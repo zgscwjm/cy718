@@ -132,7 +132,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 			public void onSuccess(ResponseInfo<String> responseInfo) {
 				jiazaidialog.dismiss();
 				String lists= responseInfo.result;
-				System.out.println(lists+"LLLLLLLLLLLLLLLL");
+				System.out.println(lists+"oooo");
 				try {
 					JSONObject object = new JSONObject(lists);
 					String num = object.getString("num").toString();
