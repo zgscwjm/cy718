@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@color/blueMain" >
+
+        <LinearLayout
+            android:id="@+id/best_results_back"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true" >
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/backimg" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="创意世界优秀成果"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </RelativeLayout>
+
+    <!-- <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/innovation_award"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:text="创新奖"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/science_award"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shapedefault"
+            android:gravity="center"
+            android:text="科学奖"
+            android:textColor="@color/greymy"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/artprize"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shapedefault"
+            android:gravity="center"
+            android:text="艺术奖"
+            android:textColor="@color/greymy"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/literary_award"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shapedefault"
+            android:gravity="center"
+            android:text="文学奖"
+            android:textColor="@color/greymy"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/goodness_award"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shapedefault"
+            android:gravity="center"
+            android:text="慈善奖"
+            android:textColor="@color/greymy"
+            android:textSize="12sp" />
+    </LinearLayout> -->
+    <com.viewpagerindicator.TabPageIndicator
+        android:id="@+id/ideas_ranking_indicator"
+        android:layout_width="fill_parent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+	<View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="5dp"
+	    android:background="@color/whiteMain"
+	    />
+    <com.lsfb.cysj.base.NoViewPage
+        android:id="@+id/best_results_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

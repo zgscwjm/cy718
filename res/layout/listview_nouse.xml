@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/ivlistViewNoUse"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/ivlistViewNoUse_right"
+        android:layout_toRightOf="@id/ivlistViewNoUse"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_nouseHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="比赛名称:广告英才比赛"
+            android:textColor="@color/blackIndexofhistoryhead"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_nouseaddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/greytime"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tv_nousetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/greytime"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+           <!--  <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="参赛金额:"
+                android:textColor="@color/greytime"
+                android:textSize="10sp" /> -->
+
+            <TextView
+                android:id="@+id/tv_nousemoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_text"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ivlistViewNoUse_right"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_world_hot_zhiku"
+        android:text="  未使用  "
+        android:textColor="@color/blueMain"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/greyxian" />
+
+</RelativeLayout>

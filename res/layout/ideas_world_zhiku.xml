@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/world_library"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:textSize="18dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/world_zhiku"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:drawableBottom="@drawable/indexthisfooter"
+                android:text="创意世界智库"
+                android:textColor="@color/blueMain" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_library"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:textSize="18dp"
+                android:id="@+id/my_zhiku"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="我的智库"
+                android:textColor="@color/zhiku" />
+
+            <!--
+                         <ImageView
+                        android:id="@+id/my_zhiku_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/indexthisfooter"
+                        android:visibility="gone" />  -->
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/ideas_more"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+           <!--  <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/moreright" /> -->
+
+            <TextView
+                android:textSize="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:drawableRight="@drawable/moreright"
+                android:text="更多"
+                android:textColor="@color/head_time" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/head_time" />
+
+    <FrameLayout
+        android:id="@+id/zhiku"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="200dp" >
+
+            <RelativeLayout
+                android:id="@+id/head_top"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/logo" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/img"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="主    席    团 :"
+                        android:textColor="@color/zhiku" />
+
+                    <ImageView
+                        android:id="@+id/linearLayout1_img1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/linearLayout1_img2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/linearLayout1_img3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"  />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignLeft="@+id/linearLayout1"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="理    事    会 :"
+                        android:textColor="@color/zhiku" />
+
+                    <ImageView
+                        android:id="@+id/linearLayout2_img1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="5dp"
+                         android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/linearLayout2_img2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="5dp"
+                         android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/linearLayout2_img3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="centerCrop"
+                         android:visibility="gone"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignBottom="@+id/img"
+                    android:layout_alignLeft="@+id/linearLayout2"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="专家顾问团 :"
+                        android:textColor="@color/zhiku" />
+
+                    <ImageView
+                        android:id="@+id/linearLayout3_img1"
+                        android:layout_width="30dp"
+                        android:scaleType="centerCrop"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/linearLayout3_img2"
+                        android:layout_width="30dp"
+                        android:scaleType="centerCrop"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="5dp"
+                         android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/linearLayout3_img3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="5dp"
+                         android:visibility="gone"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/head_top"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp" >
+
+                <!--
+                                 <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:orientation="horizontal" > -->
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/ideas_result"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_world"
+                        android:text="创意世界优秀成果"
+                        android:textColor="@color/blueMain" />
+                    <!--
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginRight="11dp"
+                                android:orientation="horizontal" >-->
+
+                    <Button
+                        android:id="@+id/ideas_heritage"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_world"
+                        android:text="创意世界优秀遗产"
+                        android:textColor="@color/blueMain" />
+                </LinearLayout>
+                <!-- </RelativeLayout> -->
+            </RelativeLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/my_zhiku_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone" >
+
+        <!--
+         <com.lsfb.cysj.view.HorizontalListView
+        android:id="@+id/horizontal_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" >
+        -->
+
+			<TextView 
+			    android:layout_gravity="center"
+			    android:gravity="center"
+			    android:layout_width="fill_parent"
+			    android:layout_height="200dp"
+			    android:text="暂无数据"
+			    android:visibility="gone"
+			    android:id="@+id/horizontal_listview_text"
+			    />
+            <com.lsfb.cysj.view.HorizontalListView
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:id="@+id/horizontal_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:divider="@null" />
+            <!-- </com.lsfb.cysj.view.HorizontalListView> -->
+    </FrameLayout>
+
+</LinearLayout>

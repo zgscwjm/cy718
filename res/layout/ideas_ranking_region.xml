@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+   <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/whiteMain"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/ideas_ranking_region_Country"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:text="国家级"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ideas_ranking_region_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/city"
+            android:gravity="center"
+            android:text="省级"
+            android:textColor="@color/greymy"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ideas_ranking_region_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/city"
+            android:gravity="center"
+            android:text="市级"
+            android:textColor="@color/greymy"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ideas_ranking_region_county"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/city"
+            android:gravity="center"
+            android:text="县(区)级"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/greymy"
+            android:textSize="14sp" />
+  
+    </LinearLayout>
+
+    <com.lsfb.cysj.base.NoViewPage
+        android:id="@+id/ideas_ranking_region_page"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+    </com.lsfb.cysj.base.NoViewPage>
+</LinearLayout>

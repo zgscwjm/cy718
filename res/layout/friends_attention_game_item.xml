@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+   <ImageView
+        android:layout_margin="10dp"
+        android:id="@+id/attention_game_item_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xxheader" />
+
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignTop="@+id/attention_game_item_img"
+	    android:layout_centerHorizontal="true"
+	    android:orientation="vertical" >
+
+	    <TextView
+	        android:id="@+id/attention_game_item_head"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:text="成都智库"
+	        android:textColor="@color/black_Main" />
+
+	    <TextView
+	        android:id="@+id/attention_game_item_buttom"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:text="属于成都本土文化创意"
+	        android:textColor="@color/black_Main" />
+	    <TextView
+	        android:id="@+id/attention_game_item_buttom"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:text="属于成都本土文化创意"
+	        android:textColor="@color/black_Main" />
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:orientation="horizontal" >
+
+
+	            <TextView
+	                android:drawableLeft="@drawable/grayman"
+	                android:id="@+id/attention_game_item_man"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:text="245"
+	                android:textColor="@color/black_Main" />
+
+	            <TextView
+	                android:layout_marginLeft="15dp"
+	                android:drawableLeft="@drawable/bishaitb"
+	                android:id="@+id/attention_game_item_num"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center"
+	                android:text="245"
+	                android:textColor="@color/black_Main" />
+	    </LinearLayout>
+	</LinearLayout>
+
+</RelativeLayout>

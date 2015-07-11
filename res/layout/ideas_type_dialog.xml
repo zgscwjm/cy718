@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="160dp"
+    android:background="@drawable/bjyuan"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical" >
+
+    <com.lsfb.cysj.view.CenterTextview
+        android:id="@+id/ideas_type_text"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/greyxian"
+        android:text="选择你要发布的全部创意类型" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/head_time" />
+
+    <LinearLayout
+        android:id="@+id/ideas_type_text1"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp" >
+
+        <TextView
+            android:id="@+id/ideas_type_text11"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="投资项目创意" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/head_time" />
+
+    <LinearLayout
+        android:id="@+id/ideas_type_text2"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp" >
+
+        <TextView
+            android:id="@+id/ideas_type_text22"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="任务人才创意" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/head_time" />
+
+    <LinearLayout
+        android:id="@+id/ideas_type_text3"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp" >
+
+        <TextView
+            android:id="@+id/ideas_type_text33"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="公益明星创意" />
+    </LinearLayout>
+
+</LinearLayout>

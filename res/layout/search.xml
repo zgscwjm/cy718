@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteMain"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@color/blueMain"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/shapefour"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/chuang" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/textclolor" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/head_search2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:background="@null"
+                    android:hint="所有我要  创创即来"
+                    android:imeOptions="actionSearch"
+                    android:maxLength="12"
+                    android:singleLine="true"
+                    android:textColor="@color/greyxian"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/search_img2"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/searchbtn" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_ll"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" >
+
+            <TextView
+                android:id="@+id/search_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:text="取消"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/search_one"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/search_button1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:text="我有创意"
+            android:textColor="@color/greybig" />
+
+        <Button
+            android:id="@+id/search_button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:text="我发起比赛"
+            android:textColor="@color/greybig" />
+
+        <Button
+            android:id="@+id/search_button3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:text="加入智库"
+            android:textColor="@color/greybig" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_two"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/search_button4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:text="我找创意"
+            android:textColor="@color/greybig" />
+
+        <Button
+            android:id="@+id/search_button5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:text="我要参赛"
+            android:textColor="@color/greybig" />
+
+        <Button
+            android:id="@+id/search_button6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:text="我要禅修"
+            android:textColor="@color/greybig" />
+    </LinearLayout>
+	<TextView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:text="暂无数据"
+	    android:gravity="center"
+	    android:visibility="gone"
+	    android:id="@+id/search_msg"
+	    />
+    <ScrollView
+        android:id="@+id/search_scrollview"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/whiteMain" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/search_xinwen"
+                android:layout_width="fill_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="新闻" />
+
+                    <TextView
+                        android:id="@+id/search_xinwen_more"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical|right"
+                        android:text="更多" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/search_xinwen_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+			<View 
+			    android:id="@+id/search_zhuanjia_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="5dp"
+			    android:background="@color/greyxian"
+			    />
+            <LinearLayout
+                android:id="@+id/search_zhuanjia"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="智库专家" />
+
+                    <TextView
+                        android:id="@+id/search_zhuanjia_more"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical|right"
+                        android:text="更多" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/search_zhuanjia_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <View 
+                android:id="@+id/search_dieas_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="5dp"
+			    android:background="@color/greyxian"
+			    />
+            <LinearLayout
+                android:id="@+id/search_dieas"
+                android:layout_width="fill_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="创意世界" />
+
+                    <TextView
+                        android:id="@+id/search_dieas_more"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical|right"
+                        android:text="更多" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/search_dieas_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <View 
+                android:id="@+id/search_friends_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="5dp"
+			    android:background="@color/greyxian"
+			    />
+            <LinearLayout
+                android:id="@+id/search_friends"
+                android:layout_width="fill_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="创友圈" />
+
+                    <TextView
+                        android:id="@+id/search_friends_more"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical|right"
+                        android:text="更多" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                     android:id="@+id/search_friends_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <View 
+                android:id="@+id/search_games_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="5dp"
+			    android:background="@color/greyxian"
+			    />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:id="@+id/search_games"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="热门大赛" />
+
+                    <TextView
+                        android:id="@+id/search_games_more"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical|right"
+                        android:text="更多" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/search_games_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <View 
+                android:id="@+id/xianxia_game_view"
+			    android:layout_width="fill_parent"
+			    android:layout_height="5dp"
+			    android:background="@color/greyxian"
+			    />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:id="@+id/xianxia_game"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="线下大赛" />
+
+                    <TextView
+                        android:id="@+id/xianxia_game_more"
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical|right"
+                        android:text="更多" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/xianxia_game_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

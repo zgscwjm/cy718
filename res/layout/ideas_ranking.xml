@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/blueMain" >
+
+        <LinearLayout
+            android:layout_width="50dp"
+                android:id="@+id/ideas_ranking_back"
+            android:layout_height="fill_parent" >
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/backimg" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="创意指数排行榜"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+    </RelativeLayout>
+
+    <!--
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/ideas_ranking_friends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/indexthisfooter"
+            android:gravity="center"
+            android:text="创友圈排名"
+            android:textColor="@color/blueMain"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/ideas_ranking_region"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="地区排名"
+            android:textColor="@color/zhiku"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/ideas_ranking_school"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="学校排名"
+            android:textColor="@color/zhiku"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/ideas_ranking_gov"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="政府排名"
+            android:textColor="@color/zhiku"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/ideas_ranking_firm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="企业排名"
+            android:textColor="@color/zhiku"
+            android:textSize="12sp" />
+    </LinearLayout>-->
+
+    <com.viewpagerindicator.TabPageIndicator
+        android:id="@+id/ideas_ranking_indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/white" />
+
+    <com.lsfb.cysj.base.NoViewPage
+        android:id="@+id/ideas_ranking_page"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white" />
+
+</LinearLayout>

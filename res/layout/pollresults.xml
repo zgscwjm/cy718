@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/blueMain" >
+
+        <LinearLayout
+            android:id="@+id/pollresults_back"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/backimg" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="投票结果"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/pollresults_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="说明"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/pollresults_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/whiteMain" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="创新奖" />
+
+                    <TextView
+                        android:id="@+id/pollresults_more1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/grayright"
+                        android:gravity="center"
+                        android:text="更多" />
+                </RelativeLayout>
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/pollresults_list1"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="科学奖" />
+
+                    <TextView
+                        android:id="@+id/pollresults_more2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/grayright"
+                        android:gravity="center"
+                        android:text="更多" />
+                </RelativeLayout>
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/pollresults_list2"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="艺术奖" />
+
+                    <TextView
+                        android:id="@+id/pollresults_more3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/grayright"
+                        android:gravity="center"
+                        android:text="更多" />
+                </RelativeLayout>
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/pollresults_list3"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="文学奖" />
+
+                    <TextView
+                        android:id="@+id/pollresults_more4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/grayright"
+                        android:gravity="center"
+                        android:text="更多" />
+                </RelativeLayout>
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/pollresults_list4"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="慈善奖" />
+
+                    <TextView
+                        android:id="@+id/pollresults_more5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/grayright"
+                        android:gravity="center"
+                        android:text="更多" />
+                </RelativeLayout>
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/pollresults_list5"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="创新奖" />
+
+                    <TextView
+                        android:id="@+id/pollresults_more6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawableRight="@drawable/grayright"
+                        android:gravity="center"
+                        android:text="更多" />
+                </RelativeLayout>
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/pollresults_list6"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

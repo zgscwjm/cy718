@@ -1,0 +1,478 @@
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/blueMain" >
+
+            <ImageButton
+                android:id="@+id/game_production_msg_backing"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="#00000000"
+                android:src="@drawable/backimg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center|center_horizontal"
+                android:text="参赛作品详情"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/game_production_msg_jubao"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true" >
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/blueMain"
+                    android:text="举报"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.lsfb.cysj.view.LazyScrollView
+            android:id="@+id/game_production_msg_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="40dp"
+            android:scrollbars="none" >
+
+           <!--  <ScrollView
+                android:id="@+id/game_production_msg_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp"
+                android:scrollbars="none" > -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal" >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical" >
+
+                            <ImageView
+                                android:id="@+id/game_production_msg_imghead"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp" />
+
+                            <TextView
+                                android:id="@+id/game_production_msg_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/blueMain"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/game_production_msg_zhishu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="5dp"
+                                android:gravity="top"
+                                android:textColor="@color/greymy"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical" >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:id="@+id/game_production_msg_type"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/greymy"
+                                    android:textSize="17sp" />
+								<Button
+				                    android:layout_alignParentRight="true"
+				                    android:id="@+id/game_production_msg_btn1"
+				                    android:layout_width="wrap_content"
+				                    android:layout_height="18dp"
+				                    android:layout_gravity="right|center_vertical"
+				                    android:layout_marginLeft="20dp"
+				                    android:layout_marginRight="20dp"
+				                    android:background="@drawable/redbj2"
+				                    android:textColor="#f82929"
+				                    android:text="    获胜冠军    "
+				                    android:textSize="8sp" />
+								<Button
+				                    android:layout_alignParentRight="true"
+				                    android:id="@+id/game_production_msg_btn2"
+				                    android:layout_width="wrap_content"
+				                    android:layout_height="18dp"
+				                    android:layout_gravity="right|center_vertical"
+				                    android:layout_marginLeft="20dp"
+				                    android:layout_marginRight="20dp"
+				                    android:visibility="gone"
+				                    android:background="@drawable/redbj"
+				                    android:textColor="#f82929"
+				                    android:text="    获胜冠军    "
+				                    android:textSize="8sp" />
+                                <!-- <TextView
+                                    android:id="@+id/game_production_msg_price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="18dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/shape_yellow_money"
+                                    android:drawableLeft="@drawable/money_orange"
+                                    android:gravity="right|center_vertical"
+                                    android:textColor="@color/yellowhomepage"
+                                    android:text="0"
+                                    android:textSize="8sp" /> -->
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/game_production_msg_content"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/greymy"
+                                android:textSize="12sp" />
+
+                            <com.lsfb.cysj.view.MyGridView
+                                android:id="@+id/game_production_msg_mg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="10dp"
+                                android:gravity="center"
+                                android:numColumns="3"
+                                android:verticalSpacing="2pt"
+                                android:visibility="gone" />
+
+                            <VideoView
+                                android:id="@+id/game_production_msg_video"
+                                android:layout_width="fill_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="10dp"
+                                android:visibility="gone" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="10dp" >
+
+                               <!--  <TextView
+                                    android:id="@+id/game_production_msg_delete"
+                                    android:layout_width="40dp"
+                                    android:layout_height="30dp"
+                                    android:gravity="center_vertical"
+                                    android:text="删除"
+                                    android:textColor="@color/greyhomepage"
+                                    android:textSize="10sp" /> -->
+
+                                <LinearLayout
+                                    android:id="@+id/game_production_msg_pinglun"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="20dp"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:id="@+id/game_production_msg_pinglun_img"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="@drawable/pinglun" />
+
+                                    <TextView
+                                        android:id="@+id/game_production_msg_pingluntext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginLeft="5dp"
+                                        android:text="0"
+                                        android:textColor="@color/greyhomepage"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/game_production_msg_likeall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_toLeftOf="@id/game_production_msg_pinglun"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:id="@+id/game_production_msg_like"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="@drawable/like" />
+
+                                    <TextView
+                                        android:id="@+id/game_production_msg_liketext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginLeft="5dp"
+                                        android:text="0"
+                                        android:textColor="@color/greyhomepage"
+                                        android:textSize="10sp" />
+                                </LinearLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/greyxian" />
+
+                    <View
+                        android:id="@+id/game_production_msg_xian"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                         android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/greyxian"/>
+
+                    <LinearLayout
+                        android:id="@+id/game_production_msg_touxiang"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@color/white"
+                        android:visibility="gone"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/shixin_zan_03" />
+
+                        <com.lsfb.cysj.view.HorizontalListView
+                            android:id="@+id/game_production_msg_duogeimg"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+                        </com.lsfb.cysj.view.HorizontalListView>
+                        <!--
+                    <LinearLayout
+                        android:id="@+id/ll_CreateDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+                    </LinearLayout>-->
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/game_production_msg_xian1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:visibility="gone"
+                        android:background="@color/greyxian"/>
+
+                    <View
+                        android:id="@+id/game_production_msg_xian2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                         android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/greyxian" />
+
+                    <com.lsfb.cysj.view.ListViewForScrollView
+                        android:id="@+id/game_production_msg_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    
+                    <!--  <ListView
+                    android:id="@+id/listview_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" /> -->
+                   
+
+                    <View
+                        android:id="@+id/game_production_msg_xian3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                         android:visibility="gone"
+                        android:background="@color/greyxian"/>
+
+                    <View
+                        android:id="@+id/game_production_msg_xian4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                         android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/greyxian" />
+                </LinearLayout>
+               <!--  </ScrollView> -->
+        </com.lsfb.cysj.view.LazyScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="41dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyxian" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/game_production_msg_down_pinglun"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/game_production_msg_down_pinglunimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/pinglun" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:text="评论"
+                    android:textColor="@color/greyhomepage"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/game_production_msg_share"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/game_production_msg_shareimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/fenxiang" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:text="分享"
+                    android:textColor="@color/greyhomepage"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/game_production_msg_down_zan"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/game_production_msg_down_zan_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/zan" />
+
+                <TextView
+                    android:id="@+id/game_production_msg_down_zan_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:text="赞"
+                    android:textColor="@color/greyhomepage"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/game_production_msg_down_xing"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/game_production_msg_down_xingimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shoucang" />
+
+                <TextView
+                    android:id="@+id/game_production_msg_down_xingtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:text="收藏"
+                    android:textColor="@color/greyhomepage"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

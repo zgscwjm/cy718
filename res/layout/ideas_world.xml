@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/blueMain" >
+
+        <!-- <LinearLayout
+            android:id="@+id/ideas_world_back"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true" >
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/backimg" />
+        </LinearLayout> -->
+
+        <TextView
+            android:id="@+id/ideas_world_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/ideas_world_button1_text"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+		<RelativeLayout 
+		    android:layout_width="50dp"
+		    android:layout_height="fill_parent"
+            android:id="@+id/ideas_world_xie"
+            android:layout_alignParentRight="true"
+		    >
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/xie" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/ideas_world_button1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="6"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:text="@string/ideas_world_button1_text"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/ideas_world_button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="4"
+            android:textSize="18dp"
+            android:background="@drawable/shapedefault"
+            android:gravity="center"
+            android:text="@string/ideas_world_button2_text"
+            android:textColor="@color/greymy" />
+
+        <TextView
+            android:id="@+id/ideas_world_button3"
+            android:layout_width="0dp"
+            android:textSize="18dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
+            android:background="@drawable/shapedefault"
+            android:gravity="center"
+            android:text="@string/ideas_world_button3_text"
+            android:textColor="@color/greymy" />
+    </LinearLayout>
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyxian"
+        />
+    <com.lsfb.cysj.base.NoViewPage
+        android:id="@+id/ideas_world_page"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+    </com.lsfb.cysj.base.NoViewPage>
+
+</LinearLayout>

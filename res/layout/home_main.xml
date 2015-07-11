@@ -1,0 +1,149 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.lsfb.cysj.base.NoViewPage
+        android:id="@+id/main"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingBottom="60dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/tab_menu"
+        android:background="@color/greyxian" />
+
+    <FrameLayout
+        android:id="@+id/tab_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true" >
+
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:background="@color/greysmall"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp" >
+
+            <RadioButton
+                android:id="@+id/btn_cyx"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/tab_selector_checked_bg"
+                android:button="@null"
+                android:checked="true"
+                android:drawableTop="@drawable/tab_selector_chuangyixin"
+                android:gravity="center_horizontal|bottom"
+                android:paddingTop="2dp"
+                android:text="创意信"
+                android:textColor="@color/tab_selector_tv_color"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/btn_cyl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/tab_selector_checked_bg"
+                android:button="@null"
+                android:drawableTop="@drawable/tab_selector_chuangyoulu"
+                android:gravity="center_horizontal|bottom"
+                android:paddingTop="2dp"
+                android:text="创友录"
+                android:textColor="@color/tab_selector_tv_color"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/btn_game"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/tab_selector_checked_bg"
+                android:button="@null"
+                android:drawableTop="@drawable/tab_selector_game"
+                android:gravity="center_horizontal|bottom"
+                android:paddingTop="2dp"
+                android:text="动态·比赛"
+                android:textColor="@color/tab_selector_tv_color"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/btn_my"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/tab_selector_checked_bg"
+                android:button="@null"
+                android:drawableTop="@drawable/tab_selector_my"
+                android:gravity="center_horizontal|bottom"
+                android:paddingTop="2dp"
+                android:text="我的"
+                android:textColor="@color/tab_selector_tv_color"
+                android:textSize="12sp" />
+        </RadioGroup>
+        <!-- 实现提醒信息用的 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="#00000000"
+            android:orientation="horizontal" >
+
+            <!-- 显示提醒信息的button android:layout_weight=1  是4个butto，平分手机界面的宽度 -->
+
+			<RelativeLayout
+			    android:layout_width="0dp"
+			    android:layout_height="fill_parent"
+			    android:layout_weight="1" >
+            <Button
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="8dp"
+                android:id="@+id/home_bt_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="7"
+                android:background="@drawable/unread_count_bg"
+                android:visibility="invisible" 
+                android:focusable="false" />
+            </RelativeLayout>
+            <!-- 占位置的button，以便适应不同分辨率手机 -->
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:visibility="invisible" />
+            <!-- 占位置的button，以便适应不同分辨率手机 -->
+
+            <Button
+                android:id="@+id/home_btn_dian"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:background="#00000000"
+                android:visibility="invisible" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

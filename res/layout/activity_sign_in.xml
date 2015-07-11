@@ -1,0 +1,151 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteMain"
+    android:orientation="vertical"
+    tools:context=".SignInActivity" >
+
+    <LinearLayout
+        android:id="@+id/llSign"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/blueMain" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="会员登录"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/greyxian" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/white" >
+
+            <ImageView
+                android:id="@+id/ivSignOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/grayphone" />
+
+            <EditText
+                android:id="@+id/etSignInAccountPhoneNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/ivSignOne"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/ivSignOne"
+                android:background="@null"
+                android:hint="请输入手机号码/登录/注册"
+                android:maxLength="15"
+                android:numeric="integer"
+                android:singleLine="true"
+                android:textColor="@color/greybig"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyxian" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/white" >
+
+            <ImageView
+                android:id="@+id/ivSignTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/graypwd" />
+
+            <EditText
+                android:id="@+id/etSignInAccountPassWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/ivSignTwo"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/ivSignTwo"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:password="true"
+                android:singleLine="true"
+                android:textColor="@color/greybig"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyxian" />
+
+        <Button
+            android:id="@+id/btnsign"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape"
+            android:text="登录"
+            android:textColor="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <Button
+                android:id="@+id/btnfeggetPassWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:background="@color/whiteMain"
+                android:text="忘记密码?"
+                android:textColor="@color/blueMain"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btnRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@color/whiteMain"
+                android:gravity="right|center_vertical"
+                android:text="注册"                
+                android:textColor="@color/blueMain"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <fragment        
+        android:id="@+id/myFragment"
+        android:name="com.lsfb.cysj.fragment.MyFragment"
+        android:layout_width="match_parent"        
+        android:layout_height="match_parent" />
+
+</LinearLayout>

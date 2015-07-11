@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/world_heritage_list_item_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:id="@+id/world_heritage_list_item_btns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/world_heritage_list_item_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/huise" />
+
+            <Button
+                android:id="@+id/world_heritage_list_item_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="14dp"
+                android:background="@drawable/shape_world_hot_zhiku"
+                android:textColor="@color/blueMain" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/world_heritage_list_item_btns"
+            android:layout_toRightOf="@+id/world_heritage_list_item_img"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/world_heritage_list_item_head"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:textSize="18dp"
+                android:textColor="@color/blackheadname" />
+
+            <TextView
+                android:id="@+id/world_heritage_list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

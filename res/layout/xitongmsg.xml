@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/xitongmsg2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="暂无信息"
+        android:visibility="gone"
+        />
+    <com.lsfb.cysj.view.XListView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/xitongmsg"
+        android:footerDividersEnabled="false"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        >
+    </com.lsfb.cysj.view.XListView>
+	<!-- <ListView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:id="@+id/xitongmsg"
+	    android:footerDividersEnabled="false"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+	    ></ListView> -->
+</LinearLayout>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@color/blueMain" >
+
+        <LinearLayout
+            android:id="@+id/ideas_zhiku_man_back"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent" >
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/backimg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="创意世界智库成员"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(领导人、科学家、艺术家、企业家、慈善家)"
+                android:textColor="@color/white" />
+        </LinearLayout>
+		<LinearLayout 
+		    android:id="@+id/shaixuan"
+		    android:layout_width="50dp"
+		    android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+		    >
+        <TextView
+            android:gravity="right"
+            android:layout_gravity="center_vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="筛选"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+	<ListView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/ideas_zhiku_man_list"
+	    ></ListView>
+    <ScrollView
+        android:id="@+id/ideas_zhiku_man_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/whiteMain" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+			
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whiteMain"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="主席团" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/ideas_zhiku_man_chairman"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whiteMain"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="理事会" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:background="@color/white"
+                    android:id="@+id/ideas_zhiku_man_director"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whiteMain"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="顾问团" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:background="@color/white"
+                    android:id="@+id/ideas_zhiku_man_counselor"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whiteMain"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="成员" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyxian" />
+
+                <com.lsfb.cysj.view.ListViewForScrollView
+                    android:id="@+id/ideas_zhiku_man_member"
+                    android:layout_width="fill_parent"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" >
+                </com.lsfb.cysj.view.ListViewForScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_zhiku_content"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone" >
+
+ <!--    <com.lsfb.cysj.view.HorizontalListView
+        android:id="@+id/horizontal_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp" > -->
+
+        <com.lsfb.cysj.view.ListViewForScrollView
+            android:id="@+id/horizontal_listview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:divider="@null" />
+        <!-- </com.lsfb.cysj.view.HorizontalListView> -->
+
+</FrameLayout>

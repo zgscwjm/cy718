@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/blueMain" >
+
+        <LinearLayout
+            android:layout_width="50dp"
+                android:id="@+id/hot_back"
+            android:layout_height="fill_parent" >
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/backimg" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="热门智库"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/hot_zhiku_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="地区选择"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <EditText
+            android:id="@+id/hot_zhiku_search"
+            android:paddingLeft="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:imeOptions="actionSearch" 
+            android:singleLine="true"
+            android:background="@drawable/search2"
+            android:drawableLeft="@drawable/searchbtn"
+            android:hint="搜索" />
+    </LinearLayout>
+	<View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/greyxian"
+	    />
+	<TextView 
+	    android:gravity="center"
+	    android:layout_gravity="center"
+	    android:id="@+id/hot_zhiku_text"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:text="暂无信息"
+	    android:visibility="gone"
+	    />
+    <com.lsfb.cysj.view.XListView
+        android:background="@color/white"
+        android:id="@+id/hot_zhiku_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/ideas_list_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/headimage" />
+
+        <TextView
+            android:id="@+id/ideas_list_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ideas_list_content"
+            android:layout_alignTop="@+id/ideas_list_head"
+            android:layout_marginTop="5dp"
+            android:text="热门新闻"
+            android:textColor="@color/black_head"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ideas_list_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ideas_list_head"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/ideas_list_head"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="热门新闻热门新闻热门新闻热门新闻热门新闻热门新闻"
+            android:textColor="@color/black_Main"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ideas_list_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ideas_list_msg"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="2015-4-14"
+            android:textColor="@color/head_time" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <ImageView
+        android:id="@+id/ivlistViewAlreadyoverdue"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+       android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+       
+        android:background="@drawable/rmzkimg" />
+
+    <LinearLayout
+        android:layout_toLeftOf="@+id/ivlistViewAlreadyoverdue_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+         android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/ivlistViewAlreadyoverdue"
+        android:orientation="vertical" >
+
+
+        <TextView
+            android:id="@+id/tv_AlreadyoverdueHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="比赛名称:广告英才比赛"
+            android:textColor="@color/blackIndexofhistoryhead"
+            android:textSize="14sp" />
+
+        <TextView
+             android:id="@+id/tv_AlreadyoverdueAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="比赛地址:成都市青羊区家园路32号"
+            android:textColor="@color/greytime"
+            android:textSize="10sp" />
+
+        <TextView
+             android:id="@+id/tv_AlreadyoverdueTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="比赛时间:2015年4月12日"
+            android:textColor="@color/greytime"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="参赛金额:"
+                android:textColor="@color/greytime"
+                android:textSize="10sp" />
+
+            <TextView
+                 android:id="@+id/tv_AlreadyoverdueMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥20"
+                android:textColor="@color/red_text"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ivlistViewAlreadyoverdue_right"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/shape_grey"
+        android:text="  已过期  "
+        android:textColor="@color/greyhomepage"
+        android:textSize="15sp" />
+<View
+     android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyxian" />
+</RelativeLayout>

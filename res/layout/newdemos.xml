@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/ivnewdemos"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/headimage"
+        android:scaleType="centerCrop" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tvnewdemos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="22dp"
+        android:layout_toLeftOf="@id/ivnewdemos"
+        android:textColor="@color/greyhomepage"
+        android:textSize="16sp"
+        android:visibility="gone" >
+    </TextView>
+
+    <ImageView
+        android:id="@+id/ivnewpictures"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@id/ivnewdemos"
+        android:scaleType="centerCrop"
+        android:visibility="gone" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/newvideos"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@id/ivnewdemos"
+        android:background="@drawable/uploadimg_fbvideo"
+        android:scaleType="centerCrop"
+        android:visibility="gone" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/newsVoiecs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@id/ivnewdemos"
+        android:background="@drawable/voiceleftright"
+        android:scaleType="centerCrop"
+        android:visibility="gone" >
+    </ImageView>
+
+</RelativeLayout>

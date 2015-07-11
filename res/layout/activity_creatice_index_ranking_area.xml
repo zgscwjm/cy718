@@ -1,0 +1,125 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreaticeIndexRankingAreaActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blueMain" >
+
+        <ImageButton
+            android:id="@+id/ibCreatice_index_ranking_area_backing"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="#00000000"
+            android:src="@drawable/backimg" />
+
+        <TextView
+            android:id="@+id/tv_creaticeIndexHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center|center_horizontal"
+            android:text="成都"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyxian" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tvCreatice_index_ranking_area_User"
+                android:layout_width="0dp"
+                android:layout_height="49dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="用户"
+                android:textColor="@color/blueMain"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tvCreatice_index_ranking_area_Idea"
+                android:layout_width="0dp"
+                android:layout_height="49dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="创意"
+                android:textColor="@color/greymy"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tvCreatice_index_ranking_area_experts"
+                android:layout_width="0dp"
+                android:layout_height="49dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="智库专家"
+                android:textColor="@color/greymy"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="horizontal" >
+
+            <View
+                android:id="@+id/tvCreatice_index_ranking_area_Userxian"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/blueMain" />
+
+            <View
+                android:id="@+id/tvCreatice_index_ranking_area_Ideaxian"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/white" />
+
+            <View
+                android:id="@+id/tvCreatice_index_ranking_area_expertsxian"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyxian" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/greyxian" />
+
+    <com.lsfb.cysj.base.NoViewPage
+         
+        android:id="@+id/viewPagetvCreatice_index_ranking_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

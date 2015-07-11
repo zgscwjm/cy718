@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="wrap_content" >
+   <View 
+       android:layout_width="fill_parent"
+       android:layout_height="1dp"
+       android:background="@color/greyxian"
+       />
+  <!--  <Button 
+       android:id="@+id/popuptwindow_button"
+       android:layout_width="fill_parent"
+       android:layout_height="30dp"
+       android:background="@null"
+       android:textColor="@color/greybig"
+       android:text="组群管理"
+       />
+   <View 
+       android:layout_width="fill_parent"
+       android:layout_height="1dp"
+       android:background="@color/greyxian"
+       /> -->
+</LinearLayout>
