@@ -150,7 +150,12 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 	@ViewInject(R.id.xianxia_game_more)
 	private TextView more6;
 	HashMap<String, Object> map;
-	ArrayList<HashMap<String, Object>> listmap;
+	ArrayList<HashMap<String, Object>> listmap1;
+	ArrayList<HashMap<String, Object>> listmap2;
+	ArrayList<HashMap<String, Object>> listmap3;
+	ArrayList<HashMap<String, Object>> listmap4;
+	ArrayList<HashMap<String, Object>> listmap5;
+	ArrayList<HashMap<String, Object>> listmap6;
 	HttpUtils httpUtils;
 	RequestParams params;
 	BitmapUtils bitmapUtils;
@@ -198,7 +203,12 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 						search_two.setVisibility(View.VISIBLE);
 						search_scrollview.setVisibility(View.GONE);
 					} else {
-						listmap = new ArrayList<HashMap<String, Object>>();
+						listmap1 = new ArrayList<HashMap<String, Object>>();
+						listmap2 = new ArrayList<HashMap<String, Object>>();
+						listmap3 = new ArrayList<HashMap<String, Object>>();
+						listmap4 = new ArrayList<HashMap<String, Object>>();
+						listmap5 = new ArrayList<HashMap<String, Object>>();
+						listmap6 = new ArrayList<HashMap<String, Object>>();
 						searchename(name);
 						searchname = name;
 					}
@@ -374,7 +384,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 	}
 
 	protected void xianxiagames(String xialist, int a) {
-		listmap = new ArrayList<HashMap<String, Object>>();
+		listmap6 = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(xialist);
 			for (int i = 0; i < array.length(); i++) {
@@ -384,7 +394,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				map.put("title", object.getString("title").toString());
 				map.put("time", object.getString("time").toString());
 				map.put("image", object.getString("image").toString());
-				listmap.add(map);
+				listmap6.add(map);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -409,16 +419,16 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				} else {
 					holder = (ViewHolder) view.getTag();
 				}
-				String img = listmap.get(position).get("image").toString();
+				String img = listmap6.get(position).get("image").toString();
 				if (img.equals("0")) {
 
 				} else {
 					bitmapUtils = new BitmapUtils(getApplicationContext());
 					bitmapUtils.display(holder.img, img);
 				}
-				holder.name.setText(listmap.get(position).get("title")
+				holder.name.setText(listmap6.get(position).get("title")
 						.toString());
-				holder.time.setText(listmap.get(position).get("time")
+				holder.time.setText(listmap6.get(position).get("time")
 						.toString());
 				return view;
 			}
@@ -435,14 +445,14 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 			@Override
 			public int getCount() {
-				return listmap.size();
+				return listmap6.size();
 			}
 		};
 		xia_list.setAdapter(adapter);
 	}
 
 	protected void games(String bitlist, int a) {
-		listmap = new ArrayList<HashMap<String, Object>>();
+		listmap5 = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(bitlist);
 			for (int i = 0; i < array.length(); i++) {
@@ -452,7 +462,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				map.put("title", object.getString("title").toString());
 				map.put("time", object.getString("time").toString());
 				map.put("image", object.getString("image").toString());
-				listmap.add(map);
+				listmap5.add(map);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -477,16 +487,16 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				} else {
 					holder = (ViewHolder) view.getTag();
 				}
-				String img = listmap.get(position).get("image").toString();
+				String img = listmap5.get(position).get("image").toString();
 				if (img.equals("0")) {
 
 				} else {
 					bitmapUtils = new BitmapUtils(getApplicationContext());
 					bitmapUtils.display(holder.img, img);
 				}
-				holder.name.setText(listmap.get(position).get("title")
+				holder.name.setText(listmap5.get(position).get("title")
 						.toString());
-				holder.time.setText(listmap.get(position).get("time")
+				holder.time.setText(listmap5.get(position).get("time")
 						.toString());
 				return view;
 			}
@@ -503,28 +513,30 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 			@Override
 			public int getCount() {
-				return listmap.size();
+				return listmap5.size();
 			}
 		};
 		game_list.setAdapter(adapter);
 	}
 
 	protected void you(String youlist, int a) {
-		listmap = new ArrayList<HashMap<String, Object>>();
+		listmap4 = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(youlist);
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = (JSONObject) array.get(i);
 				map = new HashMap<String, Object>();
 				map.put("id", object.getString("id").toString());
-				map.put("title", object.getString("title").toString());
+				map.put("name", object.getString("name").toString());
+				map.put("content", object.getString("content").toString());
 				map.put("time", object.getString("time").toString());
 				map.put("image", object.getString("image").toString());
-				listmap.add(map);
+				listmap4.add(map);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		System.out.println(listmap4+"you");
 		friendsmap = youlist;
 		adapter = new BaseAdapter() {
 
@@ -545,16 +557,16 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				} else {
 					holder = (ViewHolder) view.getTag();
 				}
-				String img = listmap.get(position).get("image").toString();
+				String img = listmap4.get(position).get("image").toString();
 				if (img.equals("0")) {
 
 				} else {
 					bitmapUtils = new BitmapUtils(getApplicationContext());
 					bitmapUtils.display(holder.img, img);
 				}
-				holder.name.setText(listmap.get(position).get("title")
+				holder.name.setText(listmap4.get(position).get("content")
 						.toString());
-				holder.time.setText(listmap.get(position).get("time")
+				holder.time.setText(listmap4.get(position).get("time")
 						.toString());
 				return view;
 			}
@@ -571,14 +583,14 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 			@Override
 			public int getCount() {
-				return listmap.size();
+				return listmap4.size();
 			}
 		};
 		friends_list.setAdapter(adapter);
 	}
 
 	protected void chuangyi(String chuanglist, int a) {
-		listmap = new ArrayList<HashMap<String, Object>>();
+		listmap3 = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(chuanglist);
 			for (int i = 0; i < array.length(); i++) {
@@ -588,11 +600,12 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				map.put("title", object.getString("title").toString());
 				map.put("time", object.getString("time").toString());
 				map.put("image", object.getString("image").toString());
-				listmap.add(map);
+				listmap3.add(map);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		System.out.println(listmap3+"chuangyi");
 		ideasmap = chuanglist;
 		adapter = new BaseAdapter() {
 
@@ -613,16 +626,16 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				} else {
 					holder = (ViewHolder) view.getTag();
 				}
-				String img = listmap.get(position).get("image").toString();
+				String img = listmap3.get(position).get("image").toString();
 				if (img.equals("0")) {
 
 				} else {
 					bitmapUtils = new BitmapUtils(getApplicationContext());
 					bitmapUtils.display(holder.img, img);
 				}
-				holder.name.setText(listmap.get(position).get("title")
+				holder.name.setText(listmap3.get(position).get("title")
 						.toString());
-				holder.time.setText(listmap.get(position).get("time")
+				holder.time.setText(listmap3.get(position).get("time")
 						.toString());
 				return view;
 			}
@@ -639,14 +652,14 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 			@Override
 			public int getCount() {
-				return listmap.size();
+				return listmap3.size();
 			}
 		};
 		ideas_list.setAdapter(adapter);
 	}
 
 	protected void zhuanjia(String zhilist, int a) {
-		listmap = new ArrayList<HashMap<String, Object>>();
+		listmap2 = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(zhilist);
 			for (int i = 0; i < array.length(); i++) {
@@ -655,7 +668,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				map.put("id", object.getString("id").toString());
 				map.put("name", object.getString("name").toString());
 				map.put("image", object.getString("image").toString());
-				listmap.add(map);
+				listmap2.add(map);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -678,14 +691,14 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				} else {
 					holder = (ViewHolder) view.getTag();
 				}
-				String img = listmap.get(position).get("image").toString();
+				String img = listmap2.get(position).get("image").toString();
 				if (img.equals("0")) {
 
 				} else {
 					bitmapUtils = new BitmapUtils(getApplicationContext());
 					bitmapUtils.display(holder.img, img);
 				}
-				holder.name.setText(listmap.get(position).get("name")
+				holder.name.setText(listmap2.get(position).get("name")
 						.toString());
 				return view;
 			}
@@ -702,14 +715,14 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 			@Override
 			public int getCount() {
-				return listmap.size();
+				return listmap2.size();
 			}
 		};
 		zhuanjia_list.setAdapter(adapter);
 	}
 
 	protected void xinwen(String newslist, int a) {
-		listmap = new ArrayList<HashMap<String, Object>>();
+		listmap1 = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(newslist);
 			for (int i = 0; i < array.length(); i++) {
@@ -719,7 +732,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				map.put("title", object.getString("title").toString());
 				map.put("time", object.getString("time").toString());
 				map.put("image", object.getString("image").toString());
-				listmap.add(map);
+				listmap1.add(map);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -744,16 +757,16 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 				} else {
 					holder = (ViewHolder) view.getTag();
 				}
-				String img = listmap.get(position).get("image").toString();
+				String img = listmap1.get(position).get("image").toString();
 				if (img.equals("0")) {
 
 				} else {
 					bitmapUtils = new BitmapUtils(getApplicationContext());
 					bitmapUtils.display(holder.img, img);
 				}
-				holder.name.setText(listmap.get(position).get("title")
+				holder.name.setText(listmap1.get(position).get("title")
 						.toString());
-				holder.time.setText(listmap.get(position).get("time")
+				holder.time.setText(listmap1.get(position).get("time")
 						.toString());
 				return view;
 			}
@@ -770,7 +783,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 			@Override
 			public int getCount() {
-				return listmap.size();
+				return listmap1.size();
 			}
 		};
 		xinwen_list.setAdapter(adapter);
@@ -793,7 +806,12 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 
 	private void init() {
 		map = new HashMap<String, Object>();
-		listmap = new ArrayList<HashMap<String, Object>>();
+		listmap1 = new ArrayList<HashMap<String, Object>>();
+		listmap2 = new ArrayList<HashMap<String, Object>>();
+		listmap3 = new ArrayList<HashMap<String, Object>>();
+		listmap4 = new ArrayList<HashMap<String, Object>>();
+		listmap5 = new ArrayList<HashMap<String, Object>>();
+		listmap6 = new ArrayList<HashMap<String, Object>>();
 		search_button1.setOnClickListener(this);
 		search_button2.setOnClickListener(this);
 		search_button3.setOnClickListener(this);
