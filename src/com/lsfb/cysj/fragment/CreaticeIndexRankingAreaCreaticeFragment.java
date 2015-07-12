@@ -348,6 +348,7 @@ public class CreaticeIndexRankingAreaCreaticeFragment extends Fragment
 					params.add(new BasicNameValuePair("uid", IsTrue.userId + ""));
 					params.add(new BasicNameValuePair("cid", cid));
 					params.add(new BasicNameValuePair("qid", qid));
+					System.out.println(cid+"UUUUUUUUUUUU"+qid);
 					post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
 					HttpResponse response = httpClient.execute(post);

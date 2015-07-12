@@ -1,5 +1,6 @@
 package com.lsfb.cysj.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -33,13 +34,14 @@ import com.lsfb.cysj.fragment.TrendsGameFragment;
 public class FragmentAdapter extends FragmentPagerAdapter {
 	int TAB_COUNT;
 	int i;
+	String ccid,qqid;
 	IdeasWorldSonFragment ideasWorldSonFragment;
 	IdeasFriendsFragment ideasFriendsFragment;
 	GameApplyFragment gameApplyFragment;
 	GameEndFragment gameEndFragment;
-	CreaticeIndexRankingAreaCreaticeFragment creaticeIndexRankingAreaCreaticeFragment;
+	CreaticeIndexRankingAreaCreaticeFragment creaticeIndexRankingAreaCreaticeFragment;//创意
 	CreaticeIndexRankingAreaUserFragment creaticeIndexRankingAreaUserFragment;//用户
-	CreaticeIndexRankingAreaThinkTankExpertsFragment creaticeIndexRankingAreaThinkTankExpertsFragment;
+	CreaticeIndexRankingAreaThinkTankExpertsFragment creaticeIndexRankingAreaThinkTankExpertsFragment;//智库专家
 
 	public FragmentAdapter(FragmentManager fm, int num, int i) {
 		super(fm);
@@ -55,15 +57,17 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 	}
 
 	public void setDataareaRanking(String cid, String qid, int i) {
+		ccid = cid;
+		qqid = qid;
 		switch (i) {
 		case 1:
-			creaticeIndexRankingAreaThinkTankExpertsFragment.setData(cid, qid);
-			break;
-		case 2:
 			creaticeIndexRankingAreaUserFragment.setData(cid, qid);
 			break;
-		case 3:
+		case 2:
 			creaticeIndexRankingAreaCreaticeFragment.setData(cid, qid);
+			break;
+		case 3:
+			creaticeIndexRankingAreaThinkTankExpertsFragment.setData(cid, qid);
 			break;
 		default:
 			break;
@@ -236,6 +240,10 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 			switch (id) {
 			case 0:
 				creaticeIndexRankingAreaUserFragment = new CreaticeIndexRankingAreaUserFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("cid", ccid);
+				bundle.putString("qid", qqid);
+				creaticeIndexRankingAreaUserFragment.setArguments(bundle);
 				return creaticeIndexRankingAreaUserFragment;
 			case 1:
 				creaticeIndexRankingAreaCreaticeFragment = new CreaticeIndexRankingAreaCreaticeFragment();

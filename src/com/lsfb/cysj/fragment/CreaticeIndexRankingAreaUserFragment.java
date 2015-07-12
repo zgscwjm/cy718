@@ -64,7 +64,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 		}
 		init();
 		adapterlist();
-//		data();
+		data();
 		return rootView;
 
 	}
@@ -87,11 +87,14 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 				}
 				bitmapUtils = new BitmapUtils(getActivity());
 				bitmapUtils.display(holder.imageview, ImageAddress.Stringhead+listmap.get(position).get("image").toString());
-				String ubs = listmap.get(position).get("ubs").toString();
-				if (ubs.equals("2")) {
-					holder.btnLook.setText("    已关注");
-				}else {
-					holder.btnLook.setText("    关注");
+				boolean contains = listmap.get(position).containsKey("ubs");
+				if (contains) {
+					String ubs = listmap.get(position).get("ubs").toString();
+						if (ubs.equals("2")) {
+							holder.btnLook.setText("    已关注");
+						}else {
+							holder.btnLook.setText("    关注");
+						}
 				}
 				return v;
 
@@ -121,6 +124,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 		params.addBodyParameter("uid", IsTrue.userId+"");
 		params.addBodyParameter("cid", cid);
 		params.addBodyParameter("qid", qid);
+		System.out.println(cid + "TTTTTTTTTTTTTTTT" + qid);
 		httpUtils.send(HttpMethod.POST, MyUrl.memlist, params, new RequestCallBack<String>() {
 
 			@Override
@@ -157,7 +161,10 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 				map = new HashMap<String, Object>();
 				map.put("uid", object.getString("uid").toString());
 				map.put("image", object.getString("image").toString());
-				map.put("ubs", object.getString("ubs").toString());
+				boolean containsKey = map.containsKey("ubs");
+				if (containsKey) {
+					map.put("ubs", object.getString("ubs").toString());
+				}
 				listmap.add(map);
 			}
 		} catch (JSONException e) {
@@ -174,6 +181,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 	public void setData(String cid, String qid) {
 		this.cid = cid;
 		this.qid = qid;
+		System.out.println(cid + "DDDDDDDDDDDDDDDDDDDDDDDDD" + qid);
 		init();
 //		count = 0;
 //		chushihua();
@@ -189,5 +197,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 		map = new HashMap<String, Object>();
 		listmap = new ArrayList<HashMap<String,Object>>();
 		gv = (GridView) rootView.findViewById(R.id.gv_creaticeindexrankingarea_user);
+//		cid = getArguments().getString("cid");
+//		qid = getArguments().getString("qid");
 	}
 }

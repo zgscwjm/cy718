@@ -95,11 +95,15 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				bitmapUtils.display(holder.imageview, ImageAddress.Stringhead+listmap.get(position).get("image").toString());
 				holder.tvHead.setText(listmap.get(position).get("name").toString());
 				holder.tvContext.setText(listmap.get(position).get("bewrite").toString());
-				String ubs = listmap.get(position).get("ubs").toString();
-				if (ubs.equals("2")) {
-					holder.imgbtn.setVisibility(View.VISIBLE);
-				}else {
-					holder.imgbtn.setVisibility(View.GONE);
+				System.out.println(listmap+"LLLLLLLLLLLLLLLLLLLLLLLLLLL");
+				boolean contains = listmap.get(position).containsValue("ubs");
+				if (contains) {
+					String ubs = listmap.get(position).get("ubs").toString();
+						if (ubs.equals("2")) {
+							holder.imgbtn.setVisibility(View.VISIBLE);
+						}else {
+							holder.imgbtn.setVisibility(View.GONE);
+						}
 				}
 				return v;
 			}
@@ -128,6 +132,7 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 		params.addBodyParameter("cid", cid);
 		params.addBodyParameter("qid", qid);
 		params.addBodyParameter("uid", IsTrue.userId+"");
+		System.out.println(cid + "JJJJJJJJJJJJJJJJJJJJ" + qid);
 		httpUtils.send(HttpMethod.POST, MyUrl.zhuanjia, params, new RequestCallBack<String>() {
 
 			@Override
@@ -140,7 +145,6 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 			public void onSuccess(ResponseInfo<String> responseInfo) {
 				jiazaidialog.dismiss();
 				String lists = responseInfo.result;
-				System.out.println(lists+"MMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
 				try {
 					JSONObject object = new JSONObject(lists);
 					String num = object.getString("num").toString();
@@ -168,7 +172,10 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				map.put("image", object.getString("image").toString());
 				map.put("name", object.getString("name").toString());
 				map.put("bewrite", object.getString("bewrite").toString());
-				map.put("ubs", object.getString("ubs").toString());
+				boolean containsKey = map.containsKey("ubs");
+				if (containsKey) {
+					map.put("ubs", object.getString("ubs").toString());
+				}
 				listmap.add(map);
 			}
 		} catch (JSONException e) {
@@ -185,8 +192,9 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 	public void setData(String cid, String qid) {
 		this.cid = cid;
 		this.qid = qid;
+		System.out.println(cid + "EEEEEEEEEEEEEEEE" + qid);
 		init();
-		count = 0;
+//		count = 0;
 		data();
 //		chushihua();
 	}
@@ -260,6 +268,7 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 	protected void xianshi2(String list) {
 		try {
 			JSONArray array = new JSONArray(list);
+			
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = (JSONObject) array.get(i);
 				map = new HashMap<String, Object>();
