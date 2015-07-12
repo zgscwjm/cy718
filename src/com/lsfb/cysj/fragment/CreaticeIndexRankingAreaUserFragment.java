@@ -2,6 +2,8 @@ package com.lsfb.cysj.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 	Dialog jiazaidialog;
 	HashMap<String, Object> map;
 	ArrayList<HashMap<String, Object>> listmap;
+	HashSet<HashMap<String, Object>> hashmap;
 	private static final float APP_PAGE_SIZE = 16.0f;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 		}
 		init();
 		adapterlist();
-		data();
+//		data();
 		return rootView;
 
 	}
@@ -87,9 +90,11 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 				}
 				bitmapUtils = new BitmapUtils(getActivity());
 				bitmapUtils.display(holder.imageview, ImageAddress.Stringhead+listmap.get(position).get("image").toString());
+//				boolean contains = listmap.contains("ubs");
 				boolean contains = listmap.get(position).containsKey("ubs");
 				if (contains) {
 					String ubs = listmap.get(position).get("ubs").toString();
+					System.out.println("SSSSSSSSSSSSSSSSSS");
 						if (ubs.equals("2")) {
 							holder.btnLook.setText("    已关注");
 						}else {
@@ -124,7 +129,6 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 		params.addBodyParameter("uid", IsTrue.userId+"");
 		params.addBodyParameter("cid", cid);
 		params.addBodyParameter("qid", qid);
-		System.out.println(cid + "TTTTTTTTTTTTTTTT" + qid);
 		httpUtils.send(HttpMethod.POST, MyUrl.memlist, params, new RequestCallBack<String>() {
 
 			@Override
@@ -136,7 +140,6 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 			public void onSuccess(ResponseInfo<String> responseInfo) {
 				jiazaidialog.dismiss();
 				String lists= responseInfo.result;
-				System.out.println(lists+"oooo");
 				try {
 					JSONObject object = new JSONObject(lists);
 					String num = object.getString("num").toString();
@@ -161,8 +164,9 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 				map = new HashMap<String, Object>();
 				map.put("uid", object.getString("uid").toString());
 				map.put("image", object.getString("image").toString());
-				boolean containsKey = map.containsKey("ubs");
-				if (containsKey) {
+				boolean has = object.has("ubs");
+//				boolean containsKey = object.contains("ubs");
+				if (has) {
 					map.put("ubs", object.getString("ubs").toString());
 				}
 				listmap.add(map);
@@ -181,7 +185,6 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 	public void setData(String cid, String qid) {
 		this.cid = cid;
 		this.qid = qid;
-		System.out.println(cid + "DDDDDDDDDDDDDDDDDDDDDDDDD" + qid);
 		init();
 //		count = 0;
 //		chushihua();
@@ -196,6 +199,7 @@ public class CreaticeIndexRankingAreaUserFragment extends Fragment {
 	private void init() {
 		map = new HashMap<String, Object>();
 		listmap = new ArrayList<HashMap<String,Object>>();
+		hashmap = new HashSet<HashMap<String,Object>>();
 		gv = (GridView) rootView.findViewById(R.id.gv_creaticeindexrankingarea_user);
 //		cid = getArguments().getString("cid");
 //		qid = getArguments().getString("qid");

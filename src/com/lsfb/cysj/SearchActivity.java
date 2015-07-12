@@ -256,6 +256,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 									xinwen.setVisibility(View.GONE);
 									view1.setVisibility(View.GONE);
 								} else {
+									xinwen.setVisibility(View.VISIBLE);
+									view1.setVisibility(View.VISIBLE);
 									String newscount = object.getString(
 											"newscount").toString();
 									int a = Integer.parseInt(newscount);
@@ -263,7 +265,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 											"newslist").toString();
 									xinwen(newslist, a);
 									if (a > 10) {
-
+										more1.setVisibility(View.VISIBLE);
 									} else {
 										more1.setVisibility(View.GONE);
 									}
@@ -273,6 +275,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 									zhuanjia.setVisibility(View.GONE);
 									view2.setVisibility(View.GONE);
 								} else {
+									zhuanjia.setVisibility(View.VISIBLE);
+									view2.setVisibility(View.VISIBLE);
 									String zhicount = object.getString(
 											"zhicount").toString();
 									int a = Integer.parseInt(zhicount);
@@ -280,7 +284,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 											.getString("zhilist").toString();
 									zhuanjia(zhilist, a);
 									if (a > 10) {
-
+										more2.setVisibility(View.VISIBLE);
 									} else {
 										more2.setVisibility(View.GONE);
 									}
@@ -290,6 +294,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 									ideas.setVisibility(View.GONE);
 									view3.setVisibility(View.GONE);
 								} else {
+									ideas.setVisibility(View.VISIBLE);
+									view3.setVisibility(View.VISIBLE);
 									String chuangcount = object.getString(
 											"chuangcount").toString();
 									int a = Integer.parseInt(chuangcount);
@@ -297,7 +303,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 											"chuanglist").toString();
 									chuangyi(chuanglist, a);
 									if (a > 10) {
-
+										more3.setVisibility(View.VISIBLE);
 									} else {
 										more3.setVisibility(View.GONE);
 									}
@@ -307,6 +313,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 									search_friends.setVisibility(View.GONE);
 									view4.setVisibility(View.GONE);
 								} else {
+									search_friends.setVisibility(View.VISIBLE);
+									view4.setVisibility(View.VISIBLE);
 									String youcount = object.getString(
 											"youcount").toString();
 									int a = Integer.parseInt(youcount);
@@ -314,7 +322,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 											.getString("youlist").toString();
 									you(youlist, a);
 									if (a > 10) {
-
+										more4.setVisibility(View.VISIBLE);
 									} else {
 										more4.setVisibility(View.GONE);
 									}
@@ -324,6 +332,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 									search_games.setVisibility(View.GONE);
 									view5.setVisibility(View.GONE);
 								} else {
+									search_games.setVisibility(View.VISIBLE);
+									view5.setVisibility(View.VISIBLE);
 									String bitcount = object.getString(
 											"bitcount").toString();
 									int a = Integer.parseInt(bitcount);
@@ -331,7 +341,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 											.getString("bitlist").toString();
 									games(bitlist, a);
 									if (a > 10) {
-
+										more5.setVisibility(View.VISIBLE);
 									} else {
 										more5.setVisibility(View.GONE);
 									}
@@ -341,6 +351,8 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 									xianxia_game.setVisibility(View.GONE);
 									view5.setVisibility(View.GONE);
 								} else {
+									xianxia_game.setVisibility(View.VISIBLE);
+									view5.setVisibility(View.VISIBLE);
 									String xiacount = object.getString(
 											"xiacount").toString();
 									int a = Integer.parseInt(xiacount);
@@ -348,7 +360,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 											.getString("xialist").toString();
 									xianxiagames(xialist, a);
 									if (a > 10) {
-
+										more6.setVisibility(View.VISIBLE);
 									} else {
 										more6.setVisibility(View.GONE);
 									}

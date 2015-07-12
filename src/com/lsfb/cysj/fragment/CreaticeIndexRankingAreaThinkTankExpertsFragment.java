@@ -95,8 +95,8 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				bitmapUtils.display(holder.imageview, ImageAddress.Stringhead+listmap.get(position).get("image").toString());
 				holder.tvHead.setText(listmap.get(position).get("name").toString());
 				holder.tvContext.setText(listmap.get(position).get("bewrite").toString());
-				System.out.println(listmap+"LLLLLLLLLLLLLLLLLLLLLLLLLLL");
-				boolean contains = listmap.get(position).containsValue("ubs");
+				boolean contains = listmap.get(position).containsKey("ubs");
+				System.out.println(contains+"KKKKKKKKKKKKKKKKKK");
 				if (contains) {
 					String ubs = listmap.get(position).get("ubs").toString();
 						if (ubs.equals("2")) {
@@ -132,7 +132,6 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 		params.addBodyParameter("cid", cid);
 		params.addBodyParameter("qid", qid);
 		params.addBodyParameter("uid", IsTrue.userId+"");
-		System.out.println(cid + "JJJJJJJJJJJJJJJJJJJJ" + qid);
 		httpUtils.send(HttpMethod.POST, MyUrl.zhuanjia, params, new RequestCallBack<String>() {
 
 			@Override
@@ -172,8 +171,9 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				map.put("image", object.getString("image").toString());
 				map.put("name", object.getString("name").toString());
 				map.put("bewrite", object.getString("bewrite").toString());
-				boolean containsKey = map.containsKey("ubs");
-				if (containsKey) {
+				boolean has = object.has("ubs");
+//				boolean containsKey = map.containsKey("ubs");
+				if (has) {
 					map.put("ubs", object.getString("ubs").toString());
 				}
 				listmap.add(map);
@@ -181,6 +181,7 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		System.out.println(listmap+"SSSSSSS");
 		baseAdapter.notifyDataSetChanged();
 	}
 	private void showdialogup() {
@@ -192,7 +193,6 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 	public void setData(String cid, String qid) {
 		this.cid = cid;
 		this.qid = qid;
-		System.out.println(cid + "EEEEEEEEEEEEEEEE" + qid);
 		init();
 //		count = 0;
 		data();
@@ -276,7 +276,10 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				map.put("image", object.getString("image").toString());
 				map.put("name", object.getString("name").toString());
 				map.put("bewrite", object.getString("bewrite").toString());
-				map.put("ubs", object.getString("ubs").toString());
+				boolean has = object.has("ubs");
+				if (has) {
+					map.put("ubs", object.getString("ubs").toString());
+				}
 				listmap.add(map);
 			}
 		} catch (JSONException e) {
