@@ -1084,8 +1084,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 
 				}
 				if (message.getType() == EMMessage.Type.TXT) {
-					TextMessageBody textMessageBody = (TextMessageBody) message
-							.getBody();
+					TextMessageBody textMessageBody = (TextMessageBody) message.getBody();
 					TextView tvcontext = (TextView) v
 							.findViewById(R.id.tvnewdemos);
 					sendshibai = (ImageView) v.findViewById(R.id.sendshibai);
