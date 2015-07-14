@@ -2,8 +2,10 @@ package com.lsfb.cysj.app;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.easemob.chat.EMChat;
+import com.lsfb.cysj.base.User;
 
 import android.app.ActivityManager;
 import android.app.Application;
@@ -11,11 +13,13 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 
 public class Myapplication extends Application {
+	private static Myapplication instance;
 	
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		instance = this;
 		EMChat.getInstance().init(getApplicationContext());
 		/**
 		 * debugMode == true 时为打开，sdk 会在log里输入调试信息
@@ -38,6 +42,17 @@ public class Myapplication extends Application {
 		    // 则此application::onCreate 是被service 调用的，直接返回
 		    return;
 		}
+	}
+	/**
+	 * 获取内存中好友user list
+	 *
+	 * @return
+	 */
+//	public Map<String, User> getContactList() {
+//	    return hxSDKHelper.getContactList();
+//	}
+	public static Myapplication getInstance() {
+		return instance;
 	}
 	private String getAppName(int pID) {
 		String processName = null;

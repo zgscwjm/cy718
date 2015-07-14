@@ -13,4 +13,5 @@ public class ImageAddress {
 	public static String yic = "http://cysj.coolmoban.com/Public/images/yic/";//创意世界优秀遗产
 	public static String Banner = "http://cysj.coolmoban.com/Public/images/banner/";//广告图
 	public static String news = "http://cysj.coolmoban.com/Public/images/news/";//新闻图
+	public static String memberimage = "http://cysj.coolmoban.com/Register/members/act/memberimage/";//获取个人头像
 }

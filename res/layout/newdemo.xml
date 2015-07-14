@@ -12,7 +12,15 @@
         android:background="@drawable/headimage"
         android:scaleType="centerCrop" >
     </ImageView>
-
+	<TextView 
+	    android:layout_below="@+id/ivnewdemo"
+	    android:id="@+id/jieshouname"
+	    android:layout_width="45dp"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:layout_marginLeft="10dp"
+		android:text="你好"
+	    />
     <TextView
         android:id="@+id/tvnewdemo"
         android:layout_width="wrap_content"
@@ -22,7 +30,7 @@
         android:layout_toRightOf="@id/ivnewdemo"
         android:textColor="@color/greyhomepage"
         android:textSize="14sp"
-        android:visibility="gone" >
+      >
     </TextView>
 
     <ImageView

@@ -267,6 +267,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 				return;
 			}
 			conversation.addMessage(message);
+			System.out.println(message+"LLLLLLLLLLL");
 			dateAdapter.notifyDataSetChanged();
 			news_list.setAdapter(dateAdapter);
 			news_list.setSelection(news_list.getCount() - 1);

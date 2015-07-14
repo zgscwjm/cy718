@@ -10,6 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
+import com.easemob.exceptions.EaseMobException;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -26,6 +29,7 @@ import com.lsfb.cysj.view.ResDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -168,6 +172,8 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 	Dialog jiazaidialog;
 	String huiyuanid;
 	int choose = 0;
+	String groupId = null;
+	String name = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -374,7 +380,35 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 			startActivity(intent);
 			break;
 		case R.id.hot_ideas_games_content_news://家居创意比赛  进入聊天
+			new Thread() {
+				public void run() {
+					try {
+						List<EMGroup> grouplist = EMGroupManager.getInstance()
+								.getGroupsFromServer();// 获取群聊列表
+						System.out.println(grouplist.size() + "SSSSSSSSSSSSS");
+						for (int i = 0; i < grouplist.size(); i++) {
+							String groupId = grouplist.get(i).getGroupId();
+							System.out.println(groupId + "MMM");
+						}
+						groupId = grouplist.get(0).getGroupId();
+						name = grouplist.get(0).getGroupName();
+						// 根据群聊ID从服务器获取群聊信息
+						EMGroup group = EMGroupManager.getInstance()
+								.getGroupFromServer(groupId);
+						List<String> s = group.getMembers();// 获取群成员
+						String ss = group.getOwner();// 获取群主
+						System.out.println(ss + "LLLLLLLLLLLLLL" + s);
+					} catch (EaseMobException e1) {
+						e1.printStackTrace();
+					}
+				};
+			}.start();
+			if (groupId == null ||name == null) {
+				return;
+			}
 			intent = new Intent(HotIdeasGamesContentActivity.this,ChatActivity.class);
+			intent.putExtra("groupId", groupId);
+			intent.putExtra("name", name);
 			startActivity(intent);
 			break;
 		case R.id.hot_ideas_games_content_man_img://创办者
