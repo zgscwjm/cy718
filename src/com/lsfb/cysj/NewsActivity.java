@@ -68,6 +68,7 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMContactManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
@@ -75,6 +76,7 @@ import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VideoMessageBody;
 import com.easemob.chat.VoiceMessageBody;
+import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
 import com.lidroid.xutils.BitmapUtils;
@@ -165,6 +167,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 	private FrameLayout fl_shuruText;
 	PopupWindow popupwindow;
 	Intent intent;
+	ImageView sendshibai;
 	private EMConversation conversation;
 	private String toChatUsername = "";
 	private DateAdapter dateAdapter;
@@ -226,7 +229,8 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		init();
-		conversation = EMChatManager.getInstance().getConversation(toChatUsername);
+		conversation = EMChatManager.getInstance().getConversation(
+				toChatUsername);
 		dateAdapter = new DateAdapter();
 		news_list.setAdapter(dateAdapter);
 
@@ -288,6 +292,21 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 		news_vpager.setOnClickListener(this);
 		Intent intent = getIntent();
 		toChatUsername = "cysj" + intent.getStringExtra("id");
+//		// 从本地获取黑名单
+//		List<String> blacklist = EMContactManager.getInstance()
+//				.getBlackListUsernames();
+//		System.out.println(blacklist
+//				+ "LLLLLLLLLLLLOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+//		String name = blacklist.get(0);
+//		if (toChatUsername.equals(name)) {
+//			Toast.makeText(getApplicationContext(), toChatUsername+"你已经把对方加入黑名单"+name, Toast.LENGTH_SHORT).show();
+//			try {
+//				EMContactManager.getInstance().deleteUserFromBlackList(toChatUsername);//需异步处理
+//			} catch (EaseMobException e) {
+//				e.printStackTrace();
+//			}
+//			finish();
+//		}
 		otherheadaddress = intent.getStringExtra("headaddress");
 		btn_speak.setOnLongClickListener(new OnLongClickListener() {
 			@Override
@@ -343,6 +362,8 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 											Toast.makeText(NewsActivity.this,
 													"发送失败", Toast.LENGTH_SHORT)
 													.show();
+											sendshibai
+													.setVisibility(View.VISIBLE);
 										}
 									});
 								}
@@ -422,6 +443,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 						public void run() {
 							Toast.makeText(NewsActivity.this, "发送失败",
 									Toast.LENGTH_SHORT).show();
+							sendshibai.setVisibility(View.VISIBLE);
 						}
 					});
 				}
@@ -446,11 +468,13 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 				}
 			});
 		} else if (requestCode == 2) {
-			
+
 			int duration = data.getIntExtra("dur", 0);
 			String videoPath = data.getStringExtra("path");
-			System.out.println(duration+"SSSSSSSSSSSSSSSSSSSSSSSS"+videoPath);
-			File file = new File(PathUtil.getInstance().getImagePath(), "thvideo" + System.currentTimeMillis());
+			System.out.println(duration + "SSSSSSSSSSSSSSSSSSSSSSSS"
+					+ videoPath);
+			File file = new File(PathUtil.getInstance().getImagePath(),
+					"thvideo" + System.currentTimeMillis());
 			Bitmap bitmap = null;
 			FileOutputStream fos = null;
 			try {
@@ -459,8 +483,10 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 				}
 				bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, 3);
 				if (bitmap == null) {
-					EMLog.d("chatactivity", "problem load video thumbnail bitmap,use default icon");
-					bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.uploadimg_fbvideo);
+					EMLog.d("chatactivity",
+							"problem load video thumbnail bitmap,use default icon");
+					bitmap = BitmapFactory.decodeResource(getResources(),
+							R.drawable.uploadimg_fbvideo);
 				}
 				fos = new FileOutputStream(file);
 
@@ -483,22 +509,22 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 				}
 
 			}
-//			sendVideo(videoPath, file.getAbsolutePath(), duration / 1000);
-			
-			
-//			// 视频播放
-//			Uri uri = data.getData();
-//			// url = uri.toString();
-//			Cursor c = getContentResolver().query(uri,new String[] { MediaStore.MediaColumns.DATA }, null, null,
-//					null);// 根据返回的URI，查找数据库，获取视频的路径
-//			String url = null;
-//			if (c != null && c.moveToFirst()) {
-//				url = c.getString(0);
-//				System.err.println(url);
-//			} else {
-//				return;
-//			}
-//			int duration = data.getIntExtra("dur", 0);
+			// sendVideo(videoPath, file.getAbsolutePath(), duration / 1000);
+
+			// // 视频播放
+			// Uri uri = data.getData();
+			// // url = uri.toString();
+			// Cursor c = getContentResolver().query(uri,new String[] {
+			// MediaStore.MediaColumns.DATA }, null, null,
+			// null);// 根据返回的URI，查找数据库，获取视频的路径
+			// String url = null;
+			// if (c != null && c.moveToFirst()) {
+			// url = c.getString(0);
+			// System.err.println(url);
+			// } else {
+			// return;
+			// }
+			// int duration = data.getIntExtra("dur", 0);
 			EMConversation conversation = EMChatManager.getInstance()
 					.getConversation(toChatUsername);
 			// 创建一个文件消息
@@ -510,11 +536,17 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 			// 设置接收人的username
 			message.setReceipt(toChatUsername);
 			// add message body
-//			File file = new File(url);
+			// File file = new File(url);
 			File videoFile = new File(videoPath);
-			VideoMessageBody body = new VideoMessageBody(videoFile, file.getAbsolutePath(), duration / 1000, videoFile.length());
-//			VideoMessageBody body = new VideoMessageBody(file,file.getAbsolutePath(), duration / 1000, file.length());
-			System.out.println("videoFile:"+videoFile+"        thumbPath:"+file.getAbsolutePath()+"             length:"+duration/1000+"           videoFile.length:"+videoFile.length());
+			VideoMessageBody body = new VideoMessageBody(videoFile,
+					file.getAbsolutePath(), duration / 1000, videoFile.length());
+			// VideoMessageBody body = new
+			// VideoMessageBody(file,file.getAbsolutePath(), duration / 1000,
+			// file.length());
+			System.out.println("videoFile:" + videoFile + "        thumbPath:"
+					+ file.getAbsolutePath() + "             length:"
+					+ duration / 1000 + "           videoFile.length:"
+					+ videoFile.length());
 			message.addBody(body);
 			conversation.addMessage(message);
 			// 刷新界面
@@ -532,6 +564,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 						public void run() {
 							Toast.makeText(NewsActivity.this, "发送失败",
 									Toast.LENGTH_SHORT).show();
+							sendshibai.setVisibility(View.VISIBLE);
 						}
 					});
 				}
@@ -619,6 +652,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 						public void run() {
 							Toast.makeText(NewsActivity.this, "发送失败",
 									Toast.LENGTH_SHORT).show();
+							sendshibai.setVisibility(View.VISIBLE);
 						}
 					});
 				}
@@ -645,24 +679,30 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	private void sendVideo(final String filePath, final String thumbPath, final int length) {
+	private void sendVideo(final String filePath, final String thumbPath,
+			final int length) {
 		final File videoFile = new File(filePath);
 		if (!videoFile.exists()) {
 			return;
 		}
 		try {
-			EMMessage message = EMMessage.createSendMessage(EMMessage.Type.VIDEO);
+			EMMessage message = EMMessage
+					.createSendMessage(EMMessage.Type.VIDEO);
 			// 如果是群聊，设置chattype,默认是单聊
-//			if (chatType == CHATTYPE_GROUP){
-//				message.setChatType(ChatType.GroupChat);
-//			}else if(chatType == CHATTYPE_CHATROOM){
-//			    message.setChatType(ChatType.ChatRoom);
-//			}
+			// if (chatType == CHATTYPE_GROUP){
+			// message.setChatType(ChatType.GroupChat);
+			// }else if(chatType == CHATTYPE_CHATROOM){
+			// message.setChatType(ChatType.ChatRoom);
+			// }
 			String to = toChatUsername;
 			message.setReceipt(to);
-			VideoMessageBody body = new VideoMessageBody(videoFile, thumbPath, length, videoFile.length());
+			VideoMessageBody body = new VideoMessageBody(videoFile, thumbPath,
+					length, videoFile.length());
 			message.addBody(body);
-			System.out.println("videoFile"+videoFile+"          thumbPath"+thumbPath+"             length"+length+"                   videoFile.length()"+ videoFile.length());
+			System.out.println("videoFile" + videoFile + "          thumbPath"
+					+ thumbPath + "             length" + length
+					+ "                   videoFile.length()"
+					+ videoFile.length());
 			conversation.addMessage(message);
 			news_list.setAdapter(dateAdapter);
 			dateAdapter.notifyDataSetChanged();
@@ -689,18 +729,32 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 			}
 
 			break;
+		case R.id.btn_yuyin:// 语音
+			if (!isOpenll_btn_speak) {
+				btn_speak.setVisibility(View.VISIBLE);
+				fl_shuruText.setVisibility(View.GONE);
+				isOpenll_btn_speak = true;
+	
+			} else {
+				btn_speak.setVisibility(View.GONE);
+				fl_shuruText.setVisibility(View.VISIBLE);
+				isOpenll_btn_speak = false;
+			}
+			break;
 		case R.id.btn_speak:
 			// 按住说话
 
 			break;
 		case R.id.btn_shipin:
 			// 视频
-//			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//			intent.setType("video/*");
-//			intent.addCategory(Intent.CATEGORY_OPENABLE);
-//			startActivityForResult(Intent.createChooser(intent, "请选择一个要上传的文件"),
-//					2);
-			Intent intent = new Intent(NewsActivity.this, ImageGridActivity.class);
+			// Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+			// intent.setType("video/*");
+			// intent.addCategory(Intent.CATEGORY_OPENABLE);
+			// startActivityForResult(Intent.createChooser(intent,
+			// "请选择一个要上传的文件"),
+			// 2);
+			Intent intent = new Intent(NewsActivity.this,
+					ImageGridActivity.class);
 			startActivityForResult(intent, 2);
 			break;
 		case R.id.btn_picture:
@@ -787,6 +841,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 						public void run() {
 							Toast.makeText(NewsActivity.this, "发送失败",
 									Toast.LENGTH_SHORT).show();
+							sendshibai.setVisibility(View.VISIBLE);
 						}
 					});
 
@@ -846,9 +901,15 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				intent = new Intent(NewsActivity.this,
-						ZhiKuManageActivity.class);
-				startActivity(intent);
+				// 第二个参数如果为true，则把用户加入到黑名单后双方发消息时对方都收不到；false,则
+				// 我能给黑名单的中用户发消息，但是对方发给我时我是收不到的
+				try {
+					EMContactManager.getInstance().addUserToBlackList(
+							toChatUsername, false);// 需异步处理
+					popupwindow.dismiss();
+				} catch (EaseMobException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -882,6 +943,7 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 						R.layout.newdemo, null);
 				ImageView imagehead = (ImageView) v
 						.findViewById(R.id.ivnewdemo);
+				ImageView shibai = (ImageView) v.findViewById(R.id.shibai);
 				BitmapUtils bitmapUtils = new BitmapUtils(NewsActivity.this);
 				bitmapUtils.display(imagehead, otherheadaddress);
 				if (message.getType() == EMMessage.Type.VOICE) {
@@ -948,11 +1010,11 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 							// startActivity(intent);
 							Uri uri = Uri.parse(normalFileMessageBody
 									.getRemoteUrl());
-							System.out.println(uri+"BBBBB");
+							System.out.println(uri + "BBBBB");
 							Intent intent = new Intent(Intent.ACTION_VIEW);
 
 							intent.setDataAndType(uri, "video/mp4");
-							
+
 							startActivity(intent);
 						}
 					});
@@ -1025,10 +1087,11 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 							.getBody();
 					TextView tvcontext = (TextView) v
 							.findViewById(R.id.tvnewdemos);
+					sendshibai = (ImageView) v.findViewById(R.id.sendshibai);
 					tvcontext.setVisibility(View.VISIBLE);
 					String zhengze = "f0[0-9]{2}|f10[0-7]"; //
 					// 正则表达式，用来判断消息内是否有表情
-					//String zhengze = "bq[0-9]{2}|"; // 正则表达式，用来判断消息内是否有表情
+					// String zhengze = "bq[0-9]{2}|"; // 正则表达式，用来判断消息内是否有表情
 					SpannableString spannableString = ExpressionUtil
 							.getExpressionString(NewsActivity.this,
 									textMessageBody.getMessage(), zhengze);
@@ -1047,7 +1110,8 @@ public class NewsActivity extends FragmentActivity implements OnClickListener {
 							// TODO Auto-generated method stub
 							Intent intent = new Intent(NewsActivity.this,
 									VideoActivity.class);
-							intent.putExtra("uri",	normalFileMessageBody.getLocalUrl());
+							intent.putExtra("uri",
+									normalFileMessageBody.getLocalUrl());
 							startActivity(intent);
 						}
 					});

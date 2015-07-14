@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import cn.jpush.android.api.m;
 
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -64,6 +66,7 @@ public class HotIdeasGameFragment extends Fragment implements IXListViewListener
 	List<Map<String, Object>> listmap;
 	Dialog jiazaidialog;
 	int count = 0;
+	List<EMGroup> grouplist;//群列表
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -281,6 +284,11 @@ public class HotIdeasGameFragment extends Fragment implements IXListViewListener
 		text = (TextView) rootView.findViewById(R.id.hot_ideas_games_text);
 		showdialogup();
 		getip();
+		if (IsTrue.userId == 0) {
+			
+		}else {
+			grouplist = EMGroupManager.getInstance().getAllGroups();//需异步处理,获取群聊列表
+		}
 	}
 
 	private void getip() {

@@ -22,11 +22,15 @@ import android.widget.Toast;
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.GroupChangeListener;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lsbf.cysj.R;
 import com.lsfb.cysj.adapter.FragmentAdapter;
 import com.lsfb.cysj.app.IsTrue;
+import com.lsfb.cysj.base.HXSDKHelper;
 import com.lsfb.cysj.fragment.IdeasFragment;
 import com.readystatesoftware.viewbadger.BadgeView;
 
@@ -69,6 +73,9 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 	private Button num;
 	SharedPreferences sp;
 	MyReceiver myReceiver;
+//	private MyConnectionListener connectionListener = null;
+//	private MyGroupChangeListener groupChangeListener = null;
+
 	class MyReceiver extends BroadcastReceiver {
 
 		@Override
@@ -113,9 +120,71 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 		editor.putInt("count", ++count);
 		// 提交修改
 		editor.commit();
-
+		
+//		groupChangeListener = new MyGroupChangeListener();
+		// 注册群聊相关的listener
+//        EMGroupManager.getInstance().addGroupChangeListener(groupChangeListener);
+		
+		EMGroupManager.getInstance().addGroupChangeListener(new GroupChangeListener() {
+			@Override
+			public void onUserRemoved(String groupId, String groupName) {
+				//当前用户被管理员移除出群聊
+			}
+			@Override
+			public void onInvitationReceived(String groupId, String groupName, String inviter, String reason) {
+				//收到加入群聊的邀请
+			}
+			@Override
+			public void onInvitationDeclined(String groupId, String invitee, String reason) {
+				//群聊邀请被拒绝
+			}
+			@Override
+			public void onInvitationAccpted(String groupId, String inviter, String reason) {
+				//群聊邀请被接受
+			}
+			@Override
+			public void onGroupDestroy(String groupId, String groupName) {
+				//群聊被创建者解散
+			}
+			@Override
+			public void onApplicationReceived(String groupId, String groupName, String applyer, String reason) {
+				//收到加群申请
+			}
+			@Override
+			public void onApplicationAccept(String groupId, String groupName, String accepter) {
+				//加群申请被同意
+			}
+			@Override
+			public void onApplicationDeclined(String groupId, String groupName, String decliner, String reason) {
+			    // 加群申请被拒绝
+			}
+		});
 		init();
 		Listener();
+	}
+	static void asyncFetchGroupsFromServer(){
+	    HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack(){
+
+            @Override
+            public void onSuccess() {
+                HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
+                
+                if(HXSDKHelper.getInstance().isContactsSyncedWithServer()){
+                    HXSDKHelper.getInstance().notifyForRecevingEvents();
+                }
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);                
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                
+            }
+            
+        });
 	}
 	@Override
 	protected void onPause() {

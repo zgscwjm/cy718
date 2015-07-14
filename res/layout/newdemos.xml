@@ -60,5 +60,16 @@
         android:scaleType="centerCrop"
         android:visibility="gone" >
     </ImageView>
+    <ImageView
+        android:id="@+id/sendshibai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@id/ivnewdemos"
+        android:background="@drawable/login_error_icon"
+        android:scaleType="centerCrop"
+        android:visibility="gone" >
+    </ImageView>
 
 </RelativeLayout>
