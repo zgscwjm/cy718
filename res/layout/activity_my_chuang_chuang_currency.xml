@@ -18,6 +18,18 @@
             android:layout_centerVertical="true"
             android:background="#00000000"
             android:src="@drawable/backimg" />
+        
+         <TextView
+             android:id="@+id/tvZuoyong"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="创币作用"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,11 +54,12 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:text="金额:0"
             android:textColor="@color/blueMain"
             android:textSize="17sp" />
 
         <Button
-            
+            android:id="@+id/btnChongzhi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

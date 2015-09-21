@@ -3,102 +3,118 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:orientation="vertical" >
-	<View 
-	    android:layout_width="fill_parent"
-	    android:layout_height="5dp"
-	    android:background="@color/whiteMain"
-	    />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:background="@color/whiteMain" />
+
     <RelativeLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="10dp" >
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/hot_ideas_games_item_img"
             android:layout_width="90dp"
-            android:layout_height="90dp" />
+            android:layout_height="90dp"
+            android:background="@drawable/logo"
+            android:scaleType="centerCrop" />
 
-        <!-- <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_ideas_games_item_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/hot_ideas_games_item_img"
             android:layout_toRightOf="@+id/hot_ideas_games_item_img"
-            android:orientation="vertical" > -->
+            android:orientation="vertical" >
 
             <TextView
-                android:layout_toRightOf="@+id/hot_ideas_games_item_img"
                 android:id="@+id/hot_ideas_games_item_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
+                android:text="好的比赛"
                 android:textColor="@color/black_head"
                 android:textSize="18sp" />
 
             <TextView
-                android:layout_below="@+id/hot_ideas_games_item_head"
-                android:layout_toRightOf="@+id/hot_ideas_games_item_img"
-                android:id="@+id/hot_ideas_games_item_content"
+                android:id="@+id/hot_ideas_games_item_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textColor="#9d9d9d" />
+                android:text="投资项目创意"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/hot_ideas_games_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_ideas_games_item_head"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/hot_ideas_games_item_img"
+            android:textColor="#9d9d9d" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/hot_ideas_games_item_img"
+            android:orientation="horizontal" >
 
             <LinearLayout
-                android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@+id/hot_ideas_games_item_img"
+                android:id="@+id/llChengyuan"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="fill_parent"
                 android:orientation="horizontal" >
 
-                <LinearLayout
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/grayman" />
+
+                <TextView
+                    android:id="@+id/hot_ideas_games_item_num1"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal" >
-
-                    <ImageView
-                        android:layout_gravity="bottom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/grayman" />
-
-                    <TextView
-                        android:layout_gravity="bottom"
-                        android:id="@+id/hot_ideas_games_item_num1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:textColor="#9d9d9d" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="horizontal" >
-
-                    <ImageView
-                        android:layout_gravity="bottom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bishaitb" />
-
-                    <TextView
-                        android:id="@+id/hot_ideas_games_item_num2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="5dp"
-                        android:textColor="#9d9d9d" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#9d9d9d" />
             </LinearLayout>
-       <!--  </LinearLayout> -->
+
+            <LinearLayout
+                android:id="@+id/llZuopin"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/bishaitb" />
+
+                <TextView
+                    android:id="@+id/hot_ideas_games_item_num2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#9d9d9d" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- </LinearLayout> -->
     </RelativeLayout>
 
 </LinearLayout>

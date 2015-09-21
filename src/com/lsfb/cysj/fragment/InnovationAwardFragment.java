@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,11 @@ import com.lsfb.cysj.view.ClearEditText;
 import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 
+/**
+ *创新奖
+ * @author Administrator
+ *
+ */
 public class InnovationAwardFragment extends Fragment implements
 		OnClickListener {
 	private static String[] citys = new String[] { "成都智库", "北京智库", "上海智库",
@@ -55,7 +61,23 @@ public class InnovationAwardFragment extends Fragment implements
 	HashMap<String, Object> map;
 	ArrayList<HashMap<String, Object>> listmap;
 	String tp;
+	int piao;	
+	ViewHolder viewHolder = null;
+	public Handler handle = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 111:				
+				viewHolder.num.setText("当前票数:"+piao++);
+				
+				break;
 
+			default:
+				break;
+			}
+		};
+	};
+		
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -156,7 +178,7 @@ public class InnovationAwardFragment extends Fragment implements
 			@Override
 			public View getView(final int position, View convertView,
 					ViewGroup parent) {
-				ViewHolder viewHolder = null;
+				
 				if (convertView == null) {
 
 					convertView = LayoutInflater.from(getActivity()).inflate(
@@ -195,6 +217,7 @@ public class InnovationAwardFragment extends Fragment implements
 						.toString());
 				viewHolder.num.setText("当前票数:"
 						+ listmap.get(position).get("piao").toString());
+				 piao=Integer.parseInt(listmap.get(position).get("piao").toString());
 				if (tp.equals("1")) {
 					viewHolder.button.setText("免费投票");
 					viewHolder.button.setOnClickListener(new OnClickListener() {
@@ -253,6 +276,11 @@ public class InnovationAwardFragment extends Fragment implements
 		list.setAdapter(adapter);
 	}
 
+	
+	/**
+	 * 创币投票
+	 * @param sid
+	 */
 	private void toupiao(String sid) {
 		client = new AsyncHttpClient();
 		params = new RequestParams();
@@ -271,7 +299,12 @@ public class InnovationAwardFragment extends Fragment implements
 						Toast.makeText(getActivity(), "投票失败",
 								Toast.LENGTH_SHORT).show();
 					} else if (num.equals("2")) {
-
+						Toast.makeText(getActivity(), "投票成功",
+								Toast.LENGTH_SHORT).show();
+						
+						handle.sendEmptyMessage(111);
+						
+						adapter.notifyDataSetChanged();
 					} else if (num.equals("3")) {
 						Toast.makeText(getActivity(), "明天再来投吧",
 								Toast.LENGTH_SHORT).show();

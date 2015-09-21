@@ -7,11 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-import com.alipay.sdk.app.PayTask;
-import com.lsbf.cysj.R;
-
-
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,20 +17,32 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-
+import com.alipay.sdk.app.PayTask;
+import com.lsbf.cysj.R;
 
 public class PayDemoActivity extends FragmentActivity {
 
-	//商户PID
-	public static final String PARTNER = "";
-	//商户收款账号
-	public static final String SELLER = "";
-	//商户私钥，pkcs8格式
-	public static final String RSA_PRIVATE = "";
-	//支付宝公钥
+	// 商户PID
+	public static final String PARTNER = "2088801085323871";
+	// 商户收款账号
+	public static final String SELLER = "chuang-chuang1@csoow.com";
+	// 商户私钥，pkcs8格式
+	public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKpLowNNuxIPXTjm"+
+"P7pNiPNkCEJNxv47J6NvrSSI6l+SHtHovfKFwr93HeEb4bmBsoY7QZdZpRyRysOI"+
+"4n7Hib7LiWyMPWU1Q2K+9w5hpBXlz9XJwgteO9pC1x2A/eHts7j4RA1fkButjSxu"+
+"SRKg87hDieRMKQtvj0azyDj+QjxJAgMBAAECgYBQ3zib8gcb7YX05otvGzElfOTb"+
+"L/qHc2pAmGFeT1MWbdsLDn9eNB2nNZdP9yC8Kxav3mYozR63MZlcQJ5nXLVRyqa5"+
+"Xnfdw96EoDr/wS9DZVOBqr43GDSh02oNUn+8kLwMdMRHkzRYlMOQu5mJeNky8G05"+
+"zbCQlEEXzaoDzQk9fQJBAN/He7O4Ow8iVPcgsyrhehywHokeXbBa6JAk+N/gM+CE"+
+"7H6LRdEur7g2OGizAk/jKPNcMzZuS77/Ir9FatzGIacCQQDC0Lz5gqugqTano0sA"+
+"BRLNgCi2Ra34zFKeLKeffKAfOW7Bp8Q6p5Hmvx2uqFtDep7Hs2kfDdkbljf0AKJM"+
+"DRCPAkAMcw6guvkeKGzNqtYM5qpiejHYswXHT+dsTYJDAjggn4SArcLellhUST/u"+
+"IzdXtm2KzHBU8OHp6EvIlFYTnjo1AkEAkGctTD1BfmsvKf9uHmukTlMK2mC33c2G"+
+"B9zNuvgjsEFgCYeTem6vRTywgcAlNdV0UE56Qxx+q2Yjv2eg5YJhnQJAMOkyTV1w"+
+"alqqdjZZvAq12t7ltdHP9SdSoK+MkAGarONoBqSMOJH5ibqy6FEuoE7BPgrKEkpt"+
+"w2C+ba7XRYd3qA==";
+	// 支付宝公钥
 	public static final String RSA_PUBLIC = "";
-
-
 	private static final int SDK_PAY_FLAG = 1;
 
 	private static final int SDK_CHECK_FLAG = 2;
@@ -43,10 +52,10 @@ public class PayDemoActivity extends FragmentActivity {
 			switch (msg.what) {
 			case SDK_PAY_FLAG: {
 				PayResult payResult = new PayResult((String) msg.obj);
-				
+
 				// 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
 				String resultInfo = payResult.getResult();
-				
+
 				String resultStatus = payResult.getResultStatus();
 
 				// 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
@@ -91,6 +100,21 @@ public class PayDemoActivity extends FragmentActivity {
 	 * 
 	 */
 	public void pay(View v) {
+		if (TextUtils.isEmpty(PARTNER) || TextUtils.isEmpty(RSA_PRIVATE)
+				|| TextUtils.isEmpty(SELLER)) {
+			new AlertDialog.Builder(this)
+					.setTitle("警告")
+					.setMessage("需要配置PARTNER | RSA_PRIVATE| SELLER")
+					.setPositiveButton("确定",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialoginterface, int i) {
+									//
+									finish();
+								}
+							}).show();
+			return;
+		}
 		// 订单
 		String orderInfo = getOrderInfo("测试的商品", "该测试商品的详细描述", "0.01");
 
@@ -170,6 +194,7 @@ public class PayDemoActivity extends FragmentActivity {
 	 * 
 	 */
 	public String getOrderInfo(String subject, String body, String price) {
+
 		// 签约合作者身份ID
 		String orderInfo = "partner=" + "\"" + PARTNER + "\"";
 

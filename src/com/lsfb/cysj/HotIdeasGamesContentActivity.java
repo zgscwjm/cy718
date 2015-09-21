@@ -24,13 +24,17 @@ import com.lsfb.cysj.app.ActivityManagerApplication;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.utils.Constant;
+import com.lsfb.cysj.utils.Show;
 import com.lsfb.cysj.view.ResDialog;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -40,35 +44,37 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HotIdeasGamesContentActivity extends FragmentActivity implements OnClickListener{
+/**
+ * 比赛；比赛内容;创意详情
+ * 
+ * @author Administrator
+ * 
+ */
+public class HotIdeasGamesContentActivity extends FragmentActivity implements
+		OnClickListener {
 	Intent intent;
 	/**
-	 * game_shezhi 
-	 * shezhi 设置
+	 * game_shezhi shezhi 设置
 	 */
 	@ViewInject(R.id.game_shezhi)
 	private Button shezhi;
 	/**
-	 * hot_ideas_games_content_addfriends 
-	 * addfriends 添加朋友
+	 * hot_ideas_games_content_addfriends addfriends 添加朋友
 	 */
 	@ViewInject(R.id.hot_ideas_games_content_addfriends)
 	private RelativeLayout addfriends;
 	/**
-	 * hot_ideas_games_content_img1 
-	 * guanzhuman 关注成员
+	 * hot_ideas_games_content_img1 guanzhuman 关注成员
 	 */
 	@ViewInject(R.id.hot_ideas_games_content_img1)
 	private RelativeLayout guanzhuman;
 	/**
-	 * hot_ideas_games_content_img3 
-	 * guanzhu 关注成员
+	 * hot_ideas_games_content_img3 guanzhu 关注成员
 	 */
 	@ViewInject(R.id.hot_ideas_games_content_img3)
 	private RelativeLayout guanzhu;
 	/**
-	 * hot_ideas_games_content_zuopin 
-	 * zuopin 作品
+	 * hot_ideas_games_content_zuopin zuopin 作品
 	 */
 	@ViewInject(R.id.hot_ideas_games_content_zuopin)
 	private RelativeLayout zuopin;
@@ -154,16 +160,15 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 	@ViewInject(R.id.hot_ideas_games_content_zuoping)
 	private TextView zuopinnum;
 	/**
-	 * collection:2(已经关注)|1(未进行关注)|3(未登录)    id:大赛id 
-	 * images:比赛封面图          introduce:比赛介绍         time:征集时间  
-	 * memimg:会员头像         nickname:会员昵称         memid:会员id  
-	 * zhik:1(智库专家存在)|0(智库专家不存在);不存在智库专家zhiklist返回0 
-	 * zhiklist:二维数组           id:会员id        memimage:会员头像  
-	 * put:1(关注成员)|0(没有关注成员);不存在关注成员    putlist返回0
-	 * putlist:二维数组           id:会员id     memimage:会员头像 zuop参赛作品数量
+	 * collection:2(已经关注)|1(未进行关注)|3(未登录) id:大赛id images:比赛封面图 introduce:比赛介绍
+	 * time:征集时间 memimg:会员头像 nickname:会员昵称 memid:会员id
+	 * zhik:1(智库专家存在)|0(智库专家不存在);不存在智库专家zhiklist返回0 zhiklist:二维数组 id:会员id
+	 * memimage:会员头像 put:1(关注成员)|0(没有关注成员);不存在关注成员 putlist返回0 putlist:二维数组
+	 * id:会员id memimage:会员头像 zuop参赛作品数量
 	 */
-	String zhiklist,id,zhik,time,put,zuop,nickname,putlist,introduce,images,collection,memimg,memid;
-	String sid;//比赛id
+	String zhiklist, id, zhik, time, put, zuop, nickname, putlist, introduce,
+			images, collection, memimg, memid,huanxlistnum,zhiklistnum,countmoney,huanxname,clasid;
+	String sid;// 比赛id
 	BitmapUtils bitmapUtils;
 	Map<String, Object> map;
 	List<Map<String, Object>> listmap;
@@ -174,121 +179,270 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 	int choose = 0;
 	String groupId = null;
 	String name = null;
+	TextView commitZuopin;
+
+	Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case Constant.HotIdeasGamesContentActivity_TIP_NOID:
+				Show.toast(getApplicationContext(), "未获取到会话ID");
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hot_ideas_games_content);
 		ViewUtils.inject(this);
-		ActivityManagerApplication.addDestoryActivity(this, 1+"");
+		ActivityManagerApplication.addDestoryActivity(this, 1 + "");
 		init();
 		showdialogup();
 		data();
 	}
+
 	private void showdialogup() {
-		jiazaidialog = new ResDialog(HotIdeasGamesContentActivity.this, R.style.MyDialog, "正在加载...",
-				R.drawable.loads);
+		jiazaidialog = new ResDialog(HotIdeasGamesContentActivity.this,
+				R.style.MyDialog, "正在加载...", R.drawable.loads);
 		jiazaidialog.show();
 		jiazaidialog.setCanceledOnTouchOutside(false);
 	}
+
 	private void data() {
 		client = new AsyncHttpClient();
 		params = new RequestParams();
 		params.put("uid", IsTrue.userId);
 		params.put("sid", sid);
-		client.post(MyUrl.bsinger, params, new JsonHttpResponseHandler(){
+		client.post(MyUrl.bsinger, params, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
-				System.out.println(response+"OOOOOOOO");
+				System.out.println(response + "OOOOOOOO");
 				try {
 					String num = response.getString("num");
 					int i = Integer.parseInt(num);
-					if (i==1) {
-						
-					}else if (i==2) {
+					if (i == 1) {
+
+					} else if (i == 2) {
 						bitmapUtils = new BitmapUtils(getApplicationContext());
+						huanxname=response.getString("huanxname");
+						 countmoney=response.getString("countmoney");
+						Log.i("zgscwjm", "countmoney:"+countmoney);
 						String list = response.getString("list");
+						
+						
+//						Log.i("zgscwjm", "request ---list:"+list);
+						
+						
 						JSONObject object = new JSONObject(list);
+						
+						clasid=object.getString("class");
+						huanxlistnum	=object.getJSONArray("huanxlist").length()+"";
+						zhiklistnum=object.getJSONArray("zhiklist").length()+"";
 						collection = object.getString("collection").toString();
 						id = object.getString("id").toString();
-						images = object.getString("images").toString();//比赛封面图
-						introduce = object.getString("introduce").toString();//比赛内容介绍
-						time = object.getString("time").toString();//征集时间
-						memimg = object.getString("memimg").toString();//会员头像
-						nickname = object.getString("nickname").toString();//会员昵称
-						memid = object.getString("memid").toString();//会员id
-						zhik = object.getString("zhik").toString();//智库专家
+						images = object.getString("images").toString();// 比赛封面图
+						introduce = object.getString("introduce").toString();// 比赛内容介绍
+						time = object.getString("time").toString();// 征集时间
+						memimg = object.getString("memimg").toString();// 会员头像
+						nickname = object.getString("nickname").toString();// 会员昵称
+						memid = object.getString("memid").toString();// 会员id
+						zhik = object.getString("zhik").toString();// 智库专家
+						
+						groupId = object.getString("huanxqun").toString();// 环信群
+						name=object.getString("nickname").toString();// 环信ming
+							
 						if (zhik.equals("1")) {
-							String lists = object.getString("zhiklist").toString();
+							String lists = object.getString("zhiklist")
+									.toString();
 							JSONArray array = new JSONArray(lists);
 							map = new HashMap<String, Object>();
-							listmap = new ArrayList<Map<String,Object>>();
+							listmap = new ArrayList<Map<String, Object>>();
 							for (int j = 0; j < array.length(); j++) {
 								JSONObject object2 = (JSONObject) array.get(j);
 								map = new HashMap<String, Object>();
-								map.put("id", object2.getString("id").toString());
-								map.put("memimage", object2.getString("memimage").toString());
+								map.put("id", object2.getString("id")
+										.toString());
+								map.put("memimage",
+										object2.getString("memimage")
+												.toString());
 								listmap.add(map);
 							}
-							System.out.println(listmap+"SSSSSSSSSSSSSSSS");
+							System.out.println(listmap + "SSSSSSSSSSSSSSSS");
 							for (int j = 0; j < listmap.size(); j++) {
-							if (listmap.size()==1) {
-								hot_ideas_games_content_zhikuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_zhikuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-							}else if (listmap.size()==2) {
-								hot_ideas_games_content_zhikuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_zhikuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-								hot_ideas_games_content_zhikuman_other2.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_zhikuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
-							}else if (listmap.size()==3) {
-								hot_ideas_games_content_zhikuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_zhikuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-								hot_ideas_games_content_zhikuman_other2.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_zhikuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
-								hot_ideas_games_content_zhikuman_other3.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_zhikuman_other3, ImageAddress.Stringhead+listmap.get(2).get("memimage").toString());
-							}
+								if (listmap.size() == 1) {
+									hot_ideas_games_content_zhikuman_other1
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_zhikuman_other1,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(0)
+																	.get("memimage")
+																	.toString());
+								} else if (listmap.size() == 2) {
+									hot_ideas_games_content_zhikuman_other1
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_zhikuman_other1,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(0)
+																	.get("memimage")
+																	.toString());
+									hot_ideas_games_content_zhikuman_other2
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_zhikuman_other2,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(1)
+																	.get("memimage")
+																	.toString());
+								} else if (listmap.size() == 3) {
+									hot_ideas_games_content_zhikuman_other1
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_zhikuman_other1,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(0)
+																	.get("memimage")
+																	.toString());
+									hot_ideas_games_content_zhikuman_other2
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_zhikuman_other2,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(1)
+																	.get("memimage")
+																	.toString());
+									hot_ideas_games_content_zhikuman_other3
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_zhikuman_other3,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(2)
+																	.get("memimage")
+																	.toString());
+								}
 							}
 						}
-						put = object.getString("put").toString();//关注会员
-						zuop = object.getString("zuop").toString();//参赛作品数量
+						
+						//环信list
+//						String huanxlist = object.getString("huanxlist")
+//								.toString();
+//						JSONArray arrayhx = new JSONArray(huanxlist);
+//						
+//						groupId=((JSONObject)arrayhx.get(0)).getString("huanxqun");
+						
+						
+						put = object.getString("put").toString();// 关注会员
+						zuop = object.getString("zuop").toString();// 参赛作品数量
 						if (put.equals("1")) {
-							String lists = object.getString("putlist").toString();
+							String lists = object.getString("putlist")
+									.toString();
 							JSONArray array = new JSONArray(lists);
 							map = new HashMap<String, Object>();
-							listmap = new ArrayList<Map<String,Object>>();
+							listmap = new ArrayList<Map<String, Object>>();
 							for (int j = 0; j < array.length(); j++) {
 								JSONObject object2 = (JSONObject) array.get(j);
 								map = new HashMap<String, Object>();
-								map.put("id", object2.getString("id").toString());
-								map.put("memimage", object2.getString("memimage").toString());
+								map.put("id", object2.getString("id")
+										.toString());
+								map.put("memimage",
+										object2.getString("memimage")
+												.toString());
 								listmap.add(map);
 							}
-							System.out.println(listmap+"EEEEEEEEEEEEEEEEEEEEEEEEEE");
+							System.out.println(listmap
+									+ "EEEEEEEEEEEEEEEEEEEEEEEEEE");
 							for (int j = 0; j < listmap.size(); j++) {
-							if (listmap.size()==1) {
-								hot_ideas_games_content_guanzhuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-							}else if (listmap.size()==2) {
-								hot_ideas_games_content_guanzhuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-								hot_ideas_games_content_guanzhuman_other2.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_guanzhuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
-							}else if (listmap.size()==3) {
-								hot_ideas_games_content_guanzhuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-								hot_ideas_games_content_guanzhuman_other2.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_guanzhuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
-								hot_ideas_games_content_guanzhuman_other3.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content_guanzhuman_other3, ImageAddress.Stringhead+listmap.get(2).get("memimage").toString());
-							}
+								if (listmap.size() == 1) {
+									hot_ideas_games_content_guanzhuman_other1
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_guanzhuman_other1,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(0)
+																	.get("memimage")
+																	.toString());
+								} else if (listmap.size() == 2) {
+									hot_ideas_games_content_guanzhuman_other1
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_guanzhuman_other1,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(0)
+																	.get("memimage")
+																	.toString());
+									hot_ideas_games_content_guanzhuman_other2
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_guanzhuman_other2,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(1)
+																	.get("memimage")
+																	.toString());
+								} else if (listmap.size() == 3) {
+									hot_ideas_games_content_guanzhuman_other1
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_guanzhuman_other1,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(0)
+																	.get("memimage")
+																	.toString());
+									hot_ideas_games_content_guanzhuman_other2
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_guanzhuman_other2,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(1)
+																	.get("memimage")
+																	.toString());
+									hot_ideas_games_content_guanzhuman_other3
+											.setVisibility(View.VISIBLE);
+									bitmapUtils
+											.display(
+													hot_ideas_games_content_guanzhuman_other3,
+													ImageAddress.Stringhead
+															+ listmap
+																	.get(2)
+																	.get("memimage")
+																	.toString());
+								}
 							}
 						}
-						bitmapUtils.display(hot_ideas_games_content_headimg, ImageAddress.cbit+images);
+						bitmapUtils.display(hot_ideas_games_content_headimg,
+								ImageAddress.cbit + images);
 						hot_ideas_games_content_content.setText(introduce);
 						gametime.setText(time);
-						zuopinnum.setText("点击查看参赛作品("+zuop+")");
-						bitmapUtils.display(hot_ideas_games_content_man_img, ImageAddress.Stringhead+memimg);
+						zuopinnum.setText("点击查看参赛作品(" + zuop + ")");
+						bitmapUtils.display(hot_ideas_games_content_man_img,
+								ImageAddress.Stringhead + memimg);
 						hot_ideas_games_content_man_name.setText(nickname);
 					}
 				} catch (JSONException e) {
@@ -297,18 +451,30 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 				jiazaidialog.dismiss();
 				super.onSuccess(statusCode, headers, response);
 			}
+
 			@Override
 			public void onFailure(int statusCode, Header[] headers,
 					Throwable throwable, JSONObject errorResponse) {
-				Toast.makeText(HotIdeasGamesContentActivity.this, errorResponse+"", Toast.LENGTH_SHORT).show();
+				Toast.makeText(HotIdeasGamesContentActivity.this,
+						errorResponse + "", Toast.LENGTH_SHORT).show();
 				super.onFailure(statusCode, headers, throwable, errorResponse);
 			}
 		});
 	}
 
 	private void init() {
+		// commitZuopin=(TextView) findViewById(R.id.commitZuopin);
+		// commitZuopin.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		// });
+
 		map = new HashMap<String, Object>();
-		listmap = new ArrayList<Map<String,Object>>();
+		listmap = new ArrayList<Map<String, Object>>();
 		intent = getIntent();
 		sid = intent.getExtras().getString("sid");
 		shezhi.setOnClickListener(this);
@@ -337,61 +503,79 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 		case R.id.hot_ideas_games_content_back:
 			finish();
 			break;
-		case R.id.game_shezhi://比赛设置
-			intent = new Intent(HotIdeasGamesContentActivity.this,GameSheZhiActivity.class);
-			intent.putExtra("sid",sid);
+		case R.id.game_shezhi:// 比赛设置，設置管理
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					GameSheZhiActivity.class);
+			intent.putExtra("sid", sid);
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_myman://邀请我的成员
-			intent = new Intent(HotIdeasGamesContentActivity.this,InviteManActivity.class);
-			intent.putExtra("sid",sid);
-			intent.putExtra("cla", 1+"");
+		case R.id.hot_ideas_games_content_myman:// 邀请我的成员
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					InviteManActivity.class);
+			intent.putExtra("sid", sid);
+			intent.putExtra("cla", 1 + "");
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_addfriends://添加智库专家
-			intent = new Intent(HotIdeasGamesContentActivity.this,InviteManActivity.class);
-			intent.putExtra("sid",sid);
-			intent.putExtra("cla", 2+"");
+		case R.id.hot_ideas_games_content_addfriends:// 添加智库专家
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					InviteManActivity.class);
+			intent.putExtra("sid", sid);
+			intent.putExtra("cla", 2 + "");
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_img3://关注成员
-			intent = new Intent(HotIdeasGamesContentActivity.this,GuanZhuMan.class);
-			intent.putExtra("sid",sid);
+		case R.id.hot_ideas_games_content_img3:// 关注成员
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					GuanZhuMan.class);
+			intent.putExtra("sid", sid);
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_img1://关注成员
-			intent = new Intent(HotIdeasGamesContentActivity.this,GuanZhuMan.class);
-			intent.putExtra("sid",sid);
+		case R.id.hot_ideas_games_content_img1:// 关注成员
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					GuanZhuMan.class);
+			intent.putExtra("sid", sid);
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_zuopin://参赛作品
-			intent = new Intent(HotIdeasGamesContentActivity.this,GameWorksActivity.class);
-			intent.putExtra("sid",sid);
+		case R.id.hot_ideas_games_content_zuopin:// 参赛作品
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					GameWorksActivity.class);
+			intent.putExtra("sid", sid);
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_img5://参赛作品
-			intent = new Intent(HotIdeasGamesContentActivity.this,GameWorksActivity.class);
-			intent.putExtra("sid",sid);
+		case R.id.hot_ideas_games_content_img5:// 参赛作品
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					GameWorksActivity.class);
+			intent.putExtra("sid", sid);
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_zuoping://参赛作品
-			intent = new Intent(HotIdeasGamesContentActivity.this,GameWorksActivity.class);
-			intent.putExtra("sid",sid);
+		case R.id.hot_ideas_games_content_zuoping:// 参赛作品
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					GameWorksActivity.class);
+			intent.putExtra("sid", sid);
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_news://家居创意比赛  进入聊天
+		case R.id.hot_ideas_games_content_news:// 家居创意比赛 进入聊天
 			new Thread() {
 				public void run() {
 					try {
-						List<EMGroup> grouplist = EMGroupManager.getInstance()
-								.getGroupsFromServer();// 获取群聊列表
-						System.out.println(grouplist.size() + "SSSSSSSSSSSSS");
-						for (int i = 0; i < grouplist.size(); i++) {
-							String groupId = grouplist.get(i).getGroupId();
-							System.out.println(groupId + "MMM");
-						}
-						groupId = grouplist.get(0).getGroupId();
-						name = grouplist.get(0).getGroupName();
+//						List<EMGroup> grouplist = EMGroupManager.getInstance()
+//								.getGroupsFromServer();// 获取群聊列表
+//						System.out.println(grouplist.size() + "SSSSSSSSSSSSS");
+//						for (int i = 0; i < grouplist.size(); i++) {
+//							String groupId = grouplist.get(i).getGroupId();
+//							System.out.println(groupId + "MMM");
+//						}
+//						if (0 == grouplist.size()) {
+//							// Show.toast(getApplicationContext(), "未获取到会话ID");
+//
+//							return;
+//						}
+//						groupId = grouplist.get(0).getGroupId();
+//						name = grouplist.get(0).getGroupName();
+						
+//						groupId = grouplist.get(0).getGroupId();
+//						name = grouplist.get(0).getGroupName();
+						
+						
 						// 根据群聊ID从服务器获取群聊信息
 						EMGroup group = EMGroupManager.getInstance()
 								.getGroupFromServer(groupId);
@@ -403,63 +587,78 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 					}
 				};
 			}.start();
-			if (groupId == null ||name == null) {
+			if (groupId == null || name == null) {
 				return;
 			}
-			intent = new Intent(HotIdeasGamesContentActivity.this,ChatActivity.class);
+			intent = new Intent(HotIdeasGamesContentActivity.this,
+					ChatActivity.class);
 			intent.putExtra("groupId", groupId);
-			intent.putExtra("name", name);
+			intent.putExtra("name", huanxname);
+			intent.putExtra("sid", sid);
+			intent.putExtra("huanxlistnum", huanxlistnum);
+			intent.putExtra("zhiklist", zhiklistnum);
+			intent.putExtra("zuop", zuop);
+			intent.putExtra("clasid", clasid);
+			Log.i("zgscwjm", "bbbx"+countmoney);
+			intent.putExtra("countmoney", countmoney);
 			startActivity(intent);
 			break;
-		case R.id.hot_ideas_games_content_man_img://创办者
+		case R.id.hot_ideas_games_content_man_img:// 创办者
 			int i = Integer.parseInt(memid);
-			if (i==IsTrue.userId) {
-				intent = new Intent(HotIdeasGamesContentActivity.this,MyDetailsActivity.class);
+			if (i == IsTrue.userId) {
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						MyDetailsActivity.class);
 				startActivity(intent);
-			}else {
-				intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			} else {
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						OtherDetailsActivity.class);
 				intent.putExtra("id", memid);
 				startActivity(intent);
 			}
 			break;
-		case R.id.hot_ideas_games_content_img7://创办者
+		case R.id.hot_ideas_games_content_img7:// 创办者
 			int j = Integer.parseInt(memid);
-			if (j==IsTrue.userId) {
-				intent = new Intent(HotIdeasGamesContentActivity.this,MyDetailsActivity.class);
+			if (j == IsTrue.userId) {
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						MyDetailsActivity.class);
 				startActivity(intent);
-			}else {
-				intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			} else {
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						OtherDetailsActivity.class);
 				intent.putExtra("id", memid);
 				startActivity(intent);
 			}
 			break;
-		case R.id.hot_ideas_games_content_zhikuman_other1://其他人的信息
-//			intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
-//			startActivity(intent);
+		case R.id.hot_ideas_games_content_zhikuman_other1:// 其他人的信息
+			// intent = new
+			// Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			// startActivity(intent);
 			choose = 0;
 			choose(choose);
 			break;
-		case R.id.hot_ideas_games_content_zhikuman_other2://其他人的信息
-//			intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
-//			startActivity(intent);
+		case R.id.hot_ideas_games_content_zhikuman_other2:// 其他人的信息
+			// intent = new
+			// Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			// startActivity(intent);
 			choose = 1;
 			choose(choose);
 			break;
-		case R.id.hot_ideas_games_content_zhikuman_other3://其他人的信息
-//			intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
-//			startActivity(intent);
+		case R.id.hot_ideas_games_content_zhikuman_other3:// 其他人的信息
+			// intent = new
+			// Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			// startActivity(intent);
 			choose = 2;
 			choose(choose);
 			break;
-		case R.id.hot_ideas_games_content_guanzhuman_other1://其他人的信息
+		case R.id.hot_ideas_games_content_guanzhuman_other1:// 其他人的信息
 			choose = 0;
 			choose(choose);
 			break;
-		case R.id.hot_ideas_games_content_guanzhuman_other2://其他人的信息
+		case R.id.hot_ideas_games_content_guanzhuman_other2:// 其他人的信息
 			choose = 1;
 			choose(choose);
 			break;
-		case R.id.hot_ideas_games_content_guanzhuman_other3://其他人的信息
+		case R.id.hot_ideas_games_content_guanzhuman_other3:// 其他人的信息
 			choose = 2;
 			choose(choose);
 			break;
@@ -467,34 +666,41 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements On
 			break;
 		}
 	}
-	private void choose(int i){
-		if (listmap.size()==1) {
+
+	private void choose(int i) {
+		if (listmap.size() == 1) {
 			huiyuanid = listmap.get(i).get("id").toString();
 			if (Integer.parseInt(huiyuanid) == IsTrue.userId) {
-				intent = new Intent(HotIdeasGamesContentActivity.this,MyDetailsActivity.class);
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						MyDetailsActivity.class);
 				startActivity(intent);
-			}else {
-				intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			} else {
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						OtherDetailsActivity.class);
 				intent.putExtra("id", huiyuanid);
 				startActivity(intent);
 			}
-		}else if (listmap.size()==2) {
+		} else if (listmap.size() == 2) {
 			huiyuanid = listmap.get(i).get("id").toString();
 			if (Integer.parseInt(huiyuanid) == IsTrue.userId) {
-				intent = new Intent(HotIdeasGamesContentActivity.this,MyDetailsActivity.class);
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						MyDetailsActivity.class);
 				startActivity(intent);
-			}else {
-				intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			} else {
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						OtherDetailsActivity.class);
 				intent.putExtra("id", huiyuanid);
 				startActivity(intent);
 			}
-		}else if (listmap.size()==3) {
+		} else if (listmap.size() == 3) {
 			huiyuanid = listmap.get(i).get("id").toString();
 			if (Integer.parseInt(huiyuanid) == IsTrue.userId) {
-				intent = new Intent(HotIdeasGamesContentActivity.this,MyDetailsActivity.class);
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						MyDetailsActivity.class);
 				startActivity(intent);
-			}else {
-				intent = new Intent(HotIdeasGamesContentActivity.this,OtherDetailsActivity.class);
+			} else {
+				intent = new Intent(HotIdeasGamesContentActivity.this,
+						OtherDetailsActivity.class);
 				intent.putExtra("id", huiyuanid);
 				startActivity(intent);
 			}

@@ -23,7 +23,22 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/backimg" />
+            
+            
         </LinearLayout>
+         <Button
+             android:id="@+id/btnTuijian"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                  android:layout_centerVertical="true" 
+                  android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:text="推荐"
+                android:textColor="@color/white"
+                android:background="@null"
+                 />
 
         <TextView
             android:id="@+id/addfriends_head_add"
@@ -31,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="添加"
+            android:text="添加好友"
             android:textColor="@color/white"
             android:textSize="20sp" />
     </RelativeLayout>

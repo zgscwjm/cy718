@@ -44,8 +44,16 @@ import com.lsfb.cysj.ThinkTankCertificationActivity;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.app.Myapplication;
+import com.lsfb.cysj.utils.SharedPrefsUtil;
 import com.lsfb.cysj.view.CircleImageView;
 
+/**
+ * 我的
+ * 
+ * @author Administrator
+ * 
+ */
 public class MyFragment extends Fragment {
 	RelativeLayout my_details;// 进入我的详情内页
 	RelativeLayout rlMyCreateindex;// 进入历史指数
@@ -61,23 +69,25 @@ public class MyFragment extends Fragment {
 	TextView tv_My_chuangchuangzhikuNUm;// 创意世界智库号
 	TextView tv_My_chuangyizhishu;// 创意指数
 	TextView tv_My_chuangchuangbi;// 创创币
+	TextView tvIndex;
 	private View rootView;
 	HttpClient httpClient;
-	String ccb = null;
+	String ccb = "";
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == 0x123) {
 				String str = msg.obj.toString();
 
-				Log.d("2222222222222222222222222", str);
+				Log.d("2222222222222222", str);
 				try {
 					JSONObject jsonObject = new JSONObject(str);
 					tv_My_chuangyizhishu.setText(jsonObject.getString("zhishu")
 							.toString());// 创意指数
-					tv_My_chuangchuangbi.setText(jsonObject.getString("ccb")
-							.toString());// 创创币
 					ccb = jsonObject.getString("ccb").toString();
+					tv_My_chuangchuangbi.setText(ccb);
+						 // 创创币
+					
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,7 +121,6 @@ public class MyFragment extends Fragment {
 			@Override
 			public void run() {
 				try {
-
 					HttpPost post = new HttpPost(MyUrl.StringIndexRulechange);
 
 					List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -176,7 +185,6 @@ public class MyFragment extends Fragment {
 		}
 		init();
 		my_details.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -202,7 +210,8 @@ public class MyFragment extends Fragment {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(getActivity(),
 						MyChuangChuangCurrencyActivity.class);
-				intent.putExtra("ccb", ccb);
+				
+				intent.putExtra("ccb", ""+ccb);
 				startActivity(intent);
 			}
 		});
@@ -288,6 +297,10 @@ public class MyFragment extends Fragment {
 				.findViewById(R.id.tv_My_chuangyizhishu);
 		tv_My_chuangchuangbi = (TextView) rootView
 				.findViewById(R.id.tv_My_chuangchuangbi);
-	}
+		// 今日新增指数
+		tvIndex = (TextView) rootView.findViewById(R.id.tvIndex);
+		tvIndex.setText(SharedPrefsUtil.getStringValue(Myapplication.context,
+				"todayIndex", ""));
 
+	}
 }

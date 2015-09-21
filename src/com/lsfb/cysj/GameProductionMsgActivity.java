@@ -45,6 +45,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lsbf.cysj.R;
+import com.lsfb.cysj.Dialog.JuBaoDialog;
 import com.lsfb.cysj.Dialog.PingLunDialog;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
@@ -73,6 +74,11 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.yixin.controller.UMYXHandler;
 import com.umeng.socialize.ynote.controller.UMYNoteHandler;
 
+/**
+ * 参赛作品详情,举报
+ * @author Administrator
+ *
+ */
 public class GameProductionMsgActivity extends FragmentActivity implements
 		OnClickListener {
 	@ViewInject(R.id.game_production_msg_backing)
@@ -164,6 +170,11 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	 */
 	@ViewInject(R.id.game_production_msg_down_xing)
 	private LinearLayout down_xing;
+	
+	
+	@ViewInject(R.id.game_production_msg_jubao)
+	private LinearLayout jubao;
+	
 	/**
 	 * game_production_msg_down_xingimg down_xingxing 五星
 	 */
@@ -212,6 +223,8 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	Intent intent;
 	String zuopinid;// 创意作品id
 	String zid; // 作品id
+	
+	String sid;//大赛id
 	/**
 	 * title:创意题目 content:创意内容(0无内容) images:多图(0无图片) video:视频(0无视频) price:创意价值
 	 * sc:会员收藏数量 index 发布会员指数 count:评论数量 nickid:发布会员 iddelid:2可删|1不可删
@@ -302,6 +315,10 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 							id = object.getString("id").toString();
 							scpd = object.getString("scpd").toString();
 							bitbs = object.getString("bitbs").toString();
+							
+							sid = object.getString("sid").toString();
+							
+							
 							if (bitbs.equals("1")) {
 								bitmember = object.getString("bitmember")
 										.toString();
@@ -674,6 +691,9 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 		pinglun.setOnClickListener(this);
 		down_zan.setOnClickListener(this);
 		btn2.setOnClickListener(this);
+		
+		jubao.setOnClickListener(this);
+		
 		map = new HashMap<String, Object>();
 		listmap = new ArrayList<Map<String, Object>>();
 		map2 = new HashMap<String, Object>();
@@ -702,6 +722,12 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		
+		
+		case R.id.game_production_msg_jubao: //举报
+			jubaoDialog();
+			 
+			break;
 		case R.id.game_production_msg_backing:
 			finish();
 			break;
@@ -745,6 +771,12 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 		default:
 			break;
 		}
+	}
+	
+	private void jubaoDialog() {
+		Dialog dialog = new JuBaoDialog(this, R.style.MyDialog, sid,4+"");
+		dialog.show();
+		dialog.setCanceledOnTouchOutside(true);		
 	}
 
 	private void share() {

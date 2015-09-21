@@ -53,6 +53,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
+            android:background="@drawable/logo"
             android:layout_marginTop="10dp" />
 
         <LinearLayout
@@ -70,6 +71,7 @@
                 android:textSize="18sp" />
 
             <ImageView
+                android:id="@+id/img_memdj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

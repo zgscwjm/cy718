@@ -50,6 +50,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 
+/**
+ * 创意世界领袖智库成员
+ * @author Administrator
+ *
+ */
 public class IdeasZhiKuMan extends FragmentActivity implements OnClickListener {
 	Context context;
 	private static String[] nums = new String[] { "222", "223", "224", "225",

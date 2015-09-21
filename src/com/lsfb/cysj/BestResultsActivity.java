@@ -27,6 +27,12 @@ import com.lsfb.cysj.fragment.MingXingAwardFragment;
 import com.lsfb.cysj.fragment.ScienceAwardFragment;
 import com.viewpagerindicator.TabPageIndicator;
 
+
+/**
+ * 创意世界优秀成果
+ * @author Administrator
+ *
+ */
 public class BestResultsActivity extends FragmentActivity implements OnClickListener {
 	/**
 	 * Tab标题

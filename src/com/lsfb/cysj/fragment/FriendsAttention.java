@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,11 @@ import com.lsfb.cysj.sortlistview.SideBar;
 import com.lsfb.cysj.sortlistview.SideBar.OnTouchingLetterChangedListener;
 import com.lsfb.cysj.view.ClearEditText;
 
+/**
+ * 创友录--好友 
+ * @author Administrator
+ *
+ */
 public class FriendsAttention extends Fragment {
 	private ListView sortListView;
 	private SideBar sideBar;
@@ -68,6 +74,10 @@ public class FriendsAttention extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// view = inflater.inflate(R.layout.mian_friends,container,false);
+	
+		Log.d("zgscwjm", "关注 fragment running");
+		
+		
 		if (rootView == null) {
 			rootView = inflater.inflate(R.layout.friends_attention, container,
 					false);
@@ -86,6 +96,11 @@ public class FriendsAttention extends Fragment {
 	}
 
 	private void data() {
+		
+		
+		Log.d("zgscwjm", "关注的data running");
+		
+		
 		client = new AsyncHttpClient();
 		params = new RequestParams();
 		params.put("uid", IsTrue.userId);
@@ -100,6 +115,7 @@ public class FriendsAttention extends Fragment {
 					if (i == 1) {
 					} else {
 						String lists = response.getString("list");
+						Log.i("zgscwjm", lists);
 						JSONArray array = new JSONArray(lists);
 						for (int j = 0; j < array.length(); j++) {
 							JSONObject object = (JSONObject) array.get(j);
@@ -107,6 +123,8 @@ public class FriendsAttention extends Fragment {
 							map.put("name", object.getString("name"));
 							map.put("mid", object.getString("mid"));
 							map.put("image", object.getString("image"));
+							map.put("memdj", object.getString("memdj"));
+							map.put("zqyz", object.getString("zqyz"));
 							list.add(map);
 						}
 				
@@ -204,6 +222,8 @@ public class FriendsAttention extends Fragment {
 			sortModel.setName(date.get(i).get("name").toString());
 			sortModel.setMid(date.get(i).get("mid").toString());
 			sortModel.setImage(date.get(i).get("image").toString());
+			sortModel.setZqzj(date.get(i).get("zqyz").toString());
+			sortModel.setMemdj(date.get(i).get("memdj").toString());
 			// 汉字转换成拼音
 			String pinyin = characterParser.getSelling(date.get(i).get("name").toString());
 			String sortString = pinyin.substring(0, 1).toUpperCase();

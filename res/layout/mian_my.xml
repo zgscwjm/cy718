@@ -40,8 +40,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                     />
+                    android:layout_marginLeft="10dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -63,9 +62,9 @@
                         android:orientation="horizontal" >
 
                         <TextView
-                            android:text="创创号："
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="创创号："
                             android:textColor="@color/greymy"
                             android:textSize="12dp" />
 
@@ -86,7 +85,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="创意世界智库号："
+                            android:text="创意世界领袖智库号："
                             android:textColor="@color/greymy"
                             android:textSize="12dp" />
 
@@ -135,6 +134,7 @@
                     android:background="@drawable/zhishu" />
 
                 <TextView
+                    android:id="@+id/tvindex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -144,13 +144,23 @@
                     android:textColor="@color/blackIdem" />
 
                 <TextView
+                    android:id="@+id/tvIndex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/tvindex"
+                    android:background="@color/red"
+                    android:text="+1"
+                    android:textColor="@color/white" />
+
+                <TextView
                     android:id="@+id/tv_My_chuangyizhishu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    
                     android:textColor="@color/redzhishu"
                     android:textSize="15dp" />
             </RelativeLayout>
@@ -167,7 +177,7 @@
                 android:background="@color/white" >
 
                 <ImageView
-                    android:id="@+id/ivIn2"
+                    android:id="@+id/ivIn3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -180,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@id/ivIn2"
+                    android:layout_toRightOf="@id/ivIn3"
                     android:text="我的创创币"
                     android:textColor="@color/blackIdem" />
 
@@ -191,7 +201,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    
                     android:textColor="@color/yellowmy"
                     android:textSize="15dp" />
             </RelativeLayout>
@@ -208,7 +217,7 @@
                 android:background="@color/white" >
 
                 <ImageView
-                    android:id="@+id/ivIn2"
+                    android:id="@+id/ivIn4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -221,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@id/ivIn2"
+                    android:layout_toRightOf="@id/ivIn4"
                     android:text="我的收藏"
                     android:textColor="@color/blackIdem" />
 
@@ -252,7 +261,7 @@
                 android:background="@color/white" >
 
                 <ImageView
-                    android:id="@+id/ivIn2"
+                    android:id="@+id/ivIn5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -265,7 +274,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@id/ivIn2"
+                    android:layout_toRightOf="@id/ivIn5"
                     android:text="我的入场卷"
                     android:textColor="@color/blackIdem" />
 
@@ -296,7 +305,7 @@
                 android:background="@color/white" >
 
                 <ImageView
-                    android:id="@+id/ivIn2"
+                    android:id="@+id/ivIn6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -309,7 +318,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@id/ivIn2"
+                    android:layout_toRightOf="@id/ivIn6"
                     android:text="我要禅修"
                     android:textColor="@color/blackIdem" />
 
@@ -340,7 +349,7 @@
                 android:background="@color/white" >
 
                 <ImageView
-                    android:id="@+id/ivIn2"
+                    android:id="@+id/ivIn7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -353,7 +362,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@id/ivIn2"
+                    android:layout_toRightOf="@id/ivIn7"
                     android:text="智库认证"
                     android:textColor="@color/blackIdem" />
 
@@ -378,7 +387,7 @@
                 android:background="@color/white" >
 
                 <ImageView
-                    android:id="@+id/ivIn2"
+                    android:id="@+id/ivIn8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -391,7 +400,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@id/ivIn2"
+                    android:layout_toRightOf="@id/ivIn8"
                     android:text="设置"
                     android:textColor="@color/blackIdem" />
 

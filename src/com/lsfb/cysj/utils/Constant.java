@@ -20,4 +20,10 @@ public class Constant {
 	public static final String MESSAGE_ATTR_IS_VOICE_CALL = "is_voice_call";
 	public static final String MESSAGE_ATTR_IS_VIDEO_CALL = "is_video_call";
 	public static final String ACCOUNT_REMOVED = "account_removed";
+
+	public static final int HotIdeasGamesContentActivity_TIP_NOID = 1003;
+	
+	public static final int MODIFY_PASSWORD_OK=1005;
+	public static final int MODIFY_PASSWORD_FAIL=1006;
+
 }

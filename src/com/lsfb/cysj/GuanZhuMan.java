@@ -50,6 +50,11 @@ import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.view.ListViewForScrollView;
 
+/**
+ * 关注成员
+ * @author Administrator
+ *
+ */
 public class GuanZhuMan extends FragmentActivity implements OnClickListener {
 
 	@ViewInject(R.id.guanzhu_man_back)

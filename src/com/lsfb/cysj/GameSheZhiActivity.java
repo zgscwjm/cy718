@@ -32,6 +32,11 @@ import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.utils.Utils;
 import com.lsfb.cysj.view.ResDialog;
 
+/**
+ * 設置管理，在此取消關注
+ * @author Administrator
+ *
+ */
 public class GameSheZhiActivity extends Activity implements OnClickListener{
 	@ViewInject(R.id.game_shezhi_back)
 	private LinearLayout back;
@@ -253,10 +258,13 @@ public class GameSheZhiActivity extends Activity implements OnClickListener{
 					String num = object.getString("num");
 					if (num.equals("2")) {
 						IsTrue.quxiaoguanzhu = 1;
-						intent = new Intent(GameSheZhiActivity.this,HomeActivity.class);
-						startActivity(intent);
+//						intent = new Intent(GameSheZhiActivity.this,HomeActivity.class);
+//						startActivity(intent);
+					
+						
+						ActivityManagerApplication.destoryActivity("HotIdeasGamesContentActivity");
 						finish();
-						ActivityManagerApplication.destoryActivity(1+"");
+				
 					}else if (num.equals("1")) {
 						Toast.makeText(getApplicationContext(),
 								"取消失败",

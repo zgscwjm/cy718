@@ -1,5 +1,6 @@
 package com.lsfb.cysj;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,11 +17,17 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnItemClick;
 import com.lsbf.cysj.R;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.app.Myapplication;
 import com.lsfb.cysj.base.BaseActivity;
+import com.lsfb.cysj.fragment.HotIdeasGameFragment;
+import com.lsfb.cysj.fragment.IdeasFriendsFragment;
+import com.lsfb.cysj.fragment.TrendsGameFragment;
+import com.lsfb.cysj.utils.SharedPrefsUtil;
 import com.lsfb.cysj.view.ListViewForScrollView;
 import com.lsfb.cysj.view.ResDialog;
 
@@ -37,6 +44,8 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +56,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
+/**
+ * 创意信搜索界面
+ * 
+ * @author yanwei
+ * 
+ */
 public class SearchActivity extends FragmentActivity implements OnClickListener {
 	Intent intent;
 	/**
@@ -174,6 +189,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 	String gamemap = null;
 	String xianxiamap = null;
 	String searchname = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -536,7 +552,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		System.out.println(listmap4+"you");
+		System.out.println(listmap4 + "you");
 		friendsmap = youlist;
 		adapter = new BaseAdapter() {
 
@@ -605,7 +621,7 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		System.out.println(listmap3+"chuangyi");
+		System.out.println(listmap3 + "chuangyi");
 		ideasmap = chuanglist;
 		adapter = new BaseAdapter() {
 
@@ -819,12 +835,28 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		search_button5.setOnClickListener(this);
 		search_button6.setOnClickListener(this);
 		cancel.setOnClickListener(this);
+
 		xinwen_list = (ListViewForScrollView) findViewById(R.id.search_xinwen_list);
+		// 专家
 		zhuanjia_list = (ListViewForScrollView) findViewById(R.id.search_zhuanjia_list);
+		// 创意世界
 		ideas_list = (ListViewForScrollView) findViewById(R.id.search_dieas_list);
+		// 创友圈
 		friends_list = (ListViewForScrollView) findViewById(R.id.search_friends_list);
+		// 热门大赛
 		game_list = (ListViewForScrollView) findViewById(R.id.search_games_list);
+		// 线下大赛
 		xia_list = (ListViewForScrollView) findViewById(R.id.xianxia_game_list);
+
+		// 添加点击事件
+//		OnItemClick itemClick = new OnItemClick();
+		xinwen_list.setOnItemClickListener(new XinwenClick());
+		zhuanjia_list.setOnItemClickListener(new ZhuanjiaClick());
+		ideas_list.setOnItemClickListener(new IdeasClick());
+		friends_list.setOnItemClickListener(new FriendsClick());
+		game_list.setOnItemClickListener(new GameClick());
+		xia_list.setOnItemClickListener(new XiaClick());
+
 		more1.setOnClickListener(this);
 		more2.setOnClickListener(this);
 		more3.setOnClickListener(this);
@@ -832,6 +864,111 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		more5.setOnClickListener(this);
 		more6.setOnClickListener(this);
 	}
+	
+	class XinwenClick implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+			Intent 	intent=new Intent(Myapplication.context,HotNews.class);
+			startActivity(intent);
+		}
+	}	
+	class ZhuanjiaClick implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+			Intent 	intent=new Intent(Myapplication.context,OtherDetailsActivity.class);
+			intent.putExtra("id", listmap2.get(position).get("id").toString());
+			startActivity(intent);
+			
+		}
+	}	
+	class IdeasClick implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+			Intent 	intent=new Intent(Myapplication.context,CreativeDetailsActivity.class);
+			intent.putExtra("id", listmap3.get(position).get("id").toString());
+			startActivity(intent);
+			
+		}
+	}	
+	class GameClick implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+			Intent 	intent=new Intent(Myapplication.context,HotIdeasGamesContentActivity.class);
+			intent.putExtra("sid", listmap5.get(position).get("id").toString());
+			startActivity(intent);
+			
+		}
+	}	
+	class FriendsClick implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+			Intent 	intent=new Intent(Myapplication.context,HomeActivity.class);
+			intent.putExtra("pageto", 3);
+			 SharedPrefsUtil.putValue(Myapplication.context, "pageto", 3);
+			HomeActivity.viewPager.setCurrentItem(2);
+			startActivity(intent);
+			
+		}
+	}	
+	class XiaClick implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+			Intent 	intent=new Intent(Myapplication.context,GameDetailsActivity.class);
+			intent.putExtra("sid", listmap6.get(position).get("id").toString());
+			intent.putExtra("title", listmap6.get(position).get("title").toString());
+			startActivity(intent);
+			
+		}
+	}	
+	
+
+//	class OnItemClick implements OnItemClickListener {
+//
+//		@Override
+//		public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+//			Intent intent=null;
+//			switch (v.getId()) { 
+//			case R.id.search_xinwen_list:
+//				intent=new Intent(Myapplication.context,HotNews.class);
+//				
+//				break;
+//			case R.id.search_zhuanjia_list:
+//				intent=new Intent(Myapplication.context,OtherDetailsActivity.class);
+//				intent.putExtra("id", listmap2.get(position).get("id").toString());
+//				break;
+//			case R.id.search_dieas_list:
+//				intent=new Intent(Myapplication.context,CreativeDetailsActivity.class);
+//				intent.putExtra("id", listmap3.get(position).get("id").toString());
+//				break;
+//			case R.id.search_games_list:
+//				intent=new Intent(Myapplication.context,HotIdeasGamesContentActivity.class);
+//				intent.putExtra("sid", listmap5.get(position).get("id").toString());
+//				break;
+//			case R.id.xianxia_game_list:
+//				intent=new Intent(Myapplication.context,GameDetailsActivity.class);
+//				intent.putExtra("sid", listmap6.get(position).get("id").toString());
+//				intent.putExtra("title", listmap6.get(position).get("title").toString());
+//				 
+//				break;
+//			case R.id.search_friends_list:
+//				intent=new Intent(Myapplication.context,HomeActivity.class);
+//				intent.putExtra("pageto", 3);
+//				break; 
+//
+//			default:
+//				break;
+//			}
+//			if(null!=intent)
+//			startActivity(intent);
+//
+//		}
+//	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -853,43 +990,43 @@ public class SearchActivity extends FragmentActivity implements OnClickListener 
 		case R.id.search_ll:// 取消
 			finish();
 			break;
-		case R.id.xianxia_game_more://线下大赛更多
-			intent = new Intent(SearchActivity.this,MoreSearchActivity.class);
+		case R.id.xianxia_game_more:// 线下大赛更多
+			intent = new Intent(SearchActivity.this, MoreSearchActivity.class);
 			intent.putExtra("i", 6);
 			intent.putExtra("msg", xianxiamap);
 			intent.putExtra("searchname", searchname);
 			startActivity(intent);
 			break;
-		case R.id.search_games_more://热门大赛更多
-			intent = new Intent(SearchActivity.this,MoreSearchActivity.class);
+		case R.id.search_games_more:// 热门大赛更多
+			intent = new Intent(SearchActivity.this, MoreSearchActivity.class);
 			intent.putExtra("i", 5);
 			intent.putExtra("msg", gamemap);
 			intent.putExtra("searchname", searchname);
 			startActivity(intent);
 			break;
-		case R.id.search_friends_more://创友圈更多
-			intent = new Intent(SearchActivity.this,MoreSearchActivity.class);
+		case R.id.search_friends_more:// 创友圈更多
+			intent = new Intent(SearchActivity.this, MoreSearchActivity.class);
 			intent.putExtra("i", 4);
 			intent.putExtra("msg", friendsmap);
 			intent.putExtra("searchname", searchname);
 			startActivity(intent);
 			break;
-		case R.id.search_dieas_more://创意世界更多
-			intent = new Intent(SearchActivity.this,MoreSearchActivity.class);
+		case R.id.search_dieas_more:// 创意世界更多
+			intent = new Intent(SearchActivity.this, MoreSearchActivity.class);
 			intent.putExtra("i", 3);
 			intent.putExtra("msg", ideasmap);
 			intent.putExtra("searchname", searchname);
 			startActivity(intent);
 			break;
-		case R.id.search_zhuanjia_more://智库专家更多
-			intent = new Intent(SearchActivity.this,MoreSearchActivity.class);
+		case R.id.search_zhuanjia_more:// 智库专家更多
+			intent = new Intent(SearchActivity.this, MoreSearchActivity.class);
 			intent.putExtra("i", 2);
 			intent.putExtra("msg", zhuajiamap);
 			intent.putExtra("searchname", searchname);
 			startActivity(intent);
 			break;
-		case R.id.search_xinwen_more://新闻更多
-			intent = new Intent(SearchActivity.this,MoreSearchActivity.class);
+		case R.id.search_xinwen_more:// 新闻更多
+			intent = new Intent(SearchActivity.this, MoreSearchActivity.class);
 			intent.putExtra("i", 1);
 			intent.putExtra("msg", xianxiamap);
 			intent.putExtra("searchname", searchname);

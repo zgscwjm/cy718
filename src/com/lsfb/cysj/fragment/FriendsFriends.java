@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,11 @@ import com.lsfb.cysj.sortlistview.SideBar;
 import com.lsfb.cysj.sortlistview.SideBar.OnTouchingLetterChangedListener;
 import com.lsfb.cysj.view.ClearEditText;
 
+/**
+ * 我的好友(点击推荐加入好友跳转)
+ * @author Administrator
+ *
+ */
 public class FriendsFriends extends Fragment {
 	private ListView sortListView;
 	private SideBar sideBar;
@@ -99,10 +105,12 @@ public class FriendsFriends extends Fragment {
 					JSONObject response) {
 				try {
 					String num = response.getString("num");
+					Log.d("num", num);
 					Integer i = Integer.parseInt(num);
 					if (i == 1) {
 					} else {
 						String lists = response.getString("list");
+						Log.d("friendslist", lists);
 						JSONArray array = new JSONArray(lists);
 						for (int j = 0; j < array.length(); j++) {
 							JSONObject object = (JSONObject) array.get(j);
@@ -119,6 +127,11 @@ public class FriendsFriends extends Fragment {
 						SourceDateList = filledData(list);
 						adapter = new SortFriendAdapter(getActivity(),
 								SourceDateList);
+						
+						Log.d("SourceDateList", ""+SourceDateList.size());
+						for(int j=0;j<SourceDateList.size();j++){
+							SourceDateList.get(j).getName();
+						}
 						sortListView.setAdapter(adapter);
 						// 根据a-z进行排序源数据
 						Collections.sort(SourceDateList, pinyinComparator);

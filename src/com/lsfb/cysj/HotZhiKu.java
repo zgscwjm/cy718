@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,6 +101,8 @@ public class HotZhiKu extends FragmentActivity implements OnClickListener,
 		ViewUtils.inject(this);
 		init();
 		adapter();
+		
+		Log.i("zgscwjm", "jianrenwei");
 		date("");
 		search.setOnEditorActionListener(new OnEditorActionListener() {
 
@@ -269,6 +272,8 @@ public class HotZhiKu extends FragmentActivity implements OnClickListener,
 		params.addBodyParameter("province", IsTrue.Stringidstrarea1);
 		params.addBodyParameter("city", IsTrue.Stringidstrarea2);
 		params.addBodyParameter("qux", IsTrue.Stringidstrarea3);
+		
+		Log.i("zgscwjm",IsTrue.Stringidstrarea0);
 		System.out.println(namesearch + "E" + IsTrue.Stringidstrarea0 + "W"
 				+ IsTrue.Stringidstrarea1 + "BB" + IsTrue.Stringidstrarea2
 				+ "NN" + IsTrue.Stringidstrarea3);
@@ -290,6 +295,9 @@ public class HotZhiKu extends FragmentActivity implements OnClickListener,
 						System.out.println(lists);
 						try {
 							JSONObject object = new JSONObject(lists);
+							
+							Log.i("zgscwjm", lists);
+							
 							String num = object.getString("num").toString();
 							if (num.equals("1")) {
 								text.setVisibility(View.VISIBLE);
@@ -317,6 +325,8 @@ public class HotZhiKu extends FragmentActivity implements OnClickListener,
 						baseAdapter.notifyDataSetChanged();
 					}
 				});
+		
+		jiazaidialog.dismiss();
 	}
 
 	private void showdialogup() {
@@ -353,8 +363,18 @@ public class HotZhiKu extends FragmentActivity implements OnClickListener,
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
-			listmap = new ArrayList<Map<String, Object>>();
+			//listmap = new ArrayList<Map<String, Object>>();
+			IsTrue.Stringidstrarea0=data.getStringExtra("result0");
+		
+			IsTrue.Stringidstrarea1=data.getStringExtra("result1");
+			IsTrue.Stringidstrarea2=data.getStringExtra("result2");
+			IsTrue.Stringidstrarea3=data.getStringExtra("result3");
+			
+			Log.i("zgscwjm", "data1:"+data.getStringExtra("result0"));
+			
 			date(namesearch);
+			
+			onRefresh();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}

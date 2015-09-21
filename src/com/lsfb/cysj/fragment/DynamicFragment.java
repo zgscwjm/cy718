@@ -69,6 +69,11 @@ import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 import com.lsfb.cysj.view.XListView.IXListViewListener;
 
+/**
+ * 我-动态fragment
+ * @author Administrator
+ *
+ */
 public class DynamicFragment extends Fragment implements IXListViewListener {
 
 	private View rootView;

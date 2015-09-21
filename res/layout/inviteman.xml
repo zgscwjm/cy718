@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -31,58 +32,61 @@
             android:text="邀请好友"
             android:textColor="@color/white"
             android:textSize="20sp" />
-        <LinearLayout 
+
+        <LinearLayout
             android:id="@+id/inviteman_finish"
             android:layout_width="50dp"
             android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            >
-            <TextView 
-                android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true" >
+
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="完成"
-                android:textSize="16dp"
-                android:textColor="@color/white"
-                android:gravity="right"
                 android:layout_gravity="center"
-                />
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:text="完成"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
         </LinearLayout>
     </RelativeLayout>
-     <LinearLayout
-        android:background="@color/white"
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp" >
+        android:layout_height="50dp"
+        android:background="@color/white" >
 
         <EditText
             android:id="@+id/inviteman_search"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="10dp"
-            android:imeOptions="actionSearch" 
-            android:singleLine="true"
             android:background="@color/whiteMain"
             android:drawableLeft="@drawable/searchbtn"
             android:hint="请输入名字或创创号快速查找"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
             android:textColor="@color/greyhomepage" />
     </LinearLayout>
-	<View 
-	    android:layout_width="fill_parent"
-	    android:layout_height="1dp"
-	    android:background="@color/greyxian"
-	    />
-	<ListView 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:id="@+id/inviteman_list"
-	    ></ListView>
-	<TextView 
-	    android:gravity="center"
-	    android:layout_gravity="center"
-	    android:id="@+id/inviteman_text"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:text="暂时没有信息哦"
-	    android:visibility="gone"
-	    />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/greyxian" />
+
+    <ListView
+        android:id="@+id/inviteman_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/inviteman_text"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="暂时没有信息哦"
+        android:visibility="gone" />
+
 </LinearLayout>

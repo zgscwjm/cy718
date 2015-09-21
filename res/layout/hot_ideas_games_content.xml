@@ -29,19 +29,22 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="比赛"
+            android:text="比赛详情"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
         <TextView
-            android:layout_width="60dp"
+            android:id="@+id/commitZuopin"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:text="提交作品"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="12sp"
+             />
     </RelativeLayout>
 
     <ScrollView
@@ -60,6 +63,7 @@
                 android:id="@+id/hot_ideas_games_content_headimg"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:src="@drawable/logo"
                 android:background="#00000000" />
 
             <TextView
@@ -371,6 +375,7 @@
                 android:id="@+id/hot_ideas_games_content_zuopin"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
+                android:visibility="gone"
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:orientation="horizontal" >

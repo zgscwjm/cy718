@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center|center_horizontal"
-            android:text="智库专家"
+            android:text="智库申请"
             android:textColor="@color/white"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -74,9 +74,10 @@
         android:layout_marginTop="10dp"
         android:background="@color/greyxian" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="160dp"
+        android:orientation="vertical"
         android:background="@color/white" >
 
         <TextView
@@ -91,7 +92,7 @@
         <EditText
             android:id="@+id/et_ThinkTankCertificationDetailsintroduce"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_alignTop="@id/tvThinkTankCertificationDetailsintroduce"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/tvThinkTankCertificationDetailsintroduce"
@@ -99,7 +100,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/greyhomepage"
             android:textSize="13sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"

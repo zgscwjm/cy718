@@ -24,6 +24,11 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+/**
+ *好友列表
+ * @author Administrator
+ *
+ */
 public class SortFriendAdapter extends BaseAdapter implements SectionIndexer {
 	private List<SortModel> list = null;
 	private Context mContext;
@@ -60,7 +65,6 @@ public class SortFriendAdapter extends BaseAdapter implements SectionIndexer {
 
 	public View getView(final int position, View view, ViewGroup arg2) {
 		ViewHolder viewHolder = null;
-
 		SortModel mContent = list.get(position);
 		if (view == null) {
 			viewHolder = new ViewHolder();
@@ -115,6 +119,9 @@ public class SortFriendAdapter extends BaseAdapter implements SectionIndexer {
 
 			}
 		});
+		
+		
+		
 		return view;
 
 	}

@@ -38,7 +38,11 @@ import com.lsfb.cysj.adapter.CheckboxAdapter;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.view.ResDialog;
-
+/**
+ * 邀请界面，邀请专家、邀请成员参加比赛
+ * @author Administrator
+ *
+ */
 public class InviteManActivity extends FragmentActivity implements
 		OnClickListener {
 	private static String[] nums = new String[] { "223", "224", "225", "226",
@@ -294,6 +298,7 @@ public class InviteManActivity extends FragmentActivity implements
 		showdialogup();
 		client = new AsyncHttpClient();
 		params = new RequestParams();
+		
 		client.post(MyUrl.invmempost, params, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
@@ -309,6 +314,7 @@ public class InviteManActivity extends FragmentActivity implements
 				}
 				jiazaidialog.dismiss();
 				super.onSuccess(statusCode, headers, response);
+				finish();
 			}
 
 			@Override

@@ -18,6 +18,7 @@ import com.lsbf.cysj.R;
 import com.lsfb.cysj.adapter.SortFansAdapter;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.app.Myapplication;
 import com.lsfb.cysj.model.SortModel;
 import com.lsfb.cysj.sortlistview.CharacterParser;
 import com.lsfb.cysj.sortlistview.PinyinComparator;
@@ -30,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * 我的粉丝
+ * @author Administrator
+ *
+ */
 public class FriendsFans extends Fragment {
 	private ListView sortListView;
 	private SideBar sideBar;
@@ -68,6 +75,9 @@ public class FriendsFans extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// view = inflater.inflate(R.layout.mian_friends,container,false);
+	
+		Log.d("zgscwjm", "粉丝 fragment running");
+		
 		if (rootView == null) {
 			rootView = inflater
 					.inflate(R.layout.friends_fans, container, false);
@@ -86,6 +96,9 @@ public class FriendsFans extends Fragment {
 	}
 
 	private void data() {
+		
+		Log.d("zgscwjm", "data running");
+		
 		client = new AsyncHttpClient();
 		params = new RequestParams();
 		params.put("uid", IsTrue.userId);
@@ -98,9 +111,15 @@ public class FriendsFans extends Fragment {
 					String num = response.getString("num");
 					Integer i = Integer.parseInt(num);
 					if (i==1) {
+						Log.i("zgscwjm", "fans is null");
+						sortListView.setAdapter(null);
 					} else {
 						String lists = response.getString("list");
+						System.out.println(lists);
 						JSONArray array = new JSONArray(lists);
+						
+						Log.d("zgscwjm", "listsize:"+array.length());
+						
 						for (int j = 0; j < array.length(); j++) {
 							JSONObject object = (JSONObject) array.get(j);
 							map = new HashMap<String, Object>();
@@ -108,18 +127,24 @@ public class FriendsFans extends Fragment {
 							 * mid:好友id
 							 * name:好友昵称
 							 * image:好友头像
+							 * 操,恶心死了
+							 * midds 2.已关注的|1未关注的
 							 */
 							map.put("mid", object.getString("mid"));
 							map.put("name", object.getString("name"));
 							map.put("image", object.getString("image"));
+							map.put("midds", object.getString("midds"));
 							list.add(map);
 						}
+						Myapplication.fensiList=list;
 						
 						SourceDateList = filledData(list);
 						adapter = new SortFansAdapter(getActivity(), SourceDateList);
 						sortListView.setAdapter(adapter);
+						
 						// 根据a-z进行排序源数据
 						Collections.sort(SourceDateList, pinyinComparator);
+						sortListView.refreshDrawableState();
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -203,6 +228,7 @@ public class FriendsFans extends Fragment {
 			sortModel.setName(data.get(i).get("name").toString());
 			sortModel.setMid(data.get(i).get("mid").toString());
 			sortModel.setImage(data.get(i).get("image").toString());
+			sortModel.setMidds(data.get(i).get("midds").toString());
 			// 汉字转换成拼音
 			String pinyin = characterParser.getSelling(data.get(i).get("name").toString());
 			String sortString = pinyin.substring(0, 1).toUpperCase();

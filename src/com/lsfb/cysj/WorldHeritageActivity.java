@@ -16,6 +16,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.lsbf.cysj.R;
+import com.lsfb.cysj.Dialog.TipToupiaoDialog;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
@@ -23,7 +24,10 @@ import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 import com.lsfb.cysj.view.XListView.IXListViewListener;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -41,6 +45,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/**
+ * 创意世界优秀遗产
+ * @author admin
+ *
+ */
 public class WorldHeritageActivity extends FragmentActivity implements
 		OnClickListener, IXListViewListener {
 	private static String[] nums = new String[] { "255", "266", "277", "299",
@@ -63,12 +73,15 @@ public class WorldHeritageActivity extends FragmentActivity implements
 	AsyncHttpClient client;
 	RequestParams params;
 	Dialog jiazaidialog;
+	TipToupiaoDialog toupiaoDialog;
+	Context con;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.world_heritage);
 		ViewUtils.inject(this);
+		con=WorldHeritageActivity.this;
 		init();
 		adapter();
 		date();
@@ -123,7 +136,24 @@ public class WorldHeritageActivity extends FragmentActivity implements
 
 							@Override
 							public void onClick(View v) {
-								toupiao(listmap.get(position).get("id").toString(),position);
+								
+							 
+								new AlertDialog.Builder(con)
+								.setTitle(
+										con.getString(R.string.tip_toupiao))
+								.setPositiveButton(R.string.yes_toupiao,
+										new DialogInterface.OnClickListener() {
+
+											@Override
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												toupiao(listmap.get(position).get("id").toString(),position);
+												 
+											}
+										})
+								.setNegativeButton(R.string.no_toupiao, null).show();
+//								
 							}
 						});
 					} else if (btntext.equals("2")) {
@@ -132,8 +162,24 @@ public class WorldHeritageActivity extends FragmentActivity implements
 
 							@Override
 							public void onClick(View v) {
-								toupiao(listmap.get(position).get("id")
-										.toString(),position);
+								
+								new AlertDialog.Builder(con)
+								.setTitle(
+										con.getString(R.string.tip_toupiao))
+								.setPositiveButton(R.string.yes_toupiao,
+										new DialogInterface.OnClickListener() {
+
+											@Override
+											public void onClick(
+													DialogInterface dialog,
+													int which) {
+												toupiao(listmap.get(position).get("id")
+														.toString(),position);
+												 
+											}
+										})
+								.setNegativeButton(R.string.no_toupiao, null).show();
+								
 							}
 						});
 					} else if (btntext.equals("3")) {
@@ -299,6 +345,7 @@ public class WorldHeritageActivity extends FragmentActivity implements
 		list = (XListView) findViewById(R.id.world_heritage_list);
 		list.setPullLoadEnable(true);
 		list.setXListViewListener(this);
+		toupiaoDialog=new TipToupiaoDialog(getApplicationContext());
 	}
 
 	@Override

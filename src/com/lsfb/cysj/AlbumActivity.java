@@ -74,6 +74,11 @@ public class AlbumActivity extends Activity {
 		//这个函数主要用来控制预览和完成按钮的状态
 		isShowOkBt();
 	}
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(broadcastReceiver);
+	};
+	 
 	
 	BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {  
 		  

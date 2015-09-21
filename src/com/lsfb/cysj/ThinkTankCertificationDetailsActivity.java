@@ -44,6 +44,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 智库申请
+ * @author Administrator
+ *
+ */
 public class ThinkTankCertificationDetailsActivity extends Activity {
 	ImageButton ibThinkTankCertificationDetailsbacking;// 返回
 	TextView tvThinkTankCertificationDetailsorganizations;// 按组织

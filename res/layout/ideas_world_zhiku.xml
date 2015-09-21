@@ -19,14 +19,14 @@
             android:orientation="vertical" >
 
             <TextView
-                android:textSize="18dp"
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/world_zhiku"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
                 android:drawableBottom="@drawable/indexthisfooter"
-                android:text="创意世界智库"
-                android:textColor="@color/blueMain" />
+                android:text="创意世界领袖智库"
+                android:textColor="@color/blueMain"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -38,13 +38,13 @@
             android:orientation="vertical" >
 
             <TextView
-                android:textSize="18dp"
                 android:id="@+id/my_zhiku"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="我的智库"
-                android:textColor="@color/zhiku" />
+                android:text="我的领袖智库"
+                android:textColor="@color/zhiku"
+                android:textSize="14dp" />
 
             <!--
                          <ImageView
@@ -52,7 +52,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/indexthisfooter"
-                        android:visibility="gone" />  -->
+                        android:visibility="gone" />
+            -->
         </LinearLayout>
 
         <RelativeLayout
@@ -63,23 +64,25 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal" >
 
-           <!--  <ImageView
+            <!--
+                 <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/moreright" /> -->
+                android:src="@drawable/moreright" />
+            -->
 
             <TextView
-                android:textSize="18dp"
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:drawableRight="@drawable/moreright"
-                android:text="更多"
-                android:textColor="@color/head_time" />
+                android:text="更多地区"
+                android:textColor="@color/head_time"
+                android:textSize="14dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -112,8 +115,16 @@
                     android:id="@+id/img"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:scaleType="centerCrop"
-                    android:background="@drawable/logo" />
+                    android:background="@drawable/logo"
+                    android:scaleType="centerCrop" />
+                
+                <LinearLayout
+                    android:id="@+id/llChengyuan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"                    
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/img"
+                    android:orientation="vertical" >
 
                 <LinearLayout
                     android:id="@+id/linearLayout1"
@@ -153,17 +164,17 @@
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
                         android:scaleType="centerCrop"
-                        android:visibility="gone"  />
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginBottom="3dp"
                     android:id="@+id/linearLayout2"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_alignLeft="@+id/linearLayout1"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -177,17 +188,17 @@
                         android:id="@+id/linearLayout2_img1"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:scaleType="centerCrop"
                         android:layout_marginLeft="5dp"
-                         android:visibility="gone"/>
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/linearLayout2_img2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:scaleType="centerCrop"
                         android:layout_marginLeft="5dp"
-                         android:visibility="gone" />
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/linearLayout2_img3"
@@ -195,7 +206,7 @@
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
                         android:scaleType="centerCrop"
-                         android:visibility="gone"/>
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -216,27 +227,28 @@
                     <ImageView
                         android:id="@+id/linearLayout3_img1"
                         android:layout_width="30dp"
-                        android:scaleType="centerCrop"
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
-                        android:visibility="gone"/>
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/linearLayout3_img2"
                         android:layout_width="30dp"
-                        android:scaleType="centerCrop"
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
-                         android:visibility="gone" />
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/linearLayout3_img3"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:scaleType="centerCrop"
                         android:layout_marginLeft="5dp"
-                         android:visibility="gone"/>
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
                 </LinearLayout>
+                 </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
@@ -254,7 +266,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
-                                android:orientation="horizontal" > -->
+                                android:orientation="horizontal" >
+                -->
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -279,7 +292,8 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_alignParentTop="true"
                                 android:layout_marginRight="11dp"
-                                android:orientation="horizontal" >-->
+                                android:orientation="horizontal" >
+                    -->
 
                     <Button
                         android:id="@+id/ideas_heritage"
@@ -309,26 +323,26 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp" >
+        android:layout_marginTop="10dp" > 
         -->
 
-			<TextView 
-			    android:layout_gravity="center"
-			    android:gravity="center"
-			    android:layout_width="fill_parent"
-			    android:layout_height="200dp"
-			    android:text="暂无数据"
-			    android:visibility="gone"
-			    android:id="@+id/horizontal_listview_text"
-			    />
-            <com.lsfb.cysj.view.HorizontalListView
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:id="@+id/horizontal_listview"
-                android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                android:divider="@null" />
-            <!-- </com.lsfb.cysj.view.HorizontalListView> -->
+        <TextView
+            android:id="@+id/horizontal_listview_text"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:visibility="gone" />
+
+        <com.lsfb.cysj.view.HorizontalListView
+            android:id="@+id/horizontal_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:divider="@null" />
+        <!-- </com.lsfb.cysj.view.HorizontalListView> -->
     </FrameLayout>
 
 </LinearLayout>

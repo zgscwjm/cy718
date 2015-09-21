@@ -20,10 +20,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -33,7 +35,8 @@ import com.lsfb.cysj.app.MyUrl;
 
 public class AboutUsActivity extends Activity {
 	ImageButton ibAboutUsbacking;// 返回
-	TextView tv_AboutUs;// 显示
+//	TextView tv_AboutUs;// 显示
+	WebView  webAboutus;
 	HttpClient httpClient;
 	Handler handler = new Handler() {
 		@Override
@@ -54,8 +57,15 @@ public class AboutUsActivity extends Activity {
 						
 						break;
 					case 2:
+						 
+						String url=jsonObject.get("url").toString();
+						
+						if(!TextUtils.isEmpty(url)){
+							webAboutus.loadUrl(url);
+							webAboutus.getSettings().setJavaScriptEnabled(true);
+						}
 
-						tv_AboutUs.setText(jsonObject.get("content").toString());
+//						tv_AboutUs.setText(jsonObject.get("content").toString());
 						break;
 
 					default:
@@ -74,6 +84,8 @@ public class AboutUsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about_us);
 		init();
+		webAboutus = (WebView) findViewById(R.id.webAboutus);
+		
 		ibAboutUsbacking.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -128,7 +140,7 @@ public class AboutUsActivity extends Activity {
 		// TODO Auto-generated method stub
 		httpClient = IsTrue.HttpConnectionManager.getHttpClient();
 		ibAboutUsbacking = (ImageButton) findViewById(R.id.ibAboutUsbacking);
-		tv_AboutUs = (TextView) findViewById(R.id.tv_AboutUs);
+//		tv_AboutUs = (TextView) findViewById(R.id.tv_AboutUs);
 	}
 
 	@Override

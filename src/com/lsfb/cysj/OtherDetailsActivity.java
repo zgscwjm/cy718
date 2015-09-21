@@ -2,7 +2,6 @@ package com.lsfb.cysj;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +43,11 @@ import com.lsfb.cysj.fragment.DynamicFragment;
 import com.lsfb.cysj.fragment.OtherHomePageFragment;
 import com.lsfb.cysj.view.CircleImageView;
 
+/**
+ * 好友详情页面：点创友录的好友头像进入
+ * @author Administrator
+ *
+ */
 public class OtherDetailsActivity extends FragmentActivity {
 	ImageButton ibbacking;// 返回
 	TextView tvHomePage;// 主页
@@ -63,6 +68,9 @@ public class OtherDetailsActivity extends FragmentActivity {
 	HttpClient httpClient;
 	String strotherNum;
 	String otherheadaddress;
+ 
+	ImageView imgMemdj;
+	
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -83,6 +91,35 @@ public class OtherDetailsActivity extends FragmentActivity {
 							"qianm").toString());
 					String strsignatur = jsonObject.getString("qianm")
 							.toString();
+					
+					
+					
+					//等级
+					
+					if(jsonObject.getInt("zqyz")==2)
+					{
+						imgMemdj.setBackgroundResource(R.drawable.img_qiye);
+					}else
+					{
+						switch (jsonObject.getInt("memdj")) {
+						case 1:
+							imgMemdj.setBackgroundResource(R.drawable.z1);
+							break;
+						case 2:
+							imgMemdj.setBackgroundResource(R.drawable.z2);
+							break;
+						case 3:
+							imgMemdj.setBackgroundResource(R.drawable.z3);
+							break;
+						case 4:
+							imgMemdj.setBackgroundResource(R.drawable.z4);
+							break;
+
+						default:
+							break;
+						}
+					}
+					
 					if (strsignatur.length() <= 16) {
 						tv_Otherdetails_signatur.setText(strsignatur);
 					} else {
@@ -453,6 +490,10 @@ public class OtherDetailsActivity extends FragmentActivity {
 						R.id.fragment_dynamicOther);
 		dynamicFragment.setClassData("2", strotherNum);
 		fragment_OtherHomePageFragment.zhiku();
+		
+		imgMemdj=(ImageView) findViewById(R.id.img_memdj);
+		
+		
 	}
 
 	@Override

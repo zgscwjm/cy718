@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+      <LinearLayout
+          android:id="@+id/top"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        android:layout_height="60dp"       
         android:background="@color/blueMain" >
 
         <LinearLayout
@@ -38,7 +45,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="创意世界智库·"
+                    android:text="创意世界领袖智库·"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -54,7 +61,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(领导人、科学家、艺术家、企业家、慈善家)"
-                android:textColor="@color/white" />
+                android:textColor="@color/white" 
+                android:textSize="10sp"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -75,6 +84,8 @@
                 android:textSize="14sp" />
         </LinearLayout>
     </RelativeLayout>
+     
+    
 
     <ScrollView
         android:id="@+id/ideas_world_zhiku_details_scrollview"
@@ -143,40 +154,40 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
-                        android:visibility="gone"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout_img2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout_img3"
                         android:layout_width="30dp"
-                        android:visibility="gone"
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout_img4"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout_img5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -222,41 +233,41 @@
                         android:id="@+id/city_details_linearlayout2_img1"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout2_img2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout2_img3"
                         android:layout_width="30dp"
-                        android:visibility="gone"
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout2_img4"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout2_img5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
                         android:layout_marginLeft="5dp"
-                        android:background="@drawable/zkman1" />
+                        android:background="@drawable/zkman1"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -280,7 +291,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/grayright" /> -->
+                    android:background="@drawable/grayright" />
+                -->
             </RelativeLayout>
 
             <View
@@ -314,36 +326,36 @@
                         android:id="@+id/city_details_linearlayout3_img1"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout3_img2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout3_img3"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout3_img4"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/city_details_linearlayout3_img5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:visibility="gone"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -389,6 +401,7 @@
                         android:background="@drawable/dating" />
 
                     <TextView
+                        android:id="@+id/chatGroupName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -431,26 +444,44 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/greyxian" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                android:background="@color/whiteMain" >
-            </LinearLayout>
+          
 
-            <RelativeLayout
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/greyxian" />
+
+            <LinearLayout
+                android:id="@+id/ideas_world_zhiku_details_ll_face_container"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/ideas_world_zhiku_details_vpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+       </LinearLayout>
+        <RelativeLayout
+          android:id="@+id/bottom"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
                 android:background="@color/white" >
 
                 <FrameLayout
-                    android:layout_toLeftOf="@+id/ideas_world_zhiku_details_send"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="10dp" >
+                    android:layout_toLeftOf="@+id/ideas_world_zhiku_details_send" >
 
                     <EditText
-                        android:id="@+id/ideas_world_zhiku_details_text"
+                        android:id="@+id/chat_text"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginBottom="10dp"
@@ -461,43 +492,43 @@
                         android:id="@+id/ideas_world_zhiku_details_biaoqing"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
+                        android:visibility="gone"
                         android:layout_gravity="center|right"
                         android:layout_marginRight="5dp"
                         android:background="@null"
                         android:src="@drawable/smile" />
                 </FrameLayout>
 
-                
-                    <Button
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/ideas_world_zhiku_details_send"
-                        android:layout_width="50dp"
-                        android:layout_height="fill_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/shape"
-                        android:text="确定"
-                        android:textColor="@color/white"
-                        android:textSize="16dp" />
+                <Button
+                    android:id="@+id/chat_send"
+                    android:layout_width="50dp"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/shape"
+                    android:text="确定"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
             </RelativeLayout>
-            <View 
+              <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="@color/greyxian"
-                />
-            <LinearLayout
-                android:id="@+id/ideas_world_zhiku_details_ll_face_container"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:orientation="vertical"
-                android:visibility="visible" >
+                android:layout_height="match_parent"
+                android:layout_below="@id/top"
+                android:layout_above="@id/bottom"
+                android:background="@color/whiteMain" >
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/ideas_world_zhiku_details_vpager"
+                <ListView
+                    android:id="@+id/chat_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:cacheColorHint="#00000000"
+                    android:divider="@null"
+                    android:dividerHeight="5dp"
+                    android:listSelector="#00000000"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:transcriptMode="normal" />
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+       
 
-</LinearLayout>
+</RelativeLayout>

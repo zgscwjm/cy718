@@ -37,6 +37,8 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -80,12 +82,35 @@ import com.lsfb.cysj.utils.Constant;
 import com.lsfb.cysj.utils.ExpressionUtil;
 
 public class ChatActivity extends FragmentActivity implements OnClickListener {
+	
+	public String sid;
+	public String clasid;
+	
+	
 	@ViewInject(R.id.chat_back)
 	private LinearLayout back;
 	@ViewInject(R.id.chat_xiangqing)
 	private TextView xiangqing;
+	
+	@ViewInject(R.id.showlener)
+	private LinearLayout linearLayout;
+	
+	@ViewInject(R.id.img_close)
+	private ImageButton closebtn;
+	
+	@ViewInject(R.id.guanzhurenshu)
+	private TextView guanzhurenshu;
+	@ViewInject(R.id.zhuanjiarenshu)
+	private TextView zhuanjiarenshu;
+	
+	@ViewInject(R.id.canshaizuopingrenshu)
+	private TextView canshaizuopingrenshu;
+	@ViewInject(R.id.zhichijinge)
+	private TextView zhichijinge;
+	
+	
 	/**
-	 * chat_button1 支持作品
+	 * chat_button1 参赛作品
 	 */
 	@ViewInject(R.id.chat_button1)
 	private TextView chat_button1;
@@ -94,11 +119,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 	 */
 	@ViewInject(R.id.chat_button2)
 	private TextView chat_button2;
-	/**
-	 * chat_button3 评论作品
-	 */
-	@ViewInject(R.id.chat_button3)
-	private TextView chat_button3;
+	
 	/**
 	 * chat_button4 邀请好友
 	 */
@@ -125,6 +146,8 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 	private ListView chat_list;
 	@ViewInject(R.id.chat_biaoqing)
 	private ImageButton biaoqing;
+	@ViewInject(R.id.chat_more)
+	private LinearLayout chat_more;
 
 	private int chatType;
 	public static final int CHATTYPE_GROUP = 2;
@@ -186,6 +209,19 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 		dateAdapter = new DateAdapter();
 		chat_list.setAdapter(dateAdapter);
 		chat_list.setSelection(chat_list.getCount() - 1);
+		chat_list.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				
+			}
+		});
 	}
 
 	public class DateAdapter extends BaseAdapter {
@@ -257,6 +293,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 				// 设置用户头像
 				// setUserAvatar(message, holder.imghead);
 				holder.name.setText(nickname);
+//				holder.name.setText(message.getFrom());
 				if (message.getType() == EMMessage.Type.TXT) {
 					TextMessageBody textMessageBody = (TextMessageBody) message
 							.getBody();
@@ -268,7 +305,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 					SpannableString spannableString = ExpressionUtil.getExpressionString(ChatActivity.this,textMessageBody.getMessage(), zhengze);
 					holder.text.setText(spannableString);
 				}
-			} else {
+			} else if(message.direct == EMMessage.Direct.SEND){
 				// 发送方
 				if (view == null) {
 					holder = new ViewHolder();
@@ -294,6 +331,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 				bitmapUtils.display(holder.imghead, ImageAddress.Stringhead
 						+ IsTrue.Stringimage);
 				holder.name.setText(IsTrue.Stringnickname);
+//				holder.name.setText(message.getFrom());
 				if (message.getType() == EMMessage.Type.TXT) {
 					TextMessageBody textMessageBody = (TextMessageBody) message
 							.getBody();
@@ -316,21 +354,13 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 
 		@Override
 		public Object getItem(int position) {
-			// if (messages != null && position < messages.length) {
-			// return messages[position];
-			// }
-			// return null;
-			return conversation.getAllMessages().get(position);
-			// return EMChatManager.getInstance()
-			// .getConversation(groupId).getAllMessages().get(position);
+//			return conversation.getAllMessages().get(position);
+			return position;
 		}
 
 		@Override
 		public int getCount() {
-			// return messages.length;
 			return conversation.getAllMessages().size();
-			// return EMChatManager.getInstance()
-			// .getConversation(groupId).getAllMessages().size();
 		}
 	};
 
@@ -409,7 +439,7 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 
 				@Override
 				public void onProgress(int arg0, String arg1) {
-
+					
 				}
 
 				@Override
@@ -476,15 +506,19 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 			chat_button2.setBackgroundResource(R.drawable.shapedefault);
 			chat_button2.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
-			chat_button3.setBackgroundResource(R.drawable.shapedefault);
-			chat_button3.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
+			
 			chat_button4.setBackgroundResource(R.drawable.shapedefault);
 			chat_button4.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
 			chat_button5.setBackgroundResource(R.drawable.shapedefault);
 			chat_button5.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
+			
+			Intent intent = new Intent(ChatActivity.this,
+					GameWorksActivity.class);
+			intent.putExtra("sid", sid);
+			startActivity(intent);
+			
 			break;
 		case R.id.chat_button2:// 提交作品
 			chat_button2.setBackgroundResource(R.drawable.shape);
@@ -493,33 +527,21 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 			chat_button1.setBackgroundResource(R.drawable.shapedefault);
 			chat_button1.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
-			chat_button3.setBackgroundResource(R.drawable.shapedefault);
-			chat_button3.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
+		
 			chat_button4.setBackgroundResource(R.drawable.shapedefault);
 			chat_button4.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
 			chat_button5.setBackgroundResource(R.drawable.shapedefault);
 			chat_button5.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
+			
+			intent = new Intent(ChatActivity.this,GameWorksFaBuActivity.class);
+			intent.putExtra("clasid", clasid);
+			intent.putExtra("sid", sid);
+			startActivity(intent);
+			
 			break;
-		case R.id.chat_button3:// 评价作品
-			chat_button3.setBackgroundResource(R.drawable.shape);
-			chat_button3.setTextColor(this.getResources().getColorStateList(
-					R.color.white));
-			chat_button2.setBackgroundResource(R.drawable.shapedefault);
-			chat_button2.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
-			chat_button1.setBackgroundResource(R.drawable.shapedefault);
-			chat_button1.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
-			chat_button4.setBackgroundResource(R.drawable.shapedefault);
-			chat_button4.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
-			chat_button5.setBackgroundResource(R.drawable.shapedefault);
-			chat_button5.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
-			break;
+		
 		case R.id.chat_button4:// 邀请好友
 			chat_button4.setBackgroundResource(R.drawable.shape);
 			chat_button4.setTextColor(this.getResources().getColorStateList(
@@ -527,15 +549,19 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 			chat_button2.setBackgroundResource(R.drawable.shapedefault);
 			chat_button2.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
-			chat_button3.setBackgroundResource(R.drawable.shapedefault);
-			chat_button3.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
+			
 			chat_button1.setBackgroundResource(R.drawable.shapedefault);
 			chat_button1.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
 			chat_button5.setBackgroundResource(R.drawable.shapedefault);
 			chat_button5.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
+			
+			intent = new Intent(ChatActivity.this,
+					InviteManActivity.class);
+			intent.putExtra("sid", sid);
+			intent.putExtra("cla", 1 + "");
+			startActivity(intent);
 			break;
 		case R.id.chat_button5:// 邀请专家
 			chat_button5.setBackgroundResource(R.drawable.shape);
@@ -544,15 +570,25 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 			chat_button2.setBackgroundResource(R.drawable.shapedefault);
 			chat_button2.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
-			chat_button3.setBackgroundResource(R.drawable.shapedefault);
-			chat_button3.setTextColor(this.getResources().getColorStateList(
-					R.color.blueMain));
+			
 			chat_button4.setBackgroundResource(R.drawable.shapedefault);
 			chat_button4.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
 			chat_button1.setBackgroundResource(R.drawable.shapedefault);
 			chat_button1.setTextColor(this.getResources().getColorStateList(
 					R.color.blueMain));
+			
+			
+			intent = new Intent(ChatActivity.this,
+					InviteManActivity.class);
+			intent.putExtra("sid", sid);
+			intent.putExtra("cla", 2 + "");
+			startActivity(intent);
+			
+			break;
+			
+		case R.id.img_close:
+			linearLayout.setVisibility(View.GONE);
 			break;
 		default:
 			break;
@@ -655,7 +691,9 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 			}
 		};
 	};
-
+	public ListView getListView() {
+		return chat_list;
+	}
 	static class ViewHolder {
 		ImageView imghead;
 		TextView text;
@@ -672,14 +710,15 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 //		isOpenll_btn_speak = false;
 //		isOpenll_mPlayer = false;
 		back.setOnClickListener(this);
+		closebtn.setOnClickListener(this);
 		xiangqing.setOnClickListener(this);
 		chat_button1.setOnClickListener(this);
 		chat_button2.setOnClickListener(this);
-		chat_button3.setOnClickListener(this);
 		chat_button4.setOnClickListener(this);
 		chat_button5.setOnClickListener(this);
 		chat_send.setOnClickListener(this);
 		biaoqing.setOnClickListener(this);
+		chat_more.setOnClickListener(this);
 		// 从本地加载群聊列表
 		List<EMGroup> grouplists = EMGroupManager.getInstance().getAllGroups();
 		if (grouplists.size() != 0) {
@@ -688,6 +727,8 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 		Intent intent = new Intent();
 		intent = getIntent();
 		groupId = intent.getExtras().getString("groupId");
+		if(TextUtils.isEmpty(groupId))
+			return;
 		chat_head.setText(intent.getExtras().getString("name"));
 		try {
 			EMGroup group = EMGroupManager.getInstance().getGroupFromServer(
@@ -696,6 +737,16 @@ public class ChatActivity extends FragmentActivity implements OnClickListener {
 		} catch (EaseMobException e) {
 			e.printStackTrace();
 		}
+		
+		
+		sid=intent.getStringExtra("sid");
+		clasid=intent.getStringExtra("clasid");
+		guanzhurenshu.setText("关注人数:"+intent.getStringExtra("huanxlistnum"));
+		
+		zhuanjiarenshu.setText("专家人数:"+intent.getStringExtra("zhiklist"));
+		canshaizuopingrenshu.setText("参赛作品数:"+intent.getStringExtra("zuop"));
+		Log.i("zgscwjm","aaa"+intent.getStringExtra("countmoney"));
+		zhichijinge.setText("支持金额:"+intent.getStringExtra("countmoney"));
 		// new Thread() {
 		// public void run() {
 		// try {

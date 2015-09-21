@@ -122,6 +122,7 @@ public class SortAdapter2 extends BaseAdapter implements SectionIndexer {
 					.findViewById(R.id.friends_attention_item_img);
 			viewHolder.guanzhu = (ImageView) view
 					.findViewById(R.id.friends_attention_item_guanzhu);
+			viewHolder.memdj = (ImageView) view.findViewById(R.id.memdj);
 			view.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
@@ -143,6 +144,29 @@ public class SortAdapter2 extends BaseAdapter implements SectionIndexer {
 		viewHolder.tvTitle
 				.setText(this.list.get(position).getName().toString());
 		// viewHolder.tvTitle.setText(this.list.get(position).getName());
+		
+		if(this.list.get(position).getZqzj().equals("2"))
+		{
+			viewHolder.memdj.setBackgroundResource(R.drawable.img_qiye);
+		}else {
+			switch(Integer.parseInt(this.list.get(position).getMemdj()))
+			{
+			case 1:
+				viewHolder.memdj.setBackgroundResource(R.drawable.z1);
+				break;
+			case 2:
+				viewHolder.memdj.setBackgroundResource(R.drawable.z2);
+				break;
+			case 3:
+				viewHolder.memdj.setBackgroundResource(R.drawable.z3);
+				break;
+			case 4:
+				viewHolder.memdj.setBackgroundResource(R.drawable.z4);
+				break;
+				
+			}
+		}
+		
 		viewHolder.guanzhu.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -179,7 +203,10 @@ public class SortAdapter2 extends BaseAdapter implements SectionIndexer {
 	protected void noguanzhu(final List<SortModel> list, final int positions) {
 		// TODO Auto-generated method stub
 		httpClient = IsTrue.HttpConnectionManager.getHttpClient();
-	
+		if (list == null || list.size() == 0) {
+			return;
+		}
+
 		new Thread() {
 			@Override
 			public void run() {
@@ -190,7 +217,7 @@ public class SortAdapter2 extends BaseAdapter implements SectionIndexer {
 					List<NameValuePair> params = new ArrayList<NameValuePair>();
 
 					params.add(new BasicNameValuePair("mid", IsTrue.userId + ""));
-					
+
 					params.add(new BasicNameValuePair("uid", list
 							.get(positions).getMid().toString()));
 					list.remove(positions);
@@ -225,7 +252,8 @@ public class SortAdapter2 extends BaseAdapter implements SectionIndexer {
 	final static class ViewHolder {
 		TextView tvLetter;
 		TextView tvTitle;
-		ImageView img, guanzhu;
+		ImageView img, guanzhu,memdj;
+		
 	}
 
 	/**

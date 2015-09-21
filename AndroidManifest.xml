@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="19"
         android:targetSdkVersion="19" />
 
     <!-- ###################声明SDK使用的相关权限###################### -->
@@ -151,7 +151,7 @@
         <activity
             android:name="com.lsfb.cysj.HomeActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
             android:windowSoftInputMode="adjustPan" >
@@ -179,13 +179,18 @@
         <activity
             android:name="com.lsfb.cysj.ImageGridActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.lsfb.cysj.MoreSearchActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.lsfb.cysj.MoreSearchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.lsfb.cysj.RecorderVideoActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.lsfb.cysj.XinWenActivity" />
         <activity
             android:name="com.lsfb.cysj.PollResultsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ChuangbiZuoyongActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.lsfb.cysj.SearchActivity"
@@ -233,6 +238,9 @@
             android:name="com.lsfb.cysj.UpMoreImge"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.lsfb.cysj.UpTongxunlu"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.lsfb.cysj.UpVideoActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -247,6 +255,10 @@
         <activity
             android:name="com.lsfb.cysj.GalleryImageActivity"
             android:screenOrientation="portrait" />
+          <activity
+            android:name="com.lsfb.cysj.RegisteXieyiActivity"
+            android:screenOrientation="portrait" />
+        
 
         <service
             android:name="com.lsfb.cysj.service.MusicService"
@@ -255,6 +267,9 @@
 
         <activity
             android:name="com.lsfb.cysj.InviteManActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.AcModifyPassword"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.lsfb.cysj.IdeasWorldGameActivity"
@@ -297,6 +312,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.lsfb.cysj.AddFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.MyFriendsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.lsfb.cysj.GameWorksActivity"
@@ -390,6 +408,18 @@
         </activity>
         <activity
             android:name="com.lsfb.cysj.InvisibilityAndSecurityActivity"
+            android:label="@string/title_activity_invisibility_and_security" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.TixingAndNotifyActivity"
+            android:label="@string/title_activity_invisibility_and_security" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.ZqjgRenzhengActivity"
+            android:label="@string/title_activity_invisibility_and_security" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.AcHeiMingdan"
             android:label="@string/title_activity_invisibility_and_security" >
         </activity>
         <activity
@@ -488,7 +518,7 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="73cd3cbb2cb7b85cca1b013e" />
+            android:value="db14ea98f5d327842a74829c" />
 
         <activity
             android:name="com.lsfb.cysj.ThinkTankCertificationDetailsActivity"
@@ -502,6 +532,29 @@
             android:name="com.lsfb.cysj.NewsImageShowActivity"
             android:label="@string/title_activity_news_image_show" >
         </activity>
+
+        <!-- 聊天室 android:theme="@style/horizontal_slide" -->
+        <activity
+            android:name="com.lsfb.cysj.PublicChatRoomsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.ChatRoomActivity"
+            android:screenOrientation="portrait" />
+        <!-- share -->
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

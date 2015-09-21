@@ -50,7 +50,7 @@
                     android:imeOptions="actionSearch"
                     android:maxLength="12"
                     android:singleLine="true"
-                    android:textColor="@color/greyxian"
+                    android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
                 <ImageView

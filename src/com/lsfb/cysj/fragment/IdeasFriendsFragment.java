@@ -58,6 +58,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.lsbf.cysj.R;
+import com.lsfb.cysj.Img;
 import com.lsfb.cysj.MyChuangChuangCurrencyActivity;
 import com.lsfb.cysj.MyDetailsActivity;
 import com.lsfb.cysj.NewsActivity;
@@ -67,6 +68,7 @@ import com.lsfb.cysj.Dialog.PingLunDialog;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.app.Myapplication;
 import com.lsfb.cysj.viedo.C;
 import com.lsfb.cysj.viedo.HttpGetProxy;
 import com.lsfb.cysj.viedo.ProxyUtils;
@@ -74,6 +76,12 @@ import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 import com.lsfb.cysj.view.XListView.IXListViewListener;
 
+/**
+ * 创友圈
+ * 
+ * @author Administrator
+ * 
+ */
 public class IdeasFriendsFragment extends Fragment implements
 		IXListViewListener {
 	HttpClient httpClient;
@@ -112,11 +120,12 @@ public class IdeasFriendsFragment extends Fragment implements
 			// content:评论内容
 			// udel:1可删|0不可删
 			// num:1(无值存在)
+		 if(null!=dialog)
 			dialog.dismiss();
 			if (msg.what == 0x123) {
 
 				String str = msg.obj.toString();
-				System.err.println(str);
+				System.err.println("chuangyouquan:" + str);
 				System.err.println(IsTrue.userId);
 				try {
 					JSONObject jsonObject = new JSONObject(str);
@@ -124,8 +133,8 @@ public class IdeasFriendsFragment extends Fragment implements
 							.toString());
 					switch (strnum) {
 					case 1:
-						Toast.makeText(getActivity(), "创友圈还没有动态",
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(Myapplication.context, "创友圈还没有动态",
+								Toast.LENGTH_SHORT).show();//getActivity()
 						break;
 					case 2:
 						list = new ArrayList<Map<String, Object>>();
@@ -158,6 +167,7 @@ public class IdeasFriendsFragment extends Fragment implements
 					}
 
 					System.err.println("分开");
+					if(null!=baseAdapter)
 					baseAdapter.notifyDataSetInvalidated();
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -296,9 +306,10 @@ public class IdeasFriendsFragment extends Fragment implements
 
 	private void chushihua() {
 		// TODO Auto-generated method stub
-		dialog = new ResDialog(getActivity(), R.style.MyDialog, "努力加载中",
-				R.drawable.loads);
-		dialog.show();
+
+//		dialog = new ResDialog(getActivity(), R.style.MyDialog, "努力加载中",
+//				R.drawable.loads); // getActivity(),R.drawable.loads
+		// dialog.show();
 		new Thread() {
 			@Override
 			public void run() {
@@ -404,6 +415,7 @@ public class IdeasFriendsFragment extends Fragment implements
 				} else {
 					holder = (ViewHolder) v.getTag();
 				}
+
 				// //设置评论布局的颜色
 				// holder.lv_chuangFriendpinglun.setBackgroundResource(R.color.greyxian);
 				bitmapUtils.display(holder.imageview, ImageAddress.Stringhead
@@ -419,9 +431,51 @@ public class IdeasFriendsFragment extends Fragment implements
 				holder.tv_IdeasFriendpinglunNUm.setText(list.get(position)
 						.get("plnum").toString());
 
+				Log.d("content", list.get(position).get("content").toString());
+
 				String strimage = list.get(position).get("images").toString();
-				String[] strimages = strimage.split(",");
+				Log.d("img", strimage);
+				final String[] strimages = strimage.split(",");
+
 				System.err.println(strimages.length + "图片的个数");
+
+				holder.image1.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getActivity(), Img.class);
+						intent.putExtra("from", "IdeasFriendsFragment");
+						intent.putExtra("imgs", strimages[0]);
+						startActivity(intent);
+					}
+				});
+				holder.image2.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getActivity(), Img.class);
+						intent.putExtra("from", "IdeasFriendsFragment");
+						intent.putExtra("imgs", strimages[1]);
+						startActivity(intent);
+					}
+				});
+				holder.image3.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getActivity(), Img.class);
+						intent.putExtra("from", "IdeasFriendsFragment");
+						intent.putExtra("imgs", strimages[2]);
+						startActivity(intent);
+					}
+				});
+				holder.image4.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getActivity(), Img.class);
+						intent.putExtra("from", "IdeasFriendsFragment");
+						intent.putExtra("imgs", strimages[3]);
+						startActivity(intent);
+					}
+				});
+
 				switch (strimages.length) {
 				case 0:
 					holder.image1.setVisibility(View.GONE);
@@ -895,8 +949,8 @@ public class IdeasFriendsFragment extends Fragment implements
 		Window window = dialog.getWindow();
 		LayoutParams params = new LayoutParams();
 		params.gravity = Gravity.BOTTOM;
-//		params.width = WindowManager.LayoutParams.FILL_PARENT;
-//		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		// params.width = WindowManager.LayoutParams.FILL_PARENT;
+		// params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 		window.setAttributes(params);
 		window.getDecorView().setPadding(0, 0, 0, 0);
 		WindowManager.LayoutParams lp = window.getAttributes();
@@ -1019,7 +1073,8 @@ public class IdeasFriendsFragment extends Fragment implements
 						Message msg = new Message();
 						msg.what = 0x123;
 						msg.obj = str;
-						handlers.sendMessage(msg);
+						if (null != handlers)
+							handlers.sendMessage(msg);
 					}
 
 				} catch (UnsupportedEncodingException e) {
@@ -1038,6 +1093,23 @@ public class IdeasFriendsFragment extends Fragment implements
 	}
 
 	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		handler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				count = 0;
+				chushihua();
+				if (null != baseAdapter)
+					baseAdapter.notifyDataSetChanged();
+				onLoad();
+			}
+		}, 2000);
+	}
+
+	@Override
 	public void onRefresh() {
 		handler.postDelayed(new Runnable() {
 
@@ -1045,7 +1117,8 @@ public class IdeasFriendsFragment extends Fragment implements
 			public void run() {
 				count = 0;
 				chushihua();
-				baseAdapter.notifyDataSetChanged();
+				if (null != baseAdapter)
+					baseAdapter.notifyDataSetChanged();
 				onLoad();
 			}
 		}, 2000);

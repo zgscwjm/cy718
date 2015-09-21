@@ -355,7 +355,7 @@
                 android:src="@drawable/querenpwd" />
 
             <EditText
-                android:id="@+id/etforgetRePassWordForget"
+                android:id="@+id/etforgetRePassWordAgain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/ivforgetFive"

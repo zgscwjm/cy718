@@ -51,6 +51,7 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 	int count = 0;
 	BitmapUtils bitmapUtils;
 	private View rootView;
+	String myming;
 	/**
 	 * ideas_ranking_friends_num num 排行
 	 */
@@ -80,6 +81,9 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 				System.err.println(str);
 				try {
 					JSONObject jsonObject = new JSONObject(str);
+					 myming=	 jsonObject.get("myming").toString().trim();
+				  num.setText(""+myming);
+					 
 					switch (Integer.parseInt(jsonObject.get("num").toString())) {
 					case 1:
 						Toast.makeText(getActivity(), "没有任何创友圈信息",
@@ -188,8 +192,9 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 		}
 		init();
 		count = 0;
-		date();
+		 
 		chushihua();
+		date();
 		return rootView;
 
 	}

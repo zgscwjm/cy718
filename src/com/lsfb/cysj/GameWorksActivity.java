@@ -42,6 +42,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 参赛作品
+ * @author admin
+ *
+ */
 public class GameWorksActivity extends Activity implements OnClickListener,IXListViewListener{
 	private static String[] nums = new String[] { "222", "223", "224", "225",
 			"226", "227", "228" };
@@ -262,7 +267,7 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 						soucang(listmap.get(position).get("id").toString(),position);
 					}
 				});
-				holder.bigimg.setOnClickListener(new OnClickListener() {
+				view.setOnClickListener(new OnClickListener() {//holder.bigimg
 					
 					@Override
 					public void onClick(View v) {
@@ -353,7 +358,7 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 //	}
 	private void init() {
 		intent = getIntent();
-		sid = intent.getExtras().getString("sid").toString();
+		sid = ""+intent.getExtras().getString("sid").toString();
 		map = new HashMap<String, Object>();
 		listmap = new ArrayList<Map<String, Object>>();
 		back.setOnClickListener(this);

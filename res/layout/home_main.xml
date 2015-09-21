@@ -41,7 +41,7 @@
                 android:drawableTop="@drawable/tab_selector_chuangyixin"
                 android:gravity="center_horizontal|bottom"
                 android:paddingTop="2dp"
-                android:text="创意信"
+                android:text="创创信"
                 android:textColor="@color/tab_selector_tv_color"
                 android:textSize="12sp" />
 

@@ -42,7 +42,7 @@ public class RegisteredActivity extends BaseActivity {
 	ImageButton ibbacking;// 返回
 	private TimeCount time;// 验证码刷新时间
 	Button btngetVerificationCode;// 获取验证码
-	Button btnsign;// 注册
+	Button btnsign, btnUserXieyi;// 注册
 	EditText etMemberAccountNum;// 手机号码
 	EditText etMemberAccount;// 输入的验证码
 	EditText etMemberPassWord;// 第一次输入密码
@@ -86,7 +86,7 @@ public class RegisteredActivity extends BaseActivity {
 						Intent intent = new Intent(RegisteredActivity.this,
 								EditDataActivity.class);
 						startActivity(intent);
-						
+
 						finish();
 						break;
 					case 3:
@@ -97,6 +97,8 @@ public class RegisteredActivity extends BaseActivity {
 						Toast.makeText(getApplicationContext(), "账号已存在",
 								Toast.LENGTH_LONG).show();
 						break;
+						
+						 
 					default:
 						break;
 					}
@@ -165,7 +167,7 @@ public class RegisteredActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+
 				/** 隐藏软键盘 **/
 				View view = getWindow().peekDecorView();
 				if (view != null) {
@@ -173,14 +175,14 @@ public class RegisteredActivity extends BaseActivity {
 					inputmanger.hideSoftInputFromWindow(view.getWindowToken(),
 							0);
 				}
-			
+
 				String strPhoneNum = etMemberAccountNum.getText().toString();
 				if ("".equals(strPhoneNum.trim())) {
 					Toast.makeText(RegisteredActivity.this, "手机号码不能为空",
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
-				
+
 				Boolean booleans = IsTrue.isMobileNum(strPhoneNum);
 				if (booleans) {
 					new Thread() {
@@ -310,6 +312,18 @@ public class RegisteredActivity extends BaseActivity {
 				}.start();
 			}
 		});
+ 
+		//点击进入用户注册协议
+		btnUserXieyi.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(RegisteredActivity.this,RegisteXieyiActivity.class);
+				startActivity(intent);
+			}
+		});
+
 	}
 
 	private void init() {
@@ -323,6 +337,8 @@ public class RegisteredActivity extends BaseActivity {
 		etMemberAccount = (EditText) findViewById(R.id.etMemberAccount);// 输入的验证码
 		etMemberPassWord = (EditText) findViewById(R.id.etMemberPassWord);// 第一次输入密码
 		etMemberRePassWord = (EditText) findViewById(R.id.etMemberRePassWord);// 第二次输入密码
+		btnUserXieyi = (Button) findViewById(R.id.btnUserXieyi);
+		
 	}
 
 	@Override

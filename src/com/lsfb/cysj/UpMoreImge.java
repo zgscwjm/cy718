@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -61,8 +62,14 @@ import com.lsfb.cysj.utils.FileUtils;
 import com.lsfb.cysj.utils.ImageItem;
 import com.lsfb.cysj.utils.PublicWay;
 import com.lsfb.cysj.utils.Res;
+import com.lsfb.cysj.utils.Show;
 import com.lsfb.cysj.view.ResDialog;
 
+/**
+ * 上传图片或视频
+ * @author Administrator
+ *
+ */
 public class UpMoreImge extends FragmentActivity implements OnClickListener{
 	private GridAdapter gridAdapter;
 	private PopupWindow pop = null;
@@ -81,6 +88,7 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
 	@ViewInject(R.id.upimg)
 	private LinearLayout upimg;
 	private Bitmap bitmap;
+	
 	AsyncHttpClient client;
 	RequestParams params;
 	Map<String, Object> map;
@@ -157,7 +165,6 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
 		gridAdapter.update();
 		photo.setAdapter(gridAdapter);
 		photo.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -393,8 +400,11 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
                     }  
                     @Override  
                     public void onSuccess(ResponseInfo<String> responseInfo) {  
+                    	Show.toast(getApplicationContext(), "上传成功");
                     	num++;
                     	String strings = responseInfo.result;
+                    	Log.d("upimg", strings);
+                    	
                     	try {
 							JSONObject jsonObject = new JSONObject(strings);
 							if (num == Bimp.tempSelectBitmap.size()) {
@@ -425,6 +435,7 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
                     }  
                     @Override  
                     public void onFailure(HttpException error, String msg) {  
+                    	Show.toast(getApplicationContext(), "上传失败");
                     	System.out.println(error+msg+"VVVVVVVVVVVVVVVV");
                     }  
                 });  
@@ -451,6 +462,7 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
 			com.lidroid.xutils.http.RequestParams paramss = new com.lidroid.xutils.http.RequestParams();
 			paramss.addBodyParameter("more", file);
 			String URI = null;
+			IsTrue.upmore=1;
 			if (IsTrue.upmore == 1) {
 				URI = MyUrl.StringUP;
 			}else if (IsTrue.upmore == 2) {

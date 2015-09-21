@@ -29,21 +29,17 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <TextView
+  <!--   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="指数规则相关文字说明："
-        android:textColor="@color/greybig" />
+        android:textColor="@color/greybig" /> -->
 
-    <TextView
+    <WebView
         android:id="@+id/tv_IndexRules"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textColor="@color/greyhomepage"
-        android:textSize="15sp" />
+        android:layout_height="match_parent"      
+     />
 
 </LinearLayout>

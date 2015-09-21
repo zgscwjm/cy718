@@ -36,6 +36,7 @@
                 android:id="@+id/activity_creative_details_jubao"
                 android:layout_width="60dp"
                 android:layout_height="fill_parent"
+                android:onClick="true"
                 android:layout_alignParentRight="true" >
 
                 <Button
@@ -86,7 +87,8 @@
                             <ImageView
                                 android:id="@+id/activity_creative_details_imghead"
                                 android:layout_width="50dp"
-                                android:layout_height="50dp" />
+                                android:layout_height="50dp"
+                                android:background="@drawable/logo" />
 
                             <TextView
                                 android:id="@+id/activity_creative_details_name"
@@ -163,10 +165,11 @@
                             <VideoView
                                 android:id="@+id/activity_creative_details_video"
                                 android:layout_width="fill_parent"
-                                android:layout_height="200dp"
+                                android:layout_height="150dp"
                                 android:layout_marginRight="20dp"
                                 android:layout_marginTop="10dp"
-                                android:visibility="gone" />
+                                  android:visibility="gone"
+                               />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"

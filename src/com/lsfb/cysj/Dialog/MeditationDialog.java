@@ -20,6 +20,7 @@ import com.lsfb.cysj.app.MyUrl;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class MeditationDialog extends Dialog {
 	List<Map<String, Object>> listmap;
 	Dialog dialog;
 	int length;
+	boolean isrun;
 	private static String[] nums = new String[] { "222", "223", "224", "225",
 			"226", "227", "228", "222", "223", "224", "225", "226", "227",
 			"228", "222", "223", "224", "225", "226", "227", "228" };
@@ -63,8 +65,10 @@ public class MeditationDialog extends Dialog {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.gongdebu);
 		list = (ListView) findViewById(R.id.gongde_list);
-		listmap = new ArrayList<Map<String,Object>>();
-//		showdialog();
+		// isrun = true;
+
+		listmap = new ArrayList<Map<String, Object>>();
+		// showdialog();
 		data();
 		adapter = new BaseAdapter() {
 
@@ -85,9 +89,12 @@ public class MeditationDialog extends Dialog {
 				} else {
 					holder = (ViewHolder) convertView.getTag();
 				}
-				holder.text.setText(listmap.get(position).get("content").toString());
-				holder.date.setText(listmap.get(position).get("date").toString());
-				holder.num.setText(listmap.get(position).get("zhanghao").toString());
+				holder.text.setText(listmap.get(position).get("content")
+						.toString());
+				holder.date.setText(listmap.get(position).get("date")
+						.toString());
+				holder.num.setText(listmap.get(position).get("zhanghao")
+						.toString());
 				return convertView;
 			}
 
@@ -108,6 +115,7 @@ public class MeditationDialog extends Dialog {
 		};
 		list.setAdapter(adapter);
 
+		new Handler().postDelayed(r, 1000);
 	}
 
 	private void data() {
@@ -123,7 +131,7 @@ public class MeditationDialog extends Dialog {
 						String lists = response.getString("list");
 						JSONArray array = new JSONArray(lists);
 						length = array.length();
-						//[{"date":"01月01日","content":"上香一次·富贵吉祥","zhanghao":"651***"}]
+						// [{"date":"01月01日","content":"上香一次·富贵吉祥","zhanghao":"651***"}]
 						for (int j = 0; j < array.length(); j++) {
 							JSONObject object = (JSONObject) array.get(j);
 							map = new HashMap<String, Object>();
@@ -132,16 +140,17 @@ public class MeditationDialog extends Dialog {
 							map.put("zhanghao", object.getString("zhanghao"));
 							listmap.add(map);
 						}
-						
-					} else if(i==1){
-						Toast.makeText(getContext(), "还未有人", Toast.LENGTH_SHORT).show();
+
+					} else if (i == 1) {
+						Toast.makeText(getContext(), "还未有人", Toast.LENGTH_SHORT)
+								.show();
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				adapter.notifyDataSetChanged();
 				super.onSuccess(statusCode, headers, response);
-//				dialog.dismiss();
+				// dialog.dismiss();
 			}
 
 			@Override
@@ -162,20 +171,35 @@ public class MeditationDialog extends Dialog {
 		// main.xml中的ImageView
 		ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
 		// 加载动画
-		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(),
-				R.anim.animation);
+		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(
+				getContext(), R.anim.animation);
 		// 使用ImageView显示动画
 		spaceshipImage.startAnimation(hyperspaceJumpAnimation);
 
-		dialog = new Dialog(getContext(),
-				R.style.FullHeightDialog);
+		dialog = new Dialog(getContext(), R.style.FullHeightDialog);
 		dialog.setCancelable(true);
 		dialog.show();
-		dialog.setContentView(layout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT));		
+		dialog.setContentView(layout, new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT));
 	}
 
 	static class ViewHolder {
 		TextView num, date, text;
 	}
+
+	private int index = 0;
+	Runnable r = new Runnable() {
+		@Override
+		public void run() {
+			// data是你ListView的数据源
+			if (index < listmap.size()) {
+				list.setSelection(index);
+				index++;
+				new Handler().postDelayed(r, 1000);
+			} else {
+				index = 0;
+			}
+		}
+	};
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.lsfb.cysj.HomeActivity;
 import com.lsfb.cysj.app.IsTrue;
@@ -31,17 +32,23 @@ import com.lsfb.cysj.fragment.TicketAlreadyoverdueFragment;
 import com.lsfb.cysj.fragment.TicketNoUseFragment;
 import com.lsfb.cysj.fragment.TrendsGameFragment;
 
+/**
+ * 报名中，已结束fragment
+ * 
+ * @author Administrator
+ * 
+ */
 public class FragmentAdapter extends FragmentPagerAdapter {
 	int TAB_COUNT;
 	int i;
-	String ccid,qqid;
-	IdeasWorldSonFragment ideasWorldSonFragment;
+	String ccid, qqid;
+	IdeasWorldSonFragment ideasWorldSonFragment; //
 	IdeasFriendsFragment ideasFriendsFragment;
 	GameApplyFragment gameApplyFragment;
 	GameEndFragment gameEndFragment;
-	CreaticeIndexRankingAreaCreaticeFragment creaticeIndexRankingAreaCreaticeFragment;//创意
-	CreaticeIndexRankingAreaUserFragment creaticeIndexRankingAreaUserFragment;//用户
-	CreaticeIndexRankingAreaThinkTankExpertsFragment creaticeIndexRankingAreaThinkTankExpertsFragment;//智库专家
+	CreaticeIndexRankingAreaCreaticeFragment creaticeIndexRankingAreaCreaticeFragment;// 创意
+	CreaticeIndexRankingAreaUserFragment creaticeIndexRankingAreaUserFragment;// 用户
+	CreaticeIndexRankingAreaThinkTankExpertsFragment creaticeIndexRankingAreaThinkTankExpertsFragment;// 智库专家
 
 	public FragmentAdapter(FragmentManager fm, int num, int i) {
 		super(fm);
@@ -72,7 +79,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 		default:
 			break;
 		}
-		
+
 	}
 
 	public void setDatechuangFriend() {
@@ -184,13 +191,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 		case 5:// 创友录
 			switch (id) {
 			case 0:
+				Log.i("zgscwjm", "goto 好友");
 				FriendsFriends friendsFriends = new FriendsFriends();
 				return friendsFriends;
 			case 1:
+				Log.i("zgscwjm", "goto 关注");
 				FriendsAttention friendsAttention = new FriendsAttention();
 				return friendsAttention;
 			case 2:
 				FriendsFans friendsFans = new FriendsFans();
+				Log.i("zgscwjm", "goto fans");
 				return friendsFans;
 			case 3:
 				FriendsGames friendsGames = new FriendsGames();

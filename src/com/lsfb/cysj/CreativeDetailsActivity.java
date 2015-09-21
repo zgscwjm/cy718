@@ -1,6 +1,5 @@
 package com.lsfb.cysj;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +19,9 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -37,11 +36,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.lidroid.xutils.BitmapUtils;
 import com.loopj.android.http.AsyncHttpClient;
@@ -61,35 +62,15 @@ import com.lsfb.cysj.view.LazyScrollView;
 import com.lsfb.cysj.view.ListViewForScrollView;
 import com.lsfb.cysj.view.MyGridView;
 import com.lsfb.cysj.view.ResDialog;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.bean.StatusCode;
-import com.umeng.socialize.controller.UMEvernoteHandler;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
-import com.umeng.socialize.flickr.controller.UMFlickrHandler;
-import com.umeng.socialize.instagram.controller.UMInstagramHandler;
-import com.umeng.socialize.instagram.media.InstagramShareContent;
-import com.umeng.socialize.kakao.controller.UMKakaoHandler;
-import com.umeng.socialize.laiwang.controller.UMLWHandler;
-import com.umeng.socialize.line.controller.UMLineHandler;
-import com.umeng.socialize.linkedin.controller.UMLinkedInHandler;
-import com.umeng.socialize.media.QQShareContent;
-import com.umeng.socialize.media.QZoneShareContent;
-import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.pinterest.controller.UMPinterestHandler;
-import com.umeng.socialize.pocket.controller.UMPocketHandler;
-import com.umeng.socialize.sso.EmailHandler;
-import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.SmsHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
-import com.umeng.socialize.tumblr.controller.UMTumblrHandler;
-import com.umeng.socialize.whatsapp.controller.UMWhatsAppHandler;
-import com.umeng.socialize.yixin.controller.UMYXHandler;
-import com.umeng.socialize.ynote.controller.UMYNoteHandler;
 
+/**
+ * 创意详情
+ * @author Administrator
+ *
+ */
 public class CreativeDetailsActivity extends Activity {
 	ImageButton ibCreativeDetailsbacking;
 	MyGridView gridView;// 内容区域展示图片的listVIew
@@ -162,6 +143,10 @@ public class CreativeDetailsActivity extends Activity {
 	private LazyScrollView scrollview;
 	String jiazhilist;// 进入页面显示是否有评论
 	int numcount = 0;
+	
+	String shareContent;
+	Dialog dialog;
+	
 	// 首先在您的Activity中添加如下成员变量
 	final UMSocialService mController = UMServiceFactory
 			.getUMSocialService("com.umeng.share");
@@ -250,210 +235,232 @@ public class CreativeDetailsActivity extends Activity {
 		showdialogup();
 		initdata();
 		share.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
-				// Share.share(urls);
+				// TODO Auto-generated method stub
 				// 首先在您的Activity中添加如下成员变量
-				// final UMSocialService mController =
-				// UMServiceFactory.getUMSocialService("com.umeng.share");
-				// 设置分享内容
-				// mController.setShareContent(urls);
-				// mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
-				// SHARE_MEDIA.WEIXIN_CIRCLE,
-				// SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA,
-				// SHARE_MEDIA.TENCENT,
-				// SHARE_MEDIA.DOUBAN,
-				// SHARE_MEDIA.RENREN);
-				mController.getConfig().setPlatformOrder(SHARE_MEDIA.RENREN,
-						SHARE_MEDIA.DOUBAN, SHARE_MEDIA.TENCENT,
-						SHARE_MEDIA.SINA);
-
-				// 添加短信
-				SmsHandler smsHandler = new SmsHandler();
-				smsHandler.addToSocialSDK();
-
-				// 添加email
-				EmailHandler emailHandler = new EmailHandler();
-				emailHandler.addToSocialSDK();
-
-				// 添加有道云笔记平台
-				UMYNoteHandler yNoteHandler = new UMYNoteHandler(CreativeDetailsActivity.this);
-				yNoteHandler.addToSocialSDK();
-
-				// 添加易信平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
-				UMYXHandler yixinHandler = new UMYXHandler(CreativeDetailsActivity.this,"yxc0614e80c9304c11b0391514d09f13bf");
-				// 关闭分享时的等待Dialog
-				yixinHandler.enableLoadingDialog(false);
-				// 把易信添加到SDK中
-				yixinHandler.addToSocialSDK();
-
-				// 易信朋友圈平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
-				UMYXHandler yxCircleHandler = new UMYXHandler(CreativeDetailsActivity.this,"yxc0614e80c9304c11b0391514d09f13bf");
-				yxCircleHandler.setToCircle(true);
-				yxCircleHandler.addToSocialSDK();
-
-				// 添加来往
-				UMLWHandler umlwHandler = new UMLWHandler(CreativeDetailsActivity.this, "laiwangd497e70d4","d497e70d4c3e4efeab1381476bac4c5e");
-				umlwHandler.addToSocialSDK();
-				umlwHandler.setMessageFrom("友盟分享组件");
-
-				// 添加来往动态
-				UMLWHandler umlwDynamicHandler = new UMLWHandler(CreativeDetailsActivity.this, "laiwangd497e70d4","d497e70d4c3e4efeab1381476bac4c5e");
-				umlwDynamicHandler.addToSocialSDK();
-				umlwDynamicHandler.setMessageFrom("友盟分享组件");
-//				mController.openShare(CreativeDetailsActivity.this, false);
-				//国外分享
-				// 添加Facebook分享
-//				 UMFacebookHandler mFacebookHandler = UMFacebookHandler(CreativeDetailsActivity.this);
-//				 mFacebookHandler.addToSocialSDK();
-
-//				 添加Twitter分享
-				 mController.getConfig().supportAppPlatform(CreativeDetailsActivity.this,SHARE_MEDIA.TWITTER,"这里你构造mController填写的字符串参数", true) ;
-
-				// 添加Instagram分享
-				// 构建Instagram的Handler
-				UMInstagramHandler instagramHandler = new UMInstagramHandler(
-						CreativeDetailsActivity.this);
-				// 将instagram添加到sdk中
-				instagramHandler.addToSocialSDK();
-				// 本地图片
-				UMImage localImage = new UMImage(CreativeDetailsActivity.this,
-						R.drawable.logo);
-				// 设置分享到Instagram的内容，
-				// 注意由于instagram客户端的限制，目前该平台只支持纯图片分享，文字、音乐、url图片等都无法分享。
-				InstagramShareContent instagramShareContent = new InstagramShareContent(
-						localImage);
-				// 设置Instagram的分享内容
-				mController.setShareMedia(instagramShareContent);
-				//添加印象笔记分享
-				// 添加evernote平台
-				UMEvernoteHandler evernoteHandler = new UMEvernoteHandler(CreativeDetailsActivity.this);
-				evernoteHandler.addToSocialSDK();
-				//添加WhatsApp分享
-				// 添加WhatsApp平台
-				UMWhatsAppHandler whatsAppHandler = new UMWhatsAppHandler(CreativeDetailsActivity.this);
-				whatsAppHandler.addToSocialSDK();
-				//添加Line分享
-				// 添加LINE平台
-				UMLineHandler lineHandler = new UMLineHandler(CreativeDetailsActivity.this);
-				lineHandler.addToSocialSDK();
-				//添加Tumblr分享 
-				// 添加Tumblr平台
-				UMTumblrHandler tumblrHandler = new UMTumblrHandler(CreativeDetailsActivity.this);
-				tumblrHandler.addToSocialSDK();
-				// 添加KaKao平台
-				UMKakaoHandler kakaoHandler = new UMKakaoHandler(CreativeDetailsActivity.this);
-				kakaoHandler.addToSocialSDK();
-				// 添加Flickr平台
-				UMFlickrHandler flickrHandler = new UMFlickrHandler(CreativeDetailsActivity.this);
-				flickrHandler.addToSocialSDK();
-				// 添加pinterest平台
-				UMPinterestHandler pinterestHandler = new UMPinterestHandler(CreativeDetailsActivity.this,"1439206");
-				pinterestHandler.addToSocialSDK();
-				// 添加LinkedIn平台
-				UMLinkedInHandler linkedInHandler = new UMLinkedInHandler(CreativeDetailsActivity.this);
-				linkedInHandler.addToSocialSDK();
-				// 添加Pocket平台
-				UMPocketHandler pocketHandler = new UMPocketHandler(CreativeDetailsActivity.this);
-				pocketHandler.addToSocialSDK();
-				//添加G+分享
-				mController.getConfig().supportAppPlatform(CreativeDetailsActivity.this, SHARE_MEDIA.GOOGLEPLUS,"这里你构造mController填写的字符串参数", true) ;
-
-
-				//传递分享数据开始
-				QQShareContent qqShareContent = new QQShareContent();
-				// 设置分享文字
-				qqShareContent
-						.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QQ");
-				// 设置分享title
-				qqShareContent.setTitle("hello, title");
-				// 设置分享图片
-				qqShareContent.setShareImage(new UMImage(
-						CreativeDetailsActivity.this, R.drawable.logo));
-				// 设置点击分享内容的跳转链接
-				qqShareContent.setTargetUrl(urls);
-				mController.setShareMedia(qqShareContent);
-
-				QZoneShareContent qzone = new QZoneShareContent();
-				// 设置分享文字
-				qzone.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QZone");
-				// 设置点击消息的跳转URL
-				qzone.setTargetUrl(urls);
-				// 设置分享内容的标题
-				// qzone.setTitle("QZone title");
-				// 设置分享图片
-				// qzone.setShareImage(urlImage);
-				mController.setShareMedia(qzone);
-
-				// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-				UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(
-						CreativeDetailsActivity.this, "100424468",
-						"c7394704798a158208a74ab60104f0ba");
-				qqSsoHandler.addToSocialSDK();
-
-				// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-				QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(
-						CreativeDetailsActivity.this, "100424468",
-						"c7394704798a158208a74ab60104f0ba");
-				qZoneSsoHandler.addToSocialSDK();
-
-				SnsPostListener snsPostListener = new SnsPostListener() {
-
-					@Override
-					public void onStart() {
-//						Toast.makeText(CreativeDetailsActivity.this, "分享开始",
-//								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onComplete(SHARE_MEDIA platform, int eCode,
-							SocializeEntity entity) {
-						if (eCode == StatusCode.ST_CODE_SUCCESSED) {
+//				final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+//				// 设置分享内容
+//				mController.setShareContent(""+shareContent);
+//				// 是否只有已登录用户才能打开分享选择页
+//		        mController.openShare(CreativeDetailsActivity.this, false);
+				
+				ShareSDK.initSDK(CreativeDetailsActivity.this);
+				OnekeyShare oks = new OnekeyShare();
+				oks.disableSSOWhenAuthorize();
+				// 分享时Notification的图标和文字
+				oks.setNotification(R.drawable.logo2,
+						getString(R.string.app_name));
+				// text是分享文本，所有平台都需要这个字段
+				// if (App.shareIndex < strShare.length) {
+				// oks.setText(strShare[App.shareIndex++]);
+				oks.setText(""+shareContent);
+				Log.e("msg", ""+shareContent);
+				// } else {
+//				App.shareIndex = 0;
+				// }
+				oks.show(CreativeDetailsActivity.this);
+				oks.setAddress("");
+			}
+		});
+			
+			
+//		share.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// Share.share(urls);
+//				// 首先在您的Activity中添加如下成员变量
+//				// final UMSocialService mController =
+//				// UMServiceFactory.getUMSocialService("com.umeng.share");
+//				// 设置分享内容
+//				// mController.setShareContent(urls);
+//				// mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN,
+//				// SHARE_MEDIA.WEIXIN_CIRCLE,
+//				// SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA,
+//				// SHARE_MEDIA.TENCENT,
+//				// SHARE_MEDIA.DOUBAN,
+//				// SHARE_MEDIA.RENREN);
+//				mController.getConfig().setPlatformOrder(SHARE_MEDIA.RENREN,
+//						SHARE_MEDIA.DOUBAN, SHARE_MEDIA.TENCENT,
+//						SHARE_MEDIA.SINA);
+//
+//				// 添加短信
+//				SmsHandler smsHandler = new SmsHandler();
+//				smsHandler.addToSocialSDK();
+//
+//				// 添加email
+//				EmailHandler emailHandler = new EmailHandler();
+//				emailHandler.addToSocialSDK();
+//
+//				// 添加有道云笔记平台
+////				UMYNoteHandler yNoteHandler = new UMYNoteHandler(CreativeDetailsActivity.this);
+////				yNoteHandler.addToSocialSDK();
+//
+//				// 添加易信平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
+//				UMYXHandler yixinHandler = new UMYXHandler(CreativeDetailsActivity.this,"yxc0614e80c9304c11b0391514d09f13bf");
+//				// 关闭分享时的等待Dialog
+//				yixinHandler.enableLoadingDialog(false);
+//				// 把易信添加到SDK中
+//				yixinHandler.addToSocialSDK();
+//
+//				// 易信朋友圈平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
+//				UMYXHandler yxCircleHandler = new UMYXHandler(CreativeDetailsActivity.this,"yxc0614e80c9304c11b0391514d09f13bf");
+//				yxCircleHandler.setToCircle(true);
+//				yxCircleHandler.addToSocialSDK();
+//
+//				// 添加来往
+//				UMLWHandler umlwHandler = new UMLWHandler(CreativeDetailsActivity.this, "laiwangd497e70d4","d497e70d4c3e4efeab1381476bac4c5e");
+//				umlwHandler.addToSocialSDK();
+//				umlwHandler.setMessageFrom("友盟分享组件");
+//
+//				// 添加来往动态
+//				UMLWHandler umlwDynamicHandler = new UMLWHandler(CreativeDetailsActivity.this, "laiwangd497e70d4","d497e70d4c3e4efeab1381476bac4c5e");
+//				umlwDynamicHandler.addToSocialSDK();
+//				umlwDynamicHandler.setMessageFrom("友盟分享组件");
+////				mController.openShare(CreativeDetailsActivity.this, false);
+//				//国外分享
+//				// 添加Facebook分享
+////				 UMFacebookHandler mFacebookHandler = UMFacebookHandler(CreativeDetailsActivity.this);
+////				 mFacebookHandler.addToSocialSDK();
+//
+////				 添加Twitter分享
+//				 mController.getConfig().supportAppPlatform(CreativeDetailsActivity.this,SHARE_MEDIA.TWITTER,"这里你构造mController填写的字符串参数", true) ;
+//
+//				// 添加Instagram分享
+//				// 构建Instagram的Handler
+//				UMInstagramHandler instagramHandler = new UMInstagramHandler(
+//						CreativeDetailsActivity.this);
+//				// 将instagram添加到sdk中
+//				instagramHandler.addToSocialSDK();
+//				// 本地图片
+//				UMImage localImage = new UMImage(CreativeDetailsActivity.this,
+//						R.drawable.logo);
+//				// 设置分享到Instagram的内容，
+//				// 注意由于instagram客户端的限制，目前该平台只支持纯图片分享，文字、音乐、url图片等都无法分享。
+//				InstagramShareContent instagramShareContent = new InstagramShareContent(
+//						localImage);
+//				// 设置Instagram的分享内容
+//				mController.setShareMedia(instagramShareContent);
+//				//添加印象笔记分享
+//				// 添加evernote平台
+//				UMEvernoteHandler evernoteHandler = new UMEvernoteHandler(CreativeDetailsActivity.this);
+//				evernoteHandler.addToSocialSDK();
+//				//添加WhatsApp分享
+//				// 添加WhatsApp平台
+//				UMWhatsAppHandler whatsAppHandler = new UMWhatsAppHandler(CreativeDetailsActivity.this);
+//				whatsAppHandler.addToSocialSDK();
+//				//添加Line分享
+//				// 添加LINE平台
+//				UMLineHandler lineHandler = new UMLineHandler(CreativeDetailsActivity.this);
+//				lineHandler.addToSocialSDK();
+//				//添加Tumblr分享 
+//				// 添加Tumblr平台
+//				UMTumblrHandler tumblrHandler = new UMTumblrHandler(CreativeDetailsActivity.this);
+//				tumblrHandler.addToSocialSDK();
+//				// 添加KaKao平台
+//				UMKakaoHandler kakaoHandler = new UMKakaoHandler(CreativeDetailsActivity.this);
+//				kakaoHandler.addToSocialSDK();
+//				// 添加Flickr平台
+//				UMFlickrHandler flickrHandler = new UMFlickrHandler(CreativeDetailsActivity.this);
+//				flickrHandler.addToSocialSDK();
+//				// 添加pinterest平台
+//				UMPinterestHandler pinterestHandler = new UMPinterestHandler(CreativeDetailsActivity.this,"1439206");
+//				pinterestHandler.addToSocialSDK();
+//				// 添加LinkedIn平台
+//				UMLinkedInHandler linkedInHandler = new UMLinkedInHandler(CreativeDetailsActivity.this);
+//				linkedInHandler.addToSocialSDK();
+//				// 添加Pocket平台
+//				UMPocketHandler pocketHandler = new UMPocketHandler(CreativeDetailsActivity.this);
+//				pocketHandler.addToSocialSDK();
+//				//添加G+分享
+//				mController.getConfig().supportAppPlatform(CreativeDetailsActivity.this, SHARE_MEDIA.GOOGLEPLUS,"这里你构造mController填写的字符串参数", true) ;
+//
+//
+//				//传递分享数据开始
+//				QQShareContent qqShareContent = new QQShareContent();
+//				// 设置分享文字
+//				qqShareContent
+//						.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QQ");
+//				// 设置分享title
+//				qqShareContent.setTitle("hello, title");
+//				// 设置分享图片
+//				qqShareContent.setShareImage(new UMImage(
+//						CreativeDetailsActivity.this, R.drawable.logo));
+//				// 设置点击分享内容的跳转链接
+//				qqShareContent.setTargetUrl(urls);
+//				mController.setShareMedia(qqShareContent);
+//
+//				QZoneShareContent qzone = new QZoneShareContent();
+//				// 设置分享文字
+//				qzone.setShareContent("来自友盟社会化组件（SDK）让移动应用快速整合社交分享功能 -- QZone");
+//				// 设置点击消息的跳转URL
+//				qzone.setTargetUrl(urls);
+//				// 设置分享内容的标题
+//				// qzone.setTitle("QZone title");
+//				// 设置分享图片
+//				// qzone.setShareImage(urlImage);
+//				mController.setShareMedia(qzone);
+//
+//				// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+//				UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(
+//						CreativeDetailsActivity.this, "100424468",
+//						"c7394704798a158208a74ab60104f0ba");
+//				qqSsoHandler.addToSocialSDK();
+//
+//				// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+//				QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(
+//						CreativeDetailsActivity.this, "100424468",
+//						"c7394704798a158208a74ab60104f0ba");
+//				qZoneSsoHandler.addToSocialSDK();
+//
+//				SnsPostListener snsPostListener = new SnsPostListener() {
+//
+//					@Override
+//					public void onStart() {
+////						Toast.makeText(CreativeDetailsActivity.this, "分享开始",
+////								Toast.LENGTH_SHORT).show();
+//					}
+//
+//					@Override
+//					public void onComplete(SHARE_MEDIA platform, int eCode,
+//							SocializeEntity entity) {
+//						if (eCode == StatusCode.ST_CODE_SUCCESSED) {
+////							Toast.makeText(CreativeDetailsActivity.this,
+////									"分享成功", Toast.LENGTH_SHORT).show();
+//							shareimg.setBackgroundResource(R.drawable.fenxiang_ed);
+//						} else {
 //							Toast.makeText(CreativeDetailsActivity.this,
-//									"分享成功", Toast.LENGTH_SHORT).show();
-							shareimg.setBackgroundResource(R.drawable.fenxiang_ed);
-						} else {
-							Toast.makeText(CreativeDetailsActivity.this,
-									"分享失败", Toast.LENGTH_SHORT).show();
-							shareimg.setBackgroundResource(R.drawable.fenxiang);
-						}
+//									"分享失败", Toast.LENGTH_SHORT).show();
+//							shareimg.setBackgroundResource(R.drawable.fenxiang);
+//						}
+//
+//					}
+//				};
+//				mController.registerListener(snsPostListener);
+//				mController.openShare(CreativeDetailsActivity.this, false);
 
-					}
-				};
-				mController.registerListener(snsPostListener);
-				mController.openShare(CreativeDetailsActivity.this, false);
-
-				// 自定义分享界面
-				// mController.postShare(CreativeDetailsActivity.this, arg1,
-				// arg2)
-				// 设置分享图片, 参数2为图片的url地址
-				// mController.setShareMedia(new
-				// UMImage(getActivity(),"http://www.umeng.com/images/pic/banner_module_social.png"));
-				// intent = new Intent();
-				// intent.setAction(Intent.ACTION_SEND);
-				// intent.putExtra(Intent.EXTRA_TEXT, urls);
-				// intent.setType("text/plain");
-				// // startActivity(intent);
-				// startActivityForResult(intent, 2);
-			}
-		});
-		jubao.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if (IsTrue.userId == 0) {
-					intent = new Intent(CreativeDetailsActivity.this,
-							HomeActivity.class);
-					IsTrue.tabnum = 4;
-					IsTrue.exit = true;
-					startActivity(intent);
-					finish();
-					return;
-				}
-				jubaoDialog();
-			}
-		});
+				 
+				 
+//			}
+//		});
+//		jubao.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				if (IsTrue.userId == 0) {
+//					intent = new Intent(CreativeDetailsActivity.this,
+//							HomeActivity.class);
+//					IsTrue.tabnum = 4;
+//					IsTrue.exit = true;
+//					startActivity(intent);
+//					finish();
+//					return;
+//				}
+//				jubaoDialog();
+//			}
+//		});
 		// 删除
 		delete.setOnClickListener(new OnClickListener() {
 
@@ -567,7 +574,7 @@ public class CreativeDetailsActivity extends Activity {
 		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 		window.setAttributes(lp);
 		dialog.show();
-		dialog.setCanceledOnTouchOutside(false);
+		dialog.setCanceledOnTouchOutside(true);
 	}
 
 	@Override
@@ -694,7 +701,8 @@ public class CreativeDetailsActivity extends Activity {
 		type.setText(title);
 		chuangyiprice.setText(price);
 		chuangyitext.setText(content);
-		jiazaidialog.dismiss();
+		if(null!=jiazaidialog  &&jiazaidialog.isShowing())
+			jiazaidialog.dismiss();
 		if (images.equals("0")) {
 			gridView.setVisibility(View.GONE);
 		} else {
@@ -723,7 +731,6 @@ public class CreativeDetailsActivity extends Activity {
 					bitmapUtils.display(holder.img, ImageAddress.Stringchuangyi
 							+ splitimages[position]);
 					holder.img.setOnClickListener(new OnClickListener() {
-
 						@Override
 						public void onClick(View v) {
 							Intent intent = new Intent(getApplicationContext(),
@@ -814,12 +821,12 @@ public class CreativeDetailsActivity extends Activity {
 										if (i == 1) {
 											Toast.makeText(
 													getApplicationContext(),
-													"收藏失败", Toast.LENGTH_SHORT)
+													"点赞失败", Toast.LENGTH_SHORT)
 													.show();
 										} else if (i == 2) {
 											Toast.makeText(
 													getApplicationContext(),
-													"收藏成功", Toast.LENGTH_SHORT)
+													"点赞成功", Toast.LENGTH_SHORT)
 													.show();
 											downimgxing
 													.setBackgroundResource(R.drawable.shoucang_ed);
@@ -829,7 +836,7 @@ public class CreativeDetailsActivity extends Activity {
 										} else if (i == 3) {
 											Toast.makeText(
 													getApplicationContext(),
-													"已经收藏", Toast.LENGTH_SHORT)
+													"已点赞", Toast.LENGTH_SHORT)
 													.show();
 										}
 									} catch (JSONException e) {
@@ -928,6 +935,7 @@ public class CreativeDetailsActivity extends Activity {
 				try {
 					title = response.getString("title").toString();
 					content = response.getString("content").toString();
+					shareContent= response.getString("urls").toString();
 					images = response.getString("images").toString();
 					// int imagesi = Integer.parseInt(images);
 					// if (imagesi == 0) {
@@ -1248,9 +1256,10 @@ public class CreativeDetailsActivity extends Activity {
 	}
 
 	protected void jubaoDialog() {
-		Dialog dialog = new JuBaoDialog(this, R.style.MyDialog, nameid, 1 + "");
+		  dialog = new JuBaoDialog(this, R.style.MyDialog, nameid, 1 + "");
+		dialog.setCanceledOnTouchOutside(true);
 		dialog.show();
-		dialog.setCanceledOnTouchOutside(false);
+		
 	}
 
 	public class ViewHolder {
@@ -1303,10 +1312,19 @@ public class CreativeDetailsActivity extends Activity {
 					}
 					BitmapUtils bitmapUtils = new BitmapUtils(
 							getApplicationContext());
+					
+					if(!"null".equals(listmap.get(position).get("zhishu")
+							.toString())&&!TextUtils.isEmpty(listmap.get(position).get("zhishu")
+							.toString())){
 					bitmapUtils.display(holder.headimg, ImageAddress.Stringhead
 							+ listmap.get(position).get("nimage").toString());
+					
 					holder.texthead.setText(listmap.get(position).get("zhishu")
 							.toString());
+					}
+					else{
+						listmap.remove(position);
+					}
 					holder.headimg.setOnClickListener(new OnClickListener() {
 
 						@Override
@@ -1383,7 +1401,21 @@ public class CreativeDetailsActivity extends Activity {
 		jubao = (LinearLayout) findViewById(R.id.activity_creative_details_jubao);
 		intent = getIntent();
 		nameid = intent.getStringExtra("id").toString();
+		//头像
 		imghead = (ImageView) findViewById(R.id.activity_creative_details_imghead);
+		imghead.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				// 跳转其他人信息
+				intent = new Intent(
+						CreativeDetailsActivity.this,
+						OtherDetailsActivity.class);
+				intent.putExtra("id", nickid + "");
+				startActivity(intent);
+			}
+		});
+		
 		username = (TextView) findViewById(R.id.activity_creative_details_name);
 		chuangyizhishu = (TextView) findViewById(R.id.activity_creative_details_zhishu);
 		type = (TextView) findViewById(R.id.activity_creative_details_type);
@@ -1411,5 +1443,22 @@ public class CreativeDetailsActivity extends Activity {
 		shareimg = (ImageView) findViewById(R.id.activity_creative_details_shareimg);
 		downpinglun = (LinearLayout) findViewById(R.id.activity_creative_details_down_pinglun);
 		downpinglunimg = (ImageView) findViewById(R.id.activity_creative_details_down_pinglunimg);
+		
+		jubao.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (IsTrue.userId == 0) {
+					intent = new Intent(CreativeDetailsActivity.this,
+							HomeActivity.class);
+					IsTrue.tabnum = 4;
+					IsTrue.exit = true;
+					startActivity(intent);
+					finish();
+					return;
+				}
+				jubaoDialog();
+			}
+		});
 	}
 }

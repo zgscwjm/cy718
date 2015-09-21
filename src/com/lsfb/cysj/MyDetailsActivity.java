@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
@@ -51,6 +52,11 @@ import com.lsfb.cysj.fragment.MyFragment;
 import com.lsfb.cysj.view.CircleImageView;
 import com.lsfb.cysj.view.Tools;
 
+/**
+ *资料详情： 点好友头像进入资料详情
+ * @author Administrator
+ *
+ */
 public class MyDetailsActivity extends FragmentActivity {
 	private String[] items = new String[] { "选择本地图片", "拍照" };
 	// private String[] items = new String[] { "选择本地图片" };
@@ -69,6 +75,7 @@ public class MyDetailsActivity extends FragmentActivity {
 	TextView tvHomePage;// 主页
 	TextView tvDynamic;// 动态
 	TextView tvCreative;// 创意
+	ImageView ImgDengJiz;// 等级图片
 	// NoViewPage noViewPage;
 	LinearLayout ll_my_details_Edit_Data;// 编辑资料
 	LinearLayout homePageFragment_show;
@@ -159,6 +166,29 @@ public class MyDetailsActivity extends FragmentActivity {
 				tv_Mydetails_signatur.setText(IsTrue.Stringsignatur.substring(
 						0, 16));
 			}
+		}
+		if(IsTrue.intZqyz==2)
+		{
+			ImgDengJiz.setImageResource(R.drawable.img_qiye);
+		}else
+		{
+		switch (IsTrue.intDengji) {
+		case 1:
+			ImgDengJiz.setImageResource(R.drawable.z1);
+			break;
+		case 2:
+			ImgDengJiz.setImageResource(R.drawable.z2);
+			break;
+		case 3:
+			ImgDengJiz.setImageResource(R.drawable.z3);
+			break;
+		case 4:
+			ImgDengJiz.setImageResource(R.drawable.z4);
+			break;
+
+		default:
+			break;
+		}
 		}
 		civ_Mydetails_head.setOnClickListener(new OnClickListener() {
 
@@ -484,6 +514,8 @@ public class MyDetailsActivity extends FragmentActivity {
 		civ_Mydetails_head = (CircleImageView) findViewById(R.id.civ_Mydetails_head);// 头像
 		civ_Mydetails_name = (TextView) findViewById(R.id.tv_Mydetails_name);// 名字
 		tv_Mydetails_signatur = (TextView) findViewById(R.id.tv_Mydetails_signatur);
+		ImgDengJiz= (ImageView) findViewById(R.id.img_dengjiz);
+		
 		fragmebt_creatuve=(CreativeFragments) MyDetailsActivity.this
 				.getSupportFragmentManager()
 				.findFragmentById(R.id.fragmebt_creatuve);

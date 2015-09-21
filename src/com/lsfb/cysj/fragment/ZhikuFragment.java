@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,14 +38,23 @@ import com.lsfb.cysj.BestResultsActivity;
 import com.lsfb.cysj.HomeActivity;
 import com.lsfb.cysj.HotZhiKu;
 import com.lsfb.cysj.IdeasWorldZhiKuDetails;
+import com.lsfb.cysj.IdeasZhiKuMan;
 import com.lsfb.cysj.MyDetailsActivity;
 import com.lsfb.cysj.OtherDetailsActivity;
 import com.lsfb.cysj.WorldHeritageActivity;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.utils.Show;
 import com.lsfb.cysj.view.HorizontalListView;
 import com.lsfb.cysj.view.ResDialog;
+
+/**
+ * 创创信中间部分创意世界智库；我的智库；更多部分
+ * 
+ * @author yanwei
+ * 
+ */
 
 public class ZhikuFragment extends Fragment implements OnClickListener {
 	private View rootView;
@@ -119,6 +129,8 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 	 * world_library 创意世界智库
 	 */
 	private LinearLayout world_library;
+	
+	private LinearLayout   llChengyuan;
 	/**
 	 * my_zhiku 我的智库
 	 */
@@ -145,9 +157,12 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 	ArrayList<HashMap<String, Object>> listimg1;
 	ArrayList<HashMap<String, Object>> listimg2;
 	ArrayList<HashMap<String, Object>> listimg3;
-	String id;//智库id
+	String id;// 智库id
 	String image;
+	int currentIndex = 0;
+
 	private TextView horizontal_listview_text;
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// view = inflater.inflate(R.layout.mian_friends,container,false);
@@ -163,7 +178,7 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 			}
 		}
 		init();
-//		data();
+		// data();
 		return rootView;
 
 	}
@@ -172,63 +187,71 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 		showdialogup();
 		httpUtils = new HttpUtils();
 		params = new RequestParams();
-		params.addBodyParameter("uid", IsTrue.userId+"");
-		httpUtils.send(HttpMethod.POST, MyUrl.index, params, new RequestCallBack<String>() {
+		params.addBodyParameter("uid", IsTrue.userId + "");
+		httpUtils.send(HttpMethod.POST, MyUrl.index, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onFailure(HttpException error, String msg) {
-				jiazaidialog.dismiss();
-				Toast.makeText(getActivity(),
-						error.getExceptionCode() + ":" + msg,
-						Toast.LENGTH_SHORT).show();
-			}
+					@Override
+					public void onFailure(HttpException error, String msg) {
+						jiazaidialog.dismiss();
+						Toast.makeText(getActivity(),
+								error.getExceptionCode() + ":" + msg,
+								Toast.LENGTH_SHORT).show();
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo) {
-				jiazaidialog.dismiss();
-				String list = responseInfo.result;
-				System.out.println(list+"????");
-				try {
-					JSONObject object2 = new JSONObject(list);
-					String sjzhi = object2.getString("sjzhi").toString();
-					JSONObject object = new JSONObject(sjzhi);
-					image = object.getString("image").toString();
-					if (image.equals("")|| image == null || image.equals("null")) {
-						
-					}else {
-						bitmapUtils = new BitmapUtils(getActivity());
-						bitmapUtils.display(img, ImageAddress.Stringhead+image);
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+						jiazaidialog.dismiss();
+						String list = responseInfo.result;
+						System.out.println(list + "????");
+						try {
+							JSONObject object2 = new JSONObject(list);
+							String sjzhi = object2.getString("sjzhi")
+									.toString();
+							JSONObject object = new JSONObject(sjzhi);
+							image = object.getString("image").toString();
+							if (image.equals("") || image == null
+									|| image.equals("null")) {
+
+							} else {
+								bitmapUtils = new BitmapUtils(getActivity());
+								bitmapUtils.display(img,
+										ImageAddress.Stringhead + image);
+							}
+							id = object.getString("id").toString();// 智库id
+							String zhuxi = object.getString("zhuxi").toString();
+							if (zhuxi.equals("0")) {
+
+							} else if (zhuxi.equals("1")) {
+								String zxlist = object.getString("zxlist")
+										.toString();
+								zhuxiimg(zxlist);
+							}
+							String lsh = object.getString("lsh").toString();
+							if (lsh.equals("0")) {
+
+							} else if (lsh.equals("1")) {
+								String lshlist = object.getString("lshlist")
+										.toString();
+								lishihuiimg(lshlist);
+							}
+							String gwt = object.getString("gwt").toString();
+							if (gwt.equals("0")) {
+
+							} else if (gwt.equals("1")) {
+								String gwtlist = object.getString("gwtlist")
+										.toString();
+								zhuanjiaimg(gwtlist);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
-					id = object.getString("id").toString();//智库id
-					String zhuxi = object.getString("zhuxi").toString();
-					if (zhuxi.equals("0")) {
-						
-					}else if (zhuxi.equals("1")) {
-						String zxlist = object.getString("zxlist").toString();
-						zhuxiimg(zxlist);
-					}
-					String lsh = object.getString("lsh").toString();
-					if (lsh.equals("0")) {
-						
-					}else if (lsh.equals("1")) {
-						String lshlist = object.getString("lshlist").toString();
-						lishihuiimg(lshlist);
-					}
-					String gwt = object.getString("gwt").toString();
-					if (gwt.equals("0")) {
-						
-					}else if (gwt.equals("1")) {
-						String gwtlist = object.getString("gwtlist").toString();
-						zhuanjiaimg(gwtlist);
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+				});
 	}
+
 	protected void zhuanjiaimg(String gwtlist) {
-		listmap = new ArrayList<HashMap<String,Object>>();
+		listmap = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(gwtlist);
 			for (int i = 0; i < array.length(); i++) {
@@ -245,26 +268,32 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 		if (listmap.size() == 1) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout3_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout3_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
-		}else if (listmap.size() == 2) {
+			bitmapUtils.display(linearLayout3_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
+		} else if (listmap.size() == 2) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout3_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout3_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
+			bitmapUtils.display(linearLayout3_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
 			linearLayout3_img2.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout3_img2, ImageAddress.Stringhead+listmap.get(1).get("image").toString());
-		}else if (listmap.size() == 3) {
+			bitmapUtils.display(linearLayout3_img2, ImageAddress.Stringhead
+					+ listmap.get(1).get("image").toString());
+		} else if (listmap.size() == 3) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout3_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout3_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
+			bitmapUtils.display(linearLayout3_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
 			linearLayout3_img2.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout3_img2, ImageAddress.Stringhead+listmap.get(1).get("image").toString());
+			bitmapUtils.display(linearLayout3_img2, ImageAddress.Stringhead
+					+ listmap.get(1).get("image").toString());
 			linearLayout3_img3.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout3_img3, ImageAddress.Stringhead+listmap.get(2).get("image").toString());
+			bitmapUtils.display(linearLayout3_img3, ImageAddress.Stringhead
+					+ listmap.get(2).get("image").toString());
 		}
 	}
 
 	protected void lishihuiimg(String lshlist) {
-		listmap = new ArrayList<HashMap<String,Object>>();
+		listmap = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(lshlist);
 			for (int i = 0; i < array.length(); i++) {
@@ -281,26 +310,32 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 		if (listmap.size() == 1) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout2_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout2_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
-		}else if (listmap.size() == 2) {
+			bitmapUtils.display(linearLayout2_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
+		} else if (listmap.size() == 2) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout2_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout2_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
+			bitmapUtils.display(linearLayout2_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
 			linearLayout2_img2.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout2_img2, ImageAddress.Stringhead+listmap.get(1).get("image").toString());
-		}else if (listmap.size() == 3) {
+			bitmapUtils.display(linearLayout2_img2, ImageAddress.Stringhead
+					+ listmap.get(1).get("image").toString());
+		} else if (listmap.size() == 3) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout2_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout2_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
+			bitmapUtils.display(linearLayout2_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
 			linearLayout2_img2.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout2_img2, ImageAddress.Stringhead+listmap.get(1).get("image").toString());
+			bitmapUtils.display(linearLayout2_img2, ImageAddress.Stringhead
+					+ listmap.get(1).get("image").toString());
 			linearLayout2_img3.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout2_img3, ImageAddress.Stringhead+listmap.get(2).get("image").toString());
+			bitmapUtils.display(linearLayout2_img3, ImageAddress.Stringhead
+					+ listmap.get(2).get("image").toString());
 		}
 	}
 
 	protected void zhuxiimg(String zxlist) {
-		listmap = new ArrayList<HashMap<String,Object>>();
+		listmap = new ArrayList<HashMap<String, Object>>();
 		try {
 			JSONArray array = new JSONArray(zxlist);
 			for (int i = 0; i < array.length(); i++) {
@@ -317,72 +352,91 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 		if (listmap.size() == 1) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout1_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout1_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
-		}else if (listmap.size() == 2) {
+			bitmapUtils.display(linearLayout1_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
+		} else if (listmap.size() == 2) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout1_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout1_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
+			bitmapUtils.display(linearLayout1_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
 			linearLayout1_img2.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout1_img2, ImageAddress.Stringhead+listmap.get(1).get("image").toString());
-		}else if (listmap.size() == 3) {
+			bitmapUtils.display(linearLayout1_img2, ImageAddress.Stringhead
+					+ listmap.get(1).get("image").toString());
+		} else if (listmap.size() == 3) {
 			bitmapUtils = new BitmapUtils(getActivity());
 			linearLayout1_img1.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout1_img1, ImageAddress.Stringhead+listmap.get(0).get("image").toString());
+			bitmapUtils.display(linearLayout1_img1, ImageAddress.Stringhead
+					+ listmap.get(0).get("image").toString());
 			linearLayout1_img2.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout1_img2, ImageAddress.Stringhead+listmap.get(1).get("image").toString());
+			bitmapUtils.display(linearLayout1_img2, ImageAddress.Stringhead
+					+ listmap.get(1).get("image").toString());
 			linearLayout1_img3.setVisibility(View.VISIBLE);
-			bitmapUtils.display(linearLayout1_img3, ImageAddress.Stringhead+listmap.get(2).get("image").toString());
+			bitmapUtils.display(linearLayout1_img3, ImageAddress.Stringhead
+					+ listmap.get(2).get("image").toString());
 		}
 	}
 
 	private void showdialogup() {
-		jiazaidialog = new ResDialog(getActivity(), R.style.MyDialog, "正在加载...",
-				R.drawable.loads);
+		jiazaidialog = new ResDialog(getActivity(), R.style.MyDialog,
+				"正在加载...", R.drawable.loads);
 		jiazaidialog.show();
 		jiazaidialog.setCanceledOnTouchOutside(false);
 	}
-	public void hengdata(){
-//		showdialogup();
-		listmaps = new ArrayList<HashMap<String,Object>>();
+
+	public void hengdata() {
+		// showdialogup();
+		listmaps = new ArrayList<HashMap<String, Object>>();
 		httpUtils = new HttpUtils();
 		params = new RequestParams();
-		params.addBodyParameter("uid", IsTrue.userId+"");
-		httpUtils.send(HttpMethod.POST, MyUrl.myidea, params, new RequestCallBack<String>() {
+		params.addBodyParameter("uid", IsTrue.userId + "");
+		httpUtils.send(HttpMethod.POST, MyUrl.myidea, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onFailure(HttpException error, String msg) {
-//				jiazaidialog.dismiss();
-				Toast.makeText(getActivity(), error.getExceptionCode()+":"+msg, Toast.LENGTH_SHORT).show();
-			}
+					@Override
+					public void onFailure(HttpException error, String msg) {
+						// jiazaidialog.dismiss();
+						Toast.makeText(getActivity(),
+								error.getExceptionCode() + ":" + msg,
+								Toast.LENGTH_SHORT).show();
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo) {
-//				jiazaidialog.dismiss();
-				String lists = responseInfo.result;
-				try {
-					JSONObject object = new JSONObject(lists);
-					String num = object.getString("num").toString();
-					if (num.equals("1")) {
-						horizontal_listview_text.setVisibility(View.VISIBLE);
-					}else if (num.equals("2")) {
-						String list = object.getString("list").toString();
-						JSONArray array = new JSONArray(list);
-						for (int i = 0; i < array.length(); i++) {
-							JSONObject object2 = (JSONObject) array.get(i);
-							map = new HashMap<String, Object>();
-							map.put("id", object2.getString("id").toString());
-							map.put("name", object2.getString("name").toString());
-							map.put("image", object2.getString("image").toString());
-							map.put("number", object2.getString("number").toString());
-							listmaps.add(map);
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+						// jiazaidialog.dismiss();
+						String lists = responseInfo.result;
+						try {
+							JSONObject object = new JSONObject(lists);
+							String num = object.getString("num").toString();
+							if (num.equals("1")) {
+								horizontal_listview_text
+										.setVisibility(View.VISIBLE);
+							} else if (num.equals("2")) {
+								String list = object.getString("list")
+										.toString();
+								JSONArray array = new JSONArray(list);
+								for (int i = 0; i < array.length(); i++) {
+									JSONObject object2 = (JSONObject) array
+											.get(i);
+									map = new HashMap<String, Object>();
+									map.put("id", object2.getString("id")
+											.toString());
+									map.put("name", object2.getString("name")
+											.toString());
+									map.put("image", object2.getString("image")
+											.toString());
+									map.put("number",
+											object2.getString("number")
+													.toString());
+									listmaps.add(map);
+								}
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
 					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+				});
 	};
+
 	private void date_horizontal() {
 		baseAdapter = new BaseAdapter() {
 
@@ -401,12 +455,23 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 				if (image.equals("0")) {
 					imageView.setBackground(getActivity().getResources()
 							.getDrawable(R.drawable.logo));
-				}else {
+				} else {
 					bitmapUtils = new BitmapUtils(getActivity());
-					bitmapUtils.display(imageView, ImageAddress.think+image);
+					bitmapUtils.display(imageView, ImageAddress.think + image);
 				}
 				city.setText(listmaps.get(position).get("name").toString());
 				num.setText(listmaps.get(position).get("number").toString());
+				
+				imageView.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						intent = new Intent(getActivity(), IdeasWorldZhiKuDetails.class);
+						intent.putExtra("zhikuid", listmaps.get(0).get("id").toString());
+						startActivity(intent);
+					}
+				});
 				return view;
 			}
 
@@ -422,6 +487,10 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 
 			@Override
 			public int getCount() {
+				if (0 == listmaps.size()) {
+					Show.toast(getActivity(), "暂无加入智库"); // 如果没有智库，给予用户提示
+				}
+
 				return listmaps.size();
 			}
 		};
@@ -431,6 +500,8 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 	private void init() {
 		img = (ImageView) rootView.findViewById(R.id.img);
 		img.setOnClickListener(this);
+		
+	
 		linearLayout1_img1 = (ImageView) rootView
 				.findViewById(R.id.linearLayout1_img1);
 		linearLayout1_img1.setOnClickListener(this);
@@ -469,82 +540,111 @@ public class ZhikuFragment extends Fragment implements OnClickListener {
 		my_zhiku = (TextView) rootView.findViewById(R.id.my_zhiku);
 		my_library = (LinearLayout) rootView.findViewById(R.id.my_library);
 		my_library.setOnClickListener(this);
+		
+		
+		llChengyuan = (LinearLayout) rootView.findViewById(R.id.llChengyuan);
+		llChengyuan.setOnClickListener(this);
+		
+		
 		ideas_more = (RelativeLayout) rootView.findViewById(R.id.ideas_more);
 		ideas_more.setOnClickListener(this);
 		zhiku = rootView.findViewById(R.id.zhiku);
 		my_zhiku_content = rootView.findViewById(R.id.my_zhiku_content);
 		horizontal_listview = (HorizontalListView) rootView
 				.findViewById(R.id.horizontal_listview);
-		horizontal_listview_text = (TextView) rootView.findViewById(R.id.horizontal_listview_text);
+		horizontal_listview_text = (TextView) rootView
+				.findViewById(R.id.horizontal_listview_text);
 		map = new HashMap<String, Object>();
-		listmap = new ArrayList<HashMap<String,Object>>();
-		listimg1 = new ArrayList<HashMap<String,Object>>();
-		listimg2 = new ArrayList<HashMap<String,Object>>();
-		listimg3 = new ArrayList<HashMap<String,Object>>();
+		listmap = new ArrayList<HashMap<String, Object>>();
+		listimg1 = new ArrayList<HashMap<String, Object>>();
+		listimg2 = new ArrayList<HashMap<String, Object>>();
+		listimg3 = new ArrayList<HashMap<String, Object>>();
 	}
 
 	@Override
 	public void onClick(View v) {
 		String uid = null;
 		switch (v.getId()) {
-		case R.id.img:// 创意世界智库
+		//点击跳转到智库成员
+		
+		case  R.id.llChengyuan:			
+			if (IsTrue.userId == 0) {
+				Show.toast(getActivity(), "请先登录,亲");
+				return;
+			} else {
+			intent = new Intent(getActivity(), IdeasZhiKuMan.class);
+			intent.putExtra("zhikuid", id);
+			startActivity(intent);
+			}
+			break;
+		
+		case R.id.img:// 跳转创意世界智库，大厅、聊天室界面
 			if (IsTrue.userId == 0) {
 				return;
-			}else {
+			} else {
 				intent = new Intent(getActivity(), IdeasWorldZhiKuDetails.class);
 				intent.putExtra("zhikuid", id);
 				startActivity(intent);
 			}
 			break;
 		case R.id.my_library:// 我的智库
+			currentIndex = 1;
 			if (IsTrue.userId == 0) {
 				return;
-			}else {
-			zhiku.setVisibility(View.GONE);
-			my_zhiku_content.setVisibility(View.VISIBLE);
-			my_zhiku.setTextColor(getActivity().getResources().getColor(
-					R.color.blueMain));
-			Drawable drawable = getResources().getDrawable(
-					R.drawable.indexthisfooter);
-			drawable.setBounds(0, 0, drawable.getMinimumWidth(),
-					drawable.getMinimumHeight());
-			my_zhiku.setCompoundDrawables(null, null, null, drawable);
-			world_zhiku.setTextColor(getActivity().getResources()
-					.getColorStateList(R.color.zhiku));
-			world_zhiku.setCompoundDrawables(null, null, null, null);
-			date_horizontal();
+			} else {
+				zhiku.setVisibility(View.GONE);
+				my_zhiku_content.setVisibility(View.VISIBLE);
+				my_zhiku.setTextColor(getActivity().getResources().getColor(
+						R.color.blueMain));
+				Drawable drawable = getResources().getDrawable(
+						R.drawable.indexthisfooter);
+				drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+						drawable.getMinimumHeight());
+				my_zhiku.setCompoundDrawables(null, null, null, drawable);
+				world_zhiku.setTextColor(getActivity().getResources()
+						.getColorStateList(R.color.zhiku));
+				world_zhiku.setCompoundDrawables(null, null, null, null);
+				date_horizontal();
 			}
 			break;
 		case R.id.world_library:// 创意世界智库
-			zhiku.setVisibility(View.VISIBLE);
-			my_zhiku_content.setVisibility(View.GONE);
-			world_zhiku.setTextColor(getActivity().getResources().getColor(
-					R.color.blueMain));
-			Drawable drawable1 = getResources().getDrawable(
-					R.drawable.indexthisfooter);
-			drawable1.setBounds(0, 0, drawable1.getMinimumWidth(),
-					drawable1.getMinimumHeight());
-			world_zhiku.setCompoundDrawables(null, null, null, drawable1);
-			my_zhiku.setTextColor(getActivity().getResources()
-					.getColorStateList(R.color.zhiku));
-			my_zhiku.setCompoundDrawables(null, null, null, null);
+			if (currentIndex == 0) {
+				intent = new Intent(getActivity(), IdeasWorldZhiKuDetails.class);
+				intent.putExtra("zhikuid", id);
+				startActivity(intent);
+			} else {
+				currentIndex = 0;
+				zhiku.setVisibility(View.VISIBLE);
+				my_zhiku_content.setVisibility(View.GONE);
+				world_zhiku.setTextColor(getActivity().getResources().getColor(
+						R.color.blueMain));
+				Drawable drawable1 = getResources().getDrawable(
+						R.drawable.indexthisfooter);
+				drawable1.setBounds(0, 0, drawable1.getMinimumWidth(),
+						drawable1.getMinimumHeight());
+				world_zhiku.setCompoundDrawables(null, null, null, drawable1);
+				my_zhiku.setTextColor(getActivity().getResources()
+						.getColorStateList(R.color.zhiku));
+				my_zhiku.setCompoundDrawables(null, null, null, null);
+			}
 			break;
 		case R.id.ideas_more:// 更多
+			currentIndex = 2;
 			intent = new Intent(getActivity(), HotZhiKu.class);
 			startActivity(intent);
 			break;
-		case R.id.ideas_result:// 创意世界优秀结果
+		case R.id.ideas_result:// 创意世界优秀成果
 			if (IsTrue.userId == 0) {
-				
-			}else {
-			intent = new Intent(getActivity(), BestResultsActivity.class);
-			intent.putExtra("tid", id);
-			startActivity(intent);
+				HomeActivity.viewPager.setCurrentItem(3);
+			} else {
+				intent = new Intent(getActivity(), BestResultsActivity.class);
+				intent.putExtra("tid", id);
+				startActivity(intent);
 			}
 			break;
 		case R.id.ideas_heritage:// 创意世界优秀遗产
-				intent = new Intent(getActivity(), WorldHeritageActivity.class);
-				startActivity(intent);
+			intent = new Intent(getActivity(), WorldHeritageActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.linearLayout1_img1:// 人家的详情
 			uid = listimg1.get(0).get("uid").toString();

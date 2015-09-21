@@ -8,32 +8,46 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lsbf.cysj.R;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.utils.Show;
 import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 import com.lsfb.cysj.view.XListView.IXListViewListener;
+import com.umeng.socialize.utils.Log;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 系統消息
+ * @author Administrator
+ *
+ */
 public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 	private XListView list;
 	BaseAdapter adapter;
@@ -44,10 +58,15 @@ public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 	RequestParams params;
 	private TextView xitongmsg2;
 	int count = 0;
+	
+	@ViewInject(R.id.hot_ideas_games_content_back)
+	private LinearLayout back;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xitongmsg);
+		ViewUtils.inject(this);
 		init();
 		data();
 		initdata();
@@ -103,6 +122,7 @@ public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 							map.put("send", object2.getString("send").toString());
 							map.put("newmsg", object2.getString("newmsg").toString());
 							map.put("time", object2.getString("time").toString());
+							map.put("zmsg", object2.getString("zmsg").toString());
 							listmap.add(map);
 						}
 					}
@@ -115,9 +135,45 @@ public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 	}
 
 	private void init() {
+		
+		 
+		back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+
 		map = new HashMap<String, Object>();
 		listmap = new ArrayList<HashMap<String,Object>>();
 		list = (XListView) findViewById(R.id.xitongmsg);
+		/*
+		 *   zmsg:1邀请好友加入智库—跳|2邀请好友关注比赛
+		 */
+		list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				
+				position=position-1;
+				Log.i("zgscwjm", "postion:"+position);
+				int zm=Integer.parseInt(listmap.get(position).get("zmsg").toString());
+			
+				if(zm==1){
+					Intent intent=new Intent(XiTongMsg.this,ThinkTankCertificationActivity.class);
+					startActivity(intent);
+				}else if(zm==2){
+					Intent intent=new Intent(XiTongMsg.this,HotIdeasGamesContentActivity.class);
+					intent.putExtra("sid",listmap.get(position).get("zid").toString());
+					startActivity(intent);
+			}else{
+				return;
+			}
+			}
+			
+		});
 		list.setPullLoadEnable(true);
 		list.setXListViewListener(this);
 		xitongmsg2 = (TextView) findViewById(R.id.xitongmsg2);
@@ -144,6 +200,7 @@ public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 				try {
 					JSONObject object = new JSONObject(list);
 					String num = object.getString("num").toString();
+					
 					if (num.equals("1")) {
 						xitongmsg2.setVisibility(View.VISIBLE);
 					}else if (num.equals("2")) {
@@ -157,6 +214,8 @@ public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 							map.put("send", object2.getString("send").toString());
 							map.put("newmsg", object2.getString("newmsg").toString());
 							map.put("time", object2.getString("time").toString());
+							map.put("zmsg", object2.getString("zmsg").toString());
+							map.put("zid", object2.getString("zid").toString());
 							listmap.add(map);
 						}
 					}
@@ -174,8 +233,7 @@ public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 		jiazaidialog.setCanceledOnTouchOutside(false);
 	}
 	private void data() {
-		adapter = new BaseAdapter() {
-			
+		adapter = new BaseAdapter() {			
 			@Override
 			public View getView(int position, View view, ViewGroup parent) {
 				ViewHolder holder = null;
@@ -204,11 +262,15 @@ public class XiTongMsg extends FragmentActivity implements IXListViewListener{
 			}
 			
 			@Override
-			public int getCount() {
+			public int getCount() {				
 				return listmap.size();
 			}
-		};
+		};		
 		list.setAdapter(adapter);
+		if(0==listmap.size()){
+			Toast.makeText(XiTongMsg.this, "暂无系统消息", Toast.LENGTH_SHORT).show();
+			 				
+		}
 	}
 	static class ViewHolder{
 		TextView time,text;

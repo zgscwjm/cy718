@@ -114,6 +114,7 @@ public class CreativeFragments extends Fragment implements IXListViewListener {
 
 						break;
 					case 3:
+						
 						Toast.makeText(getActivity(), "已经点赞了，请勿重复点赞",
 								Toast.LENGTH_SHORT).show();
 						break;
@@ -443,7 +444,7 @@ public class CreativeFragments extends Fragment implements IXListViewListener {
 										.findViewById(R.id.tv_zan);
 								imageView
 										.setBackgroundResource(R.drawable.zan_ed);
-								textView.setText("已赞");
+								textView.setText("1");
 								Map<String, Object>	map=list.get(position);
 								map.put("zan","1" );
 								zan();

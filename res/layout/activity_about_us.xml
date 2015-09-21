@@ -29,14 +29,10 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_AboutUs"
-        android:textColor="@color/greyhomepage"
-        android:textSize="15sp"
+   <WebView
+        android:id="@+id/webAboutus"       
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_height="match_parent"
+          />
 
 </LinearLayout>

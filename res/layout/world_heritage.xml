@@ -45,7 +45,7 @@
             android:layout_marginRight="10dp"
             android:text="提交遗产"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>
 	<TextView 

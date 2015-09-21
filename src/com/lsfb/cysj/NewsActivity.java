@@ -86,7 +86,11 @@ import com.lsbf.cysj.R;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.utils.ExpressionUtil;
-
+/**
+ * 私信，个人聊天界面
+ * @author Administrator
+ *
+ */
 public class NewsActivity extends FragmentActivity implements OnClickListener {
 	@ViewInject(R.id.news_list)
 	private ListView news_list;

@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,11 @@ import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.fragment.InnovationAwardFragment.ViewHolder;
 import com.lsfb.cysj.view.ResDialog;
-
+/**
+ * 科学奖
+ * @author Administrator
+ *
+ */
 public class ScienceAwardFragment extends Fragment implements OnClickListener {
 	private static String[] citys = new String[] { "成都智库", "北京智库", "上海智库",
 			"绵阳智库", "广州智库", "深圳智库", "内蒙古智库", "北京智库", "上海智库", "绵阳智库", "广州智库",
@@ -51,6 +56,23 @@ public class ScienceAwardFragment extends Fragment implements OnClickListener {
 	HashMap<String, Object> map;
 	ArrayList<HashMap<String, Object>> listmap;
 	String tp;
+	
+	int piao;	
+	ViewHolder viewHolder = null;
+	public Handler handle = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 112:				
+				viewHolder.num.setText("当前票数:"+piao++);
+				
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -167,6 +189,7 @@ public class ScienceAwardFragment extends Fragment implements OnClickListener {
 				holder.city.setText(listmap.get(position).get("title").toString());
 				holder.text.setText(listmap.get(position).get("name").toString());
 				holder.num.setText("当前票数:"+listmap.get(position).get("piao").toString());
+				 piao=Integer.parseInt(listmap.get(position).get("piao").toString());
 				if (tp.equals("1")) {
 					holder.button.setText("免费投票");
 					holder.button.setOnClickListener(new OnClickListener() {
@@ -242,7 +265,9 @@ public class ScienceAwardFragment extends Fragment implements OnClickListener {
 						Toast.makeText(getActivity(), "投票失败",
 								Toast.LENGTH_SHORT).show();
 					}else if (num.equals("2")) {
-						
+						Toast.makeText(getActivity(), "投票成功",
+								Toast.LENGTH_SHORT).show();
+						handle.sendEmptyMessage(112);
 					}else if (num.equals("3")) {
 						Toast.makeText(getActivity(), "明天再来投吧",
 								Toast.LENGTH_SHORT).show();

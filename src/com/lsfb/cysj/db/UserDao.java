@@ -86,4 +86,10 @@ public class UserDao {
     public List<String> getDisabledIds(){
         return DemoDBManager.getInstance().getDisabledIds();
     }
+//    public Map<String, com.easemob.chatuidemo.utils.RobotUser> getRobotUser(){
+//    	return DemoDBManager.getInstance().getRobotList();
+//    }
+//    public void saveRobotUser(List<com.easemob.chatuidemo.utils.RobotUser> robotList){
+//    	DemoDBManager.getInstance().saveRobotList(robotList);
+//    }
 }

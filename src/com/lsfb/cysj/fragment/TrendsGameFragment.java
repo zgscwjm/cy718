@@ -22,8 +22,15 @@ import com.lsfb.cysj.ReleaseGameActivity;
 import com.lsfb.cysj.ReleaseIdeasActivity;
 import com.lsfb.cysj.adapter.FragmentAdapter;
 import com.lsfb.cysj.app.IsTrue;
+import com.lsfb.cysj.app.Myapplication;
 import com.lsfb.cysj.base.NoViewPage;
+import com.lsfb.cysj.utils.SharedPrefsUtil;
 
+/**
+ * 动态比赛,1.熱門HotIdeasGameFragment。2.創意世界 IdeasWorldSonFragment3.
+ * @author Administrator
+ *
+ */
 public class TrendsGameFragment extends Fragment implements OnClickListener {
 
 	@Override
@@ -88,13 +95,19 @@ public class TrendsGameFragment extends Fragment implements OnClickListener {
 		ideas_world_button1.setOnClickListener(this);
 		ideas_world_button2.setOnClickListener(this);
 		ideas_world_button3.setOnClickListener(this);
-		xie = (RelativeLayout) rootView.findViewById(R.id.ideas_world_xie);
+		
+		//发布
+		xie = (RelativeLayout) rootView.findViewById(R.id.ideas_world_xie);		
 		xie.setOnClickListener(this);
 		ideas_world_page = (NoViewPage) rootView
 				.findViewById(R.id.ideas_world_page);
 		 adapter = new FragmentAdapter(
 				getChildFragmentManager(), 3, 4);
 		ideas_world_page.setAdapter(adapter);
+		if(3==SharedPrefsUtil.getIntValue(Myapplication.context, "pageto", 0)){
+			ideas_world_page.setCurrentItem(2);
+		    SharedPrefsUtil.putValue(Myapplication.context, "pageto", 0);
+		}
 	}
 	
 	@Override
@@ -144,6 +157,9 @@ public class TrendsGameFragment extends Fragment implements OnClickListener {
 			head.setText(R.string.ideas_world_button3_text);
 			adapter.setDatechuangFriend();
 			break;
+			/*
+			 * 发布图标按钮
+			 */
 		case R.id.ideas_world_xie:
 			if (IsTrue.userId == 0) {
 //				IsTrue.fabulogin = false;//发布默认未登录
@@ -167,6 +183,43 @@ public class TrendsGameFragment extends Fragment implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if(ideas_world_page.getCurrentItem()==1){
+			IsTrue.fabuotheridea = 1;
+			ideas_world_button2.setBackgroundResource(R.drawable.shape);
+			ideas_world_button2.setTextColor(getActivity()
+					.getResources().getColorStateList(R.color.white));
+			ideas_world_button1.setBackgroundResource(R.drawable.shapedefault);
+			ideas_world_button1.setTextColor(getActivity()
+					.getResources().getColorStateList(R.color.greymy));
+			ideas_world_button3.setBackgroundResource(R.drawable.shapedefault);
+			ideas_world_button3.setTextColor(getActivity()
+					.getResources().getColorStateList(R.color.greymy));
+			head.setText(R.string.ideas_world_button2_text);
+			adapter.refresh();
+			
+		}else if(ideas_world_page.getCurrentItem()==2){
+			IsTrue.fabuotheridea = 2;
+			ideas_world_button3.setBackgroundResource(R.drawable.shape);
+			ideas_world_button3.setTextColor(getActivity()
+					.getResources().getColorStateList(R.color.white));
+			ideas_world_button2.setBackgroundResource(R.drawable.shapedefault);
+			ideas_world_button2.setTextColor(getActivity()
+					.getResources().getColorStateList(R.color.greymy));
+			ideas_world_button1.setBackgroundResource(R.drawable.shapedefault);
+			ideas_world_button1.setTextColor(getActivity()
+					.getResources().getColorStateList(R.color.greymy));
+			head.setText(R.string.ideas_world_button3_text);
+			adapter.setDatechuangFriend();
+			
+		}
+//		else if{
+//			
+//		}
 	}
 
 }

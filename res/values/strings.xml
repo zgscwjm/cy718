@@ -36,6 +36,10 @@
 这就是生命.\n
 而她不再是一个简单的发声机器.\n
 她就是----“Clara”</string>
+
+    
+    
+    
     <string name="title_activity_creative_details">CreativeDetailsActivity</string>
     <string name="title_activity_other_details">OtherDetailsActivity</string>
     <string name="xlistview_header_hint_normal">下拉刷新</string>
@@ -51,6 +55,14 @@
     <string name="invalidSD">sdcard无效或没有插入！</string>
     <string name="photo">选择相册</string>
     <string name="album">相册</string>
+    
+     <string name="tip_toupiao">真的要投TA一票么?</string>
+       <string name="no_toupiao"> 不投</string>
+        <string name="yes_toupiao">果断投</string>
+      
+    <string name="up_tognxunlu">上传通讯录</string>
+     <string name="tip_up_tongxunlu">启用通讯录匹配，如果你的通讯录中有朋友注册了创意世界可以关注TA，没有可以邀请</string>
+     
     <string name="preview">预览</string>
     <string name="unfinished">完成</string>
     <string name="camera_cancel">取消</string>
@@ -93,7 +105,7 @@
     <string name="button_logout">Logout</string>
     <string name="button_uploadlog">Upload the log</string>
     <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">取消</string>
     <string name="prompt">Prompt</string>
     <string name="clear_records">Clear conversation?</string>
     <string name="clear_all_records">Clear all conversations？</string>
@@ -172,7 +184,7 @@
     <string name="newchat">Create new group</string>
     <string name="agree">Agree</string>
     <string name="Group_chat">Group chat</string>
-    <string name="chat_room">Chat room</string>
+    <string name="chat_room">组管理</string>
     <string name="not_download">Did not download:</string>
     <string name="is_down_please_wait">Downloading video, please try again later</string>
     <string name="Exit_the_group_chat">Exit the group</string>
@@ -333,5 +345,37 @@
     <string name="searching">searching</string>
     <string name="hanging_up">Hanging up..</string>
     <string name="illegal_user_name">Illegal user name</string>
+    
+    
+     <string name="o_password">原密码</string>
+    <string name="n_password">新密码 </string>
+    <string name="s_password">确认密码</string>
+     <string name="positive">确定</string>
+     <string name="modify_password_ok">修改密码成功</string>
+      <string name="modify_password_fail">修改密码失败</string>
+       <string name="error_invalid_password">密码长度太短，至少6位</string>
+    <string name="pass_not_match">密码两次输入不一致</string>
+    <string name="input_not_empty">输入不能为空</string>
+    
+     <string name="sinaweibo">新浪微博</string>
+    <string name="tencentweibo">腾讯微博</string>
+    <string name="qzone">QQ空间</string>
+    <string name="wechat">微信好友</string>
+    <string name="wechatmoments">微信朋友圈</string>
+     <string name="email">邮件</string>
+     <string name="qq">QQ</string>
+      <string name="share_to_qzone">分享到QQ空间</string>
+    <string name="share_to_qq">分享到QQ</string>
+    <string name="shortmessage">信息</string>
+     
+    
+     <string name="basic_action_1">删除</string> 
+    <string name="basic_del">Delete</string>
+    <string name="str_orange">#fe7b27</string>
+    <string name="str_green">#3cac69</string>
+    <string name="str_red">#FF4444</string>
+    <string name="str_yellow">#FFBB33</string>
+    <string name="str_sky_blue">#33B5E5</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>

@@ -32,8 +32,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -47,6 +49,12 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
+/**
+ * 禅修
+ * 
+ * @author Administrator
+ * 
+ */
 public class MeditationActivity extends FragmentActivity implements
 		OnClickListener {
 	ImageView meditation_back;
@@ -67,56 +75,66 @@ public class MeditationActivity extends FragmentActivity implements
 	 */
 	@ViewInject(R.id.btn_meditation_songjing)
 	private Button songjing;
-//	/**
-//	 * 姓名 name1 meditation_name1
-//	 */
-//	@ViewInject(R.id.meditation_name1)
-//	private Button name1;
-//	/**
-//	 * 姓名 name2 meditation_name2
-//	 */
-//	@ViewInject(R.id.meditation_name2)
-//	private Button name2;
-//	/**
-//	 * 姓名 name3 meditation_name3
-//	 */
-//	@ViewInject(R.id.meditation_name3)
-//	private Button name3;
-//	/**
-//	 * 姓名 name4 meditation_name4
-//	 */
-//	@ViewInject(R.id.meditation_name4)
-//	private Button name4;
-//	/**
-//	 * 姓名 name5 meditation_name5
-//	 */
-//	@ViewInject(R.id.meditation_name5)
-//	private Button name5;
-//	/**
-//	 * 姓名 name6 meditation_name6
-//	 */
-//	@ViewInject(R.id.meditation_name6)
-//	private Button name6;
-//	/**
-//	 * 姓名 name7 meditation_name7
-//	 */
-//	@ViewInject(R.id.meditation_name7)
-//	private Button name7;
-//	/**
-//	 * 姓名 name8 meditation_name8
-//	 */
-//	@ViewInject(R.id.meditation_name8)
-//	private Button name8;
-//	/**
-//	 * 姓名 name9 meditation_name9
-//	 */
-//	@ViewInject(R.id.meditation_name9)
-//	private Button name9;
-//	/**
-//	 * 姓名 name10 meditation_name10
-//	 */
-//	@ViewInject(R.id.meditation_name10)
-//	private Button name10;
+
+	/**
+	 * 烟飘
+	 */
+	@ViewInject(R.id.imgYan)
+	private ImageView imgYan;
+	
+	boolean workFlag;
+	int currIndex=0;
+
+	// /**
+	// * 姓名 name1 meditation_name1
+	// */
+	// @ViewInject(R.id.meditation_name1)
+	// private Button name1;
+	// /**
+	// * 姓名 name2 meditation_name2
+	// */
+	// @ViewInject(R.id.meditation_name2)
+	// private Button name2;
+	// /**
+	// * 姓名 name3 meditation_name3
+	// */
+	// @ViewInject(R.id.meditation_name3)
+	// private Button name3;
+	// /**
+	// * 姓名 name4 meditation_name4
+	// */
+	// @ViewInject(R.id.meditation_name4)
+	// private Button name4;
+	// /**
+	// * 姓名 name5 meditation_name5
+	// */
+	// @ViewInject(R.id.meditation_name5)
+	// private Button name5;
+	// /**
+	// * 姓名 name6 meditation_name6
+	// */
+	// @ViewInject(R.id.meditation_name6)
+	// private Button name6;
+	// /**
+	// * 姓名 name7 meditation_name7
+	// */
+	// @ViewInject(R.id.meditation_name7)
+	// private Button name7;
+	// /**
+	// * 姓名 name8 meditation_name8
+	// */
+	// @ViewInject(R.id.meditation_name8)
+	// private Button name8;
+	// /**
+	// * 姓名 name9 meditation_name9
+	// */
+	// @ViewInject(R.id.meditation_name9)
+	// private Button name9;
+	// /**
+	// * 姓名 name10 meditation_name10
+	// */
+	// @ViewInject(R.id.meditation_name10)
+	// private Button name10;
 	/**
 	 * meditation_pai1 pai1 牌位
 	 */
@@ -127,17 +145,42 @@ public class MeditationActivity extends FragmentActivity implements
 	 */
 	@ViewInject(R.id.meditation_pai2)
 	private LinearLayout pai2;
+	
 	AsyncHttpClient client;
 	RequestParams params;
 	Intent intent;
-	int length;//返回的数值长度
+	int length;// 返回的数值长度
 	Dialog dialog;
 	Dialog jiazaidialog;
-	LinearLayout layout;//动态添加布局
-	LinearLayout layout2;//动态添加布局
-	Button btnpai;//牌位
-	int pwidth;//窗体宽度
-	 
+	LinearLayout layout;// 动态添加布局
+	LinearLayout layout2;// 动态添加布局
+	Button btnpai;// 牌位
+	int pwidth;// 窗体宽度
+	
+	public static  final int YANPIAO_START=1009;
+
+	// 烟飘
+	int[] bitmapId = new int[] { R.drawable.yan1, R.drawable.yan2,
+			R.drawable.yan3, R.drawable.yan4, R.drawable.yan5, R.drawable.yan6,
+			R.drawable.yan7, R.drawable.yan8, R.drawable.yan9,
+			R.drawable.yan11, R.drawable.yan12, R.drawable.yan13,
+			R.drawable.yan14, R.drawable.yan15 };
+	
+	
+	public  Handler handler=new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case YANPIAO_START:
+				imgYan.setBackgroundResource(bitmapId[currIndex]);
+				
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -160,7 +203,8 @@ public class MeditationActivity extends FragmentActivity implements
 			@Override
 			public void onClick(View arg0) {
 				if (IsTrue.userId == 0) {
-					intent = new Intent(MeditationActivity.this,HomeActivity.class);
+					intent = new Intent(MeditationActivity.this,
+							HomeActivity.class);
 					IsTrue.tabnum = 4;
 					IsTrue.exit = true;
 					startActivity(intent);
@@ -175,13 +219,13 @@ public class MeditationActivity extends FragmentActivity implements
 	protected void shangxiang() {
 		client = new AsyncHttpClient();
 		params = new RequestParams();
-		params.put("uid", IsTrue.userId+"");
+		params.put("uid", IsTrue.userId + "");
 		if (IsTrue.shangxiang == true) {
-			params.put("bid", 1+"");
-		}else{
-			params.put("bid", 2+"");
+			params.put("bid", 1 + "");
+		} else {
+			params.put("bid", 2 + "");
 		}
-		client.post(MyUrl.chanting, params, new JsonHttpResponseHandler(){
+		client.post(MyUrl.chanting, params, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
@@ -191,24 +235,34 @@ public class MeditationActivity extends FragmentActivity implements
 					switch (i) {
 					case 1:
 						if (IsTrue.shangxiang == true) {
-							Toast.makeText(getApplicationContext(), "上香失败", Toast.LENGTH_SHORT).show();
-						}else {
-							Toast.makeText(getApplicationContext(), "诵经失败", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "上香失败",
+									Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(getApplicationContext(), "诵经失败",
+									Toast.LENGTH_SHORT).show();
 						}
 						break;
 					case 2:
 						if (IsTrue.shangxiang == true) {
-							Toast.makeText(getApplicationContext(), "上香成功", Toast.LENGTH_SHORT).show();
-							ll_meditation_xiang.setBackgroundResource(R.drawable.a7);
-						}else {
-							Toast.makeText(getApplicationContext(), "诵经成功", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "上香成功",
+									Toast.LENGTH_SHORT).show();
+							ll_meditation_xiang
+									.setBackgroundResource(R.drawable.a7);
+							
+							yanPiao();
+
+						} else {
+							Toast.makeText(getApplicationContext(), "诵经成功",
+									Toast.LENGTH_SHORT).show();
 						}
 						break;
 					case 3:
-						Toast.makeText(getApplicationContext(), "创币不足", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "创币不足",
+								Toast.LENGTH_SHORT).show();
 						break;
 					case 4:
-						Toast.makeText(getApplicationContext(), "没有创币", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "没有创币",
+								Toast.LENGTH_SHORT).show();
 						break;
 					default:
 						break;
@@ -216,9 +270,10 @@ public class MeditationActivity extends FragmentActivity implements
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
+
 				super.onSuccess(statusCode, headers, response);
 			}
+
 			@Override
 			public void onFailure(int statusCode, Header[] headers,
 					Throwable throwable, JSONObject errorResponse) {
@@ -228,29 +283,76 @@ public class MeditationActivity extends FragmentActivity implements
 			}
 		});
 	}
+	
+	/**
+	 * 烟飘
+	 */
+	void yanPiao(){
+		  workFlag=true;
+		
+		 new Thread(){   
+			  
+             //重写run方法   
+             public void run(){ 
+                     // TODO Auto-generated method stub   
+                     while(workFlag)//一直执行这个循环(死循环)   
+                     {   
+//                             currIndex = (currIndex+1)%bitmapId.length;//更改图片的ID   
+                             
+                             if(currIndex<13){//                            	 
+                            	handler.sendEmptyMessage(YANPIAO_START);
+                            	 currIndex++; 
+                             }else{
+                            	 currIndex=0;
+                             }                             
+ 
+                             try 
+                             {   
+                                   Thread.sleep(500);//到此处暂停3秒钟,然后继续执行run函数,即实现每隔3秒钟刷新屏幕一次   
+                             }  
+                             catch (InterruptedException e)    
+                             {   
+                                     // TODO Auto-generated catch block   
+                                     e.printStackTrace();   
+                             }  
+                     }  
+             }  
+     }.start();  
+} 
+  
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		workFlag=false;
+	}
 
 	private void showdialog() {
-//		LayoutInflater inflater = LayoutInflater.from(this);
-//		View v = inflater.inflate(R.layout.dialogview, null);
-//
-//		LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);
-//
-//		// main.xml中的ImageView
-//		ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
-//		// 加载动画
-//		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this,
-//				R.anim.animation);
-//		// 使用ImageView显示动画
-//		spaceshipImage.startAnimation(hyperspaceJumpAnimation);
-//
-//		jiazaidialog = new Dialog(this,
-//				R.style.FullHeightDialog);
-//		jiazaidialog.setCancelable(true);
-//		jiazaidialog.show();
-//		jiazaidialog.setCanceledOnTouchOutside(false);
-//		jiazaidialog.setContentView(layout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-//				LinearLayout.LayoutParams.WRAP_CONTENT));			
-		jiazaidialog = new ResDialog(this,R.style.MyDialog, "正在加载...",
+		// LayoutInflater inflater = LayoutInflater.from(this);
+		// View v = inflater.inflate(R.layout.dialogview, null);
+		//
+		// LinearLayout layout = (LinearLayout)
+		// v.findViewById(R.id.dialog_view);
+		//
+		// // main.xml中的ImageView
+		// ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
+		// // 加载动画
+		// Animation hyperspaceJumpAnimation =
+		// AnimationUtils.loadAnimation(this,
+		// R.anim.animation);
+		// // 使用ImageView显示动画
+		// spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+		//
+		// jiazaidialog = new Dialog(this,
+		// R.style.FullHeightDialog);
+		// jiazaidialog.setCancelable(true);
+		// jiazaidialog.show();
+		// jiazaidialog.setCanceledOnTouchOutside(false);
+		// jiazaidialog.setContentView(layout, new
+		// LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+		// LinearLayout.LayoutParams.WRAP_CONTENT));
+		jiazaidialog = new ResDialog(this, R.style.MyDialog, "正在加载...",
 				R.drawable.loads);
 		jiazaidialog.show();
 		jiazaidialog.setCanceledOnTouchOutside(false);
@@ -265,7 +367,7 @@ public class MeditationActivity extends FragmentActivity implements
 	private void requestjson() {
 		client = new AsyncHttpClient();
 		params = new RequestParams();
-		params.put("uid", IsTrue.userId+"");
+		params.put("uid", IsTrue.userId + "");
 		client.post(MyUrl.StringMeditation, params,
 				new JsonHttpResponseHandler() {
 					@Override
@@ -279,99 +381,135 @@ public class MeditationActivity extends FragmentActivity implements
 								JSONArray array = new JSONArray(lists);
 								length = array.length();
 								int one = length - 5;
-									if (one<=0) {
-										for (int j = 0; j < length; j++) {
-											JSONObject object = (JSONObject) array
-													.get(j);
-											pai1.setOrientation(LinearLayout.HORIZONTAL);
-											layout = new LinearLayout(getApplicationContext());
-											layout.setLayoutParams(new LinearLayout.LayoutParams(pwidth/5,LayoutParams.FILL_PARENT));
-											btnpai = new Button(getApplicationContext());
-											btnpai.setBackgroundResource(R.drawable.bitmpbg);
-											String name = object.getString("fname")
-													.toString();
-											int namelength = name.length();
-											if (namelength == 1) {
-												btnpai.setTextSize(13);
-												btnpai.setText(name);
-											} else if (namelength == 2) {
-												String a = name.substring(0, 1);
-												String b = name.substring(1, 2);
-												btnpai.setTextSize(13);
-												btnpai.setText(a + "\n" + b);
-											} else if (namelength == 3) {
-												String a = name.substring(0, 1);
-												String b = name.substring(1, 2);
-												String c = name.substring(2, 3);
-												btnpai.setTextSize(13);
-												btnpai.setText(a + "\n" + b + "\n"
-														+ c);
-											}
-											layout.addView(btnpai);
-											pai1.addView(layout);
+								if (one <= 0) {
+									for (int j = 0; j < length; j++) {
+										JSONObject object = (JSONObject) array
+												.get(j);
+										pai1.setOrientation(LinearLayout.HORIZONTAL);
+										layout = new LinearLayout(
+												getApplicationContext());
+										layout.setLayoutParams(new LinearLayout.LayoutParams(
+												pwidth / 5,
+												LayoutParams.FILL_PARENT));
+										btnpai = new Button(
+												getApplicationContext());
+										btnpai.setBackgroundResource(R.drawable.bitmpbg);
+										String name = object.getString("fname")
+												.toString();
+										int namelength = name.length();
+										if (namelength == 1) {
+											btnpai.setTextSize(12);
+											btnpai.setText(name);
+										} else if (namelength == 2) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b);
+										} else if (namelength == 3) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											String c = name.substring(2, 3);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b + "\n"
+													+ c);
+										} else if (namelength == 4) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											String c = name.substring(2, 3);
+											String d = name.substring(3, 4);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b + "\n"
+													+ c + "\n" + d);
 										}
-									}else {
-										for (int j = 0; j < 5; j++) {
-											JSONObject object = (JSONObject) array
-													.get(j);
-											pai1.setOrientation(LinearLayout.HORIZONTAL);
-											layout = new LinearLayout(getApplicationContext());
-											layout.setLayoutParams(new LinearLayout.LayoutParams(pwidth/5,LayoutParams.FILL_PARENT));
-											btnpai = new Button(getApplicationContext());
-											btnpai.setBackgroundResource(R.drawable.bitmpbg);
-											String name = object.getString("fname")
-													.toString();
-											int namelength = name.length();
-											if (namelength == 1) {
-												btnpai.setTextSize(13);
-												btnpai.setText(name);
-											} else if (namelength == 2) {
-												String a = name.substring(0, 1);
-												String b = name.substring(1, 2);
-												btnpai.setTextSize(13);
-												btnpai.setText(a + "\n" + b);
-											} else if (namelength == 3) {
-												String a = name.substring(0, 1);
-												String b = name.substring(1, 2);
-												String c = name.substring(2, 3);
-												btnpai.setTextSize(13);
-												btnpai.setText(a + "\n" + b + "\n"
-														+ c);
-											}
-											layout.addView(btnpai);
-											pai1.addView(layout);
-										}
-										for (int j = 5; j < length; j++) {
-											JSONObject object = (JSONObject) array
-													.get(j);
-											pai2.setOrientation(LinearLayout.HORIZONTAL);
-											layout = new LinearLayout(getApplicationContext());
-											layout.setLayoutParams(new LinearLayout.LayoutParams(pwidth/5,LayoutParams.FILL_PARENT));
-											btnpai = new Button(getApplicationContext());
-											btnpai.setBackgroundResource(R.drawable.bitmpbg);
-											String name = object.getString("fname")
-													.toString();
-											int namelength = name.length();
-											if (namelength == 1) {
-												btnpai.setTextSize(13);
-												btnpai.setText(name);
-											} else if (namelength == 2) {
-												String a = name.substring(0, 1);
-												String b = name.substring(1, 2);
-												btnpai.setTextSize(13);
-												btnpai.setText(a + "\n" + b);
-											} else if (namelength == 3) {
-												String a = name.substring(0, 1);
-												String b = name.substring(1, 2);
-												String c = name.substring(2, 3);
-												btnpai.setTextSize(13);
-												btnpai.setText(a + "\n" + b + "\n"
-														+ c);
-											}
-											layout.addView(btnpai);
-											pai2.addView(layout);
-										}
+										layout.addView(btnpai);
+										pai1.addView(layout);
 									}
+								} else {
+									for (int j = 0; j < 5; j++) {
+										JSONObject object = (JSONObject) array
+												.get(j);
+										pai1.setOrientation(LinearLayout.HORIZONTAL);
+										layout = new LinearLayout(
+												getApplicationContext());
+										layout.setLayoutParams(new LinearLayout.LayoutParams(
+												pwidth / 5,
+												LayoutParams.FILL_PARENT));
+										btnpai = new Button(
+												getApplicationContext());
+										btnpai.setBackgroundResource(R.drawable.bitmpbg);
+										String name = object.getString("fname")
+												.toString();
+										int namelength = name.length();
+										if (namelength == 1) {
+											btnpai.setTextSize(12);
+											btnpai.setText(name);
+										} else if (namelength == 2) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b);
+										} else if (namelength == 3) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											String c = name.substring(2, 3);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b + "\n"
+													+ c);
+										} else if (namelength == 4) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											String c = name.substring(2, 3);
+											String d = name.substring(3, 4);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b + "\n"
+													+ c + "\n" + d);
+										}
+										layout.addView(btnpai);
+										pai1.addView(layout);
+									}
+									for (int j = 5; j < length; j++) {
+										JSONObject object = (JSONObject) array
+												.get(j);
+										pai2.setOrientation(LinearLayout.HORIZONTAL);
+										layout = new LinearLayout(
+												getApplicationContext());
+										layout.setLayoutParams(new LinearLayout.LayoutParams(
+												pwidth / 5,
+												LayoutParams.FILL_PARENT));
+										btnpai = new Button(
+												getApplicationContext());
+										btnpai.setBackgroundResource(R.drawable.bitmpbg);
+										String name = object.getString("fname")
+												.toString();
+										int namelength = name.length();
+										if (namelength == 1) {
+											btnpai.setTextSize(12);
+											btnpai.setText(name);
+										} else if (namelength == 2) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b);
+										} else if (namelength == 3) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											String c = name.substring(2, 3);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b + "\n"
+													+ c);
+										} else if (namelength == 4) {
+											String a = name.substring(0, 1);
+											String b = name.substring(1, 2);
+											String c = name.substring(2, 3);
+											String d = name.substring(3, 4);
+											btnpai.setTextSize(12);
+											btnpai.setText(a + "\n" + b + "\n"
+													+ c + "\n" + d);
+										}
+										layout.addView(btnpai);
+										pai2.addView(layout);
+									}
+								}
 							} else if (i == 1) {
 								Toast.makeText(getApplicationContext(), "还未有人",
 										Toast.LENGTH_SHORT).show();
@@ -399,6 +537,8 @@ public class MeditationActivity extends FragmentActivity implements
 		meditation_back = (ImageView) findViewById(R.id.meditation_back);
 		ll_meditation_xiang = (LinearLayout) findViewById(R.id.ll_meditation_xiang);
 		btn_meditation_xiang = (Button) findViewById(R.id.btn_meditation_xiang);
+		// imgYan= (ImageView) findViewById(R.id.imgYan);
+
 		gongde.setOnClickListener(this);
 		qifu.setOnClickListener(this);
 		songjing.setOnClickListener(this);
@@ -412,13 +552,15 @@ public class MeditationActivity extends FragmentActivity implements
 		stopService(intent);
 		super.onStop();
 	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-//		if (IsTrue.exit == false && IsTrue.search == true) {
-//			finish();
-//		}
+		// if (IsTrue.exit == false && IsTrue.search == true) {
+		// finish();
+		// }
 		return super.onKeyDown(keyCode, event);
 	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -426,23 +568,23 @@ public class MeditationActivity extends FragmentActivity implements
 			showDialog();
 			break;
 		case R.id.btn_meditation_qifu:// 祈福
-//			if (IsTrue.userId == 0) {
-//				intent = new Intent(MeditationActivity.this,HomeActivity.class);
-//				IsTrue.tabnum = 4;
-//				IsTrue.exit = true;
-//				startActivity(intent);
-//				break;
-//			}
+			// if (IsTrue.userId == 0) {
+			// intent = new Intent(MeditationActivity.this,HomeActivity.class);
+			// IsTrue.tabnum = 4;
+			// IsTrue.exit = true;
+			// startActivity(intent);
+			// break;
+			// }
 			showDialog2();
 			break;
 		case R.id.btn_meditation_songjing:// 诵经
-//			if (IsTrue.userId == 0) {
-//				intent = new Intent(MeditationActivity.this,HomeActivity.class);
-//				IsTrue.tabnum = 4;
-//				IsTrue.exit = true;
-//				startActivity(intent);
-//				break;
-//			}
+			// if (IsTrue.userId == 0) {
+			// intent = new Intent(MeditationActivity.this,HomeActivity.class);
+			// IsTrue.tabnum = 4;
+			// IsTrue.exit = true;
+			// startActivity(intent);
+			// break;
+			// }
 			intent = new Intent(MeditationActivity.this, MusicService.class);
 			startService(intent);
 			IsTrue.shangxiang = false;
@@ -453,7 +595,6 @@ public class MeditationActivity extends FragmentActivity implements
 		}
 	}
 
-
 	private void showDialog2() {
 		dialog = new QiFuialog(this, R.style.selectorDialog,
 				new QiFuialog.PriorityListener() {
@@ -462,62 +603,75 @@ public class MeditationActivity extends FragmentActivity implements
 					public void refreshPriorityUI(String string) {
 						if (IsTrue.qifuchange == true) {
 							int two = length - 5;
-							if (two <=0) {
+							Log.d("dialog", "" + two);
+							if (two <= 0) {
 								pai1.setOrientation(LinearLayout.HORIZONTAL);
-								layout = new LinearLayout(getApplicationContext());
-								layout.setLayoutParams(new LinearLayout.LayoutParams(pwidth/5,LayoutParams.FILL_PARENT));
+								layout = new LinearLayout(
+										getApplicationContext());
+								layout.setLayoutParams(new LinearLayout.LayoutParams(
+										pwidth / 5, LayoutParams.FILL_PARENT));
 								btnpai = new Button(getApplicationContext());
 								btnpai.setBackgroundResource(R.drawable.bitmpbg);
 								String name = string.toString();
 								int namelength = name.length();
 								if (namelength == 1) {
-									btnpai.setTextSize(13);
+									btnpai.setTextSize(12);
 									btnpai.setText(name);
 								} else if (namelength == 2) {
 									String a = name.substring(0, 1);
 									String b = name.substring(1, 2);
-									btnpai.setTextSize(13);
+									btnpai.setTextSize(12);
 									btnpai.setText(a + "\n" + b);
 								} else if (namelength == 3) {
 									String a = name.substring(0, 1);
 									String b = name.substring(1, 2);
 									String c = name.substring(2, 3);
-									btnpai.setTextSize(13);
-									btnpai.setText(a + "\n" + b + "\n"
-											+ c);
+									btnpai.setTextSize(12);
+									btnpai.setText(a + "\n" + b + "\n" + c);
+								} else if (namelength == 4) {
+									String a = name.substring(0, 1);
+									String b = name.substring(1, 2);
+									String c = name.substring(2, 3);
+									String d = name.substring(3, 4);
+									btnpai.setTextSize(12);
+									Log.d("abcd", "" + a + "\n" + b + "\n" + c
+											+ "\n" + d);
+									btnpai.setText(a + "\n" + b + "\n" + c
+											+ "\n" + d);
 								}
 								layout.addView(btnpai);
 								pai1.addView(layout);
 								length++;
-							}else if (two > 0) {
+							} else if (two > 0) {
 								pai2.setOrientation(LinearLayout.HORIZONTAL);
-								layout = new LinearLayout(getApplicationContext());
-								layout.setLayoutParams(new LinearLayout.LayoutParams(pwidth/5,LayoutParams.FILL_PARENT));
+								layout = new LinearLayout(
+										getApplicationContext());
+								layout.setLayoutParams(new LinearLayout.LayoutParams(
+										pwidth / 5, LayoutParams.FILL_PARENT));
 								btnpai = new Button(getApplicationContext());
 								btnpai.setBackgroundResource(R.drawable.bitmpbg);
 								String name = string.toString();
 								int namelength = name.length();
 								if (namelength == 1) {
-									btnpai.setTextSize(13);
+									btnpai.setTextSize(12);
 									btnpai.setText(name);
 								} else if (namelength == 2) {
 									String a = name.substring(0, 1);
 									String b = name.substring(1, 2);
-									btnpai.setTextSize(13);
+									btnpai.setTextSize(12);
 									btnpai.setText(a + "\n" + b);
 								} else if (namelength == 3) {
 									String a = name.substring(0, 1);
 									String b = name.substring(1, 2);
 									String c = name.substring(2, 3);
-									btnpai.setTextSize(13);
-									btnpai.setText(a + "\n" + b + "\n"
-											+ c);
+									btnpai.setTextSize(12);
+									btnpai.setText(a + "\n" + b + "\n" + c);
 								}
 								layout.addView(btnpai);
 								pai2.addView(layout);
 								length++;
 							}
-						}else {
+						} else {
 							pai1.removeAllViews();
 							pai2.removeAllViews();
 							showdialog();
@@ -532,7 +686,7 @@ public class MeditationActivity extends FragmentActivity implements
 	private void showDialog() {
 		dialog = new MeditationDialog(this, R.style.selectorDialog);
 		dialog.show();
-		dialog.setCanceledOnTouchOutside(false);
+		dialog.setCanceledOnTouchOutside(true);
 	}
 
 }

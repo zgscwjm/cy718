@@ -22,7 +22,7 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/rounded_edittext"
         android:gravity="top|left"
-        android:hint="请输入评论内容" />
+        android:hint="众创优化" />
 
     <RelativeLayout
         android:layout_width="fill_parent"

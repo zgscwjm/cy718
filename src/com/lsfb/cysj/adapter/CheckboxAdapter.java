@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class CheckboxAdapter extends BaseAdapter {
@@ -54,6 +55,10 @@ public class CheckboxAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(R.layout.inviteman_item, null);
 			holder = new ViewHolder();
+			
+			holder.rlCheck= (RelativeLayout) convertView
+					.findViewById(R.id.rlCheck);
+			
 			holder.headimg = (ImageView) convertView
 					.findViewById(R.id.inviteman_item_img);
 			holder.name = (TextView) convertView
@@ -74,6 +79,7 @@ public class CheckboxAdapter extends BaseAdapter {
 		holder.num.setText(listmap.get(position).get("index")
 				.toString());
 //		holder.num.setText(nums[position]);
+				
 		holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
@@ -93,5 +99,6 @@ public class CheckboxAdapter extends BaseAdapter {
 		TextView name;
 		TextView num;
 		CheckBox checkBox;
+		RelativeLayout rlCheck;
 	}
 }

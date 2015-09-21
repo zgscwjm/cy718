@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -31,9 +32,14 @@ import com.lsbf.cysj.R;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
 
+/**
+ * 指数规则
+ * @author Administrator
+ *
+ */
 public class IndexRulesActivity extends Activity {
 	ImageButton ibIndexRulesbacking;// 返回
-	TextView tv_IndexRules;// 显示
+	WebView tv_IndexRules;// 显示
 	HttpClient httpClient;
 	Handler handler = new Handler() {
 		@Override
@@ -51,13 +57,16 @@ public class IndexRulesActivity extends Activity {
 					JSONObject jsonObject = new JSONObject(str);
 					switch (Integer.parseInt(jsonObject.get("num").toString())) {
 					case 1:
-
 						break;
 					case 2:
 						// Toast.makeText(AboutUsActivity.this, "上传成功",
 						// Toast.LENGTH_SHORT).show();
-						tv_IndexRules.setText(jsonObject.get("content")
-								.toString());
+						String url=jsonObject.get("url").toString();
+						
+						tv_IndexRules.loadUrl(url);
+						tv_IndexRules.getSettings().setJavaScriptEnabled(true);
+//						tv_IndexRules.setText(jsonObject.get("content")
+//								.toString());
 						break;
 
 					default:
@@ -130,7 +139,7 @@ public class IndexRulesActivity extends Activity {
 		// TODO Auto-generated method stub
 		httpClient = IsTrue.HttpConnectionManager.getHttpClient();
 		ibIndexRulesbacking = (ImageButton) findViewById(R.id.ibIndexRulesbacking);
-		tv_IndexRules = (TextView) findViewById(R.id.tv_IndexRules);
+		tv_IndexRules = (WebView) findViewById(R.id.tv_IndexRules);
 	}
 
 	@Override

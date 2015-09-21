@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lsbf.cysj.R;
+import com.lsfb.cysj.utils.Show;
 
 public class AddFriendsActivity extends Activity implements OnClickListener {
 	Context mContext;
@@ -71,7 +73,7 @@ public class AddFriendsActivity extends Activity implements OnClickListener {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); 
 		ViewUtils.inject(this);
 		getPhoneContacts();
-//		getSIMContacts();
+		getSIMContacts();
 		init();
 		data();
 	}
@@ -159,17 +161,26 @@ public class AddFriendsActivity extends Activity implements OnClickListener {
 
 	private void data() {
 		adapter = new BaseAdapter() {
-
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.addfriends_item, null);
 				ImageView img = (ImageView) view.findViewById(R.id.addfriends_item_img);
 				TextView name = (TextView) view.findViewById(R.id.addfriends_item_name);
 				TextView num = (TextView) view.findViewById(R.id.addfriends_item_text);
-				ImageView guanzhu = (ImageView) view.findViewById(R.id.addfriends_item_kan);
+				final Button btnYaoqing = (Button) view.findViewById(R.id.addfriends_item_yaoqing);
 				name.setText(mContactsName.get(position));
 				num.setText(mContactsNumber.get(position));
 				img.setImageBitmap(mContactsPhonto.get(position));
+				btnYaoqing.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Show.toast(getApplicationContext(), "邀请成功");
+						btnYaoqing.setText("已邀请");
+						btnYaoqing.setEnabled(false);
+					}
+				});
 				return view;
 			}
 
@@ -207,6 +218,7 @@ public class AddFriendsActivity extends Activity implements OnClickListener {
 		case R.id.addfriends_back:
 			finish();
 			break;
+			
 
 		default:
 			break;

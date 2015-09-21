@@ -1,16 +1,29 @@
 package com.lsfb.cysj;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lsbf.cysj.R;
+import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.base.BaseActivity;
+import com.lsfb.cysj.utils.Show;
 import com.lsfb.cysj.view.CircleImageView;
 import com.lsfb.cysj.view.Code;
 
@@ -38,15 +51,25 @@ public class ForgetPassWordActivity extends BaseActivity {
 	CircleImageView civResetPassword;// 圆图标
 	TextView tvResetPassword;// 圆里面的数字
 	TextView tvResetPasswordtext;// 文字
+	
+	EditText  etForgetPhoneNum,etforgetAccountForget,etforgetPassWordForget,etforgetRePassWordAgain;
 
 	Button btngetVerificationCodeForget;// 获取验证码
 	private TimeCount time;// 验证码刷新时间
+	
+	String phone;
+	String sms;
+	
+	HttpUtils httpUtils;
+	RequestParams params;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_forget_pass_word);
 		init();
+		httpUtils = new HttpUtils();
+		params = new RequestParams();
 		btnforgetBacking.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -75,10 +98,13 @@ public class ForgetPassWordActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				state++;
 				switch (state) {
-				case 1:
-
+				case 1:  //第一次点击保存手机号码
+					phone=etForgetPhoneNum.getText().toString().trim();
 					break;
-				case 2:
+				case 2://验证手机好和验证码
+					//第一次点击保存手机号码
+					phone=etForgetPhoneNum.getText().toString().trim();
+					
 					llforgetVerifyPhone.setVisibility(View.GONE);
 					llforgetPhoneSure.setVisibility(View.VISIBLE);
 					// 修改颜色
@@ -94,8 +120,15 @@ public class ForgetPassWordActivity extends BaseActivity {
 							.setTextColor(ForgetPassWordActivity.this
 									.getResources().getColorStateList(
 											R.color.blueMain));
+				
+					
 					break;
-				case 3:
+				case 3://点第二次
+					String yanzhengma=etforgetAccountForget.getText().toString().trim();
+					if(!yanzhengma.equals(sms)){
+						Show.toast(getApplicationContext(), "验证码不对");
+						return; 
+					}					
 					llforgetPhoneSure.setVisibility(View.GONE);
 					llforgetResetPassword.setVisibility(View.VISIBLE);
 					// 修改颜色
@@ -114,18 +147,94 @@ public class ForgetPassWordActivity extends BaseActivity {
 
 					btnNext.setText("完成");
 					break;
+					
+				case 4://点击完成					
+				String password=etforgetPassWordForget.getText().toString().trim();
+				String passwordAgain=etforgetRePassWordAgain.getText().toString().trim();
+					if(TextUtils.isEmpty(password) ||TextUtils.isEmpty(passwordAgain)){
+						Show.toast(getApplicationContext(), "输入不能为空");
+						return;
+					}
+					if(!password.equals(passwordAgain)){
+						Show.toast(getApplicationContext(), "两次输入不一致");
+						return;
+					}
+					
+					params.addBodyParameter("name", phone+ "");
+					params.addBodyParameter("pwd", password+ "");
+					httpUtils.send(HttpMethod.POST, MyUrl.getyanzhengma, params,
+							new RequestCallBack<String>() {
+
+								@Override
+								public void onFailure(HttpException arg0,
+										String arg1) {
+									// TODO Auto-generated method stub
+									
+								}
+
+								@Override
+								public void onSuccess(ResponseInfo<String> arg0) {
+									// TODO Auto-generated method stub
+									
+								}						
+				 	  }
+					);
+					
+					break;
 				default:
 					break;
 				}
 			}
 		});
 
+		//获取验证码
 		btngetVerificationCodeForget.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				time.start();
+				
+				params.addBodyParameter("name", phone+ "");
+				httpUtils.send(HttpMethod.POST, MyUrl.getyanzhengma, params,
+						new RequestCallBack<String>() {
+
+							@Override
+							public void onFailure(HttpException arg0,
+									String arg1) {
+								// TODO Auto-generated method stub
+								Show.toast(getApplicationContext(), "获取验证码失败");
+							}
+
+							@Override
+							public void onSuccess(ResponseInfo<String> responseInfo) {
+								// TODO Auto-generated method stub
+								String list = responseInfo.result;
+								System.out.println(list + "OOOOOOOOOOOOOOO");
+								JSONObject object;							 
+									try {
+										object = new JSONObject(list);
+										int state = object.getInt("state");
+										String sms = object.getString("sms");
+										String tel = object.getString("tel");
+										
+										if(1==state){
+											Show.toast(getApplicationContext(), "账号不存在");
+											return;
+										}
+										
+										
+										
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								
+									 
+							} 
+				  }
+				);
+				
+				time.start();				
 			}
 		});
 	}
@@ -151,6 +260,13 @@ public class ForgetPassWordActivity extends BaseActivity {
 		civResetPassword = (CircleImageView) findViewById(R.id.civResetPassword);// 圆图标
 		tvResetPassword = (TextView) findViewById(R.id.tvResetPassword);// 圆里面的数字
 		tvResetPasswordtext = (TextView) findViewById(R.id.tvResetPasswordtext);// 文字
+		
+		etforgetPassWordForget = (EditText) findViewById(R.id.etforgetPassWordForget);// 文字
+		
+		etForgetPhoneNum=(EditText) findViewById(R.id.etForgetPhoneNum);//  输入手机号码
+		etforgetRePassWordAgain=(EditText) findViewById(R.id.etforgetRePassWordAgain);// 
+		
+		etforgetAccountForget=(EditText) findViewById(R.id.etforgetAccountForget);//  输入手机号码
 
 		btngetVerificationCodeForget = (Button) findViewById(R.id.btngetVerificationCodeForget);
 		time = new TimeCount(120000, 1000);// 构造CountDownTimer对象

@@ -40,16 +40,7 @@
                 android:text="您当前的排名"
                 android:textColor="@color/white" />
         </LinearLayout>
-        <!--
-             <ImageView 
-            android:layout_alignParentBottom="true"
-			android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/jiayou"
-            android:background="@color/black_Main"
-            />
-        -->
+  
     </RelativeLayout>
 
     <View

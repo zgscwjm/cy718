@@ -22,7 +22,7 @@ public class ResDialog extends Dialog {
 	private String msg;
 	private int imgname;
 
-	public ResDialog(Context context, int theme, String msg, int imgname) {
+	public ResDialog(Context context, int theme, String msg, int imgname) { 
 		super(context, theme);
 		this.context = context;
 		this.msg = msg;

@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/huise" />
 
+           <!--  免费投票 -->
             <Button
                 android:id="@+id/world_heritage_list_item_btn"
                 android:layout_width="fill_parent"

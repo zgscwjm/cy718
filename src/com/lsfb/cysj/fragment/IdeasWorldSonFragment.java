@@ -22,6 +22,11 @@ import com.lsfb.cysj.HotZhiKuCity;
 import com.lsfb.cysj.Dialog.ApplyDialog;
 import com.lsfb.cysj.app.IsTrue;
 
+/**
+ * 动态比赛---创意世界---创意世界fragment,创意作品CreativeFragment
+ * @author Administrator
+ *
+ */
 public class IdeasWorldSonFragment extends Fragment implements OnClickListener {
 
 	private View rootView;

@@ -37,14 +37,14 @@
                 android:textColor="@color/greyhomepage"
                 />
         </LinearLayout>
-        <ImageView 
-            android:id="@+id/addfriends_item_kan"
+        <Button 
+            android:id="@+id/addfriends_item_yaoqing"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/addguanzhu"
+           android:text="邀请"
             />
     </RelativeLayout>
 

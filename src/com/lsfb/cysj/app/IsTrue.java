@@ -21,6 +21,11 @@ import org.apache.http.params.HttpParams;
 import android.R.bool;
 import android.graphics.drawable.Drawable;
 
+/**
+ * 静态变量类
+ * @author Administrator
+ *
+ */
 public class IsTrue {
 	public static String szImei=null;//手机设备唯一标识
 	public static Set<String> tags = null;//推送标签
@@ -53,6 +58,8 @@ public class IsTrue {
 	public static String Stringsex = "";//性别(男、女、未设置)
 	public static String Stringphone = "";//手机号(未设置)
 	public static String Stringschool = "";//学校
+	public static int intDengji = 4;//等级
+	public static int intZqyz = 1;//等级
 	public static boolean booleanisschool = false;//学校验证标识(0未验证|其他值为验证了的)
 	public static String Stringgovernment = "";//政企
 	public static boolean booleanisgovernment = false;//政企验证标识(0未验证|其他值为验证了的)

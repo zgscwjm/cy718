@@ -22,7 +22,7 @@
             android:layout_alignLeft="@+id/ideas_list_content"
             android:layout_alignTop="@+id/ideas_list_head"
             android:layout_marginTop="5dp"
-            android:text="热门新闻"
+            android:text="系统消息"
             android:textColor="@color/black_head"
             android:textSize="18sp" />
 

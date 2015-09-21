@@ -22,22 +22,24 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="禅修"
+            android:text="佛心空心禅修"
             android:textColor="@color/chanxiutext"
             android:textSize="20sp" />
-		<LinearLayout 
-		    android:id="@+id/meditation_gongde"
-		    android:layout_width="60dp"
-		    android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-		    >
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="功德簿"
-            android:textColor="@color/chanxiutext" />
+
+        <LinearLayout
+            android:id="@+id/meditation_gongde"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:text="功德簿"
+                android:textColor="@color/chanxiutext"
+                android:textSize="12sp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -53,19 +55,20 @@
 
             <ImageButton
                 android:id="@+id/fohuo"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bitmp" />
+                android:background="@drawable/bitmp"
+                android:orientation="horizontal" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:id="@+id/meditation_pai1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/a5" >
+                android:background="@drawable/a5"
+                android:orientation="horizontal" >
 
-               <!--  <LinearLayout
+                <!--
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -147,17 +150,24 @@
                         android:background="@drawable/paiwei"
                         android:text="@string/sunwukong"
                         android:textColor="@color/white" />
-                </LinearLayout> -->
+                </LinearLayout>       
+                -->
             </LinearLayout>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                 android:id="@+id/meditation_pai2"
+            <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/a4" >
+                android:background="@drawable/a4"
+                 >
 
-                <!-- <LinearLayout
+                <LinearLayout
+                    android:id="@+id/meditation_pai2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"                     
+                    android:orientation="horizontal" >
+
+                    <!--
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -239,12 +249,21 @@
                         android:background="@drawable/paiwei"
                         android:text="@string/sunwukong"
                         android:textColor="@color/white" />
-                </LinearLayout> -->
-            </LinearLayout>
+                </LinearLayout>
+                    -->
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgYan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                     android:background="@drawable/yan1"        
+                    android:layout_gravity="center" />
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/ll_meditation_xiang"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/a6"
                 android:orientation="vertical" >

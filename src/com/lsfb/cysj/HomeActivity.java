@@ -22,12 +22,13 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Toast;
-
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
 import com.easemob.EMCallBack;
+import com.easemob.EMEventListener;
 import com.easemob.EMGroupChangeListener;
+import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactManager;
 import com.easemob.chat.EMConversation;
@@ -53,7 +54,14 @@ import com.lsfb.cysj.fragment.IdeasFragment;
 import com.lsfb.cysj.utils.CommonUtils;
 import com.readystatesoftware.viewbadger.BadgeView;
 
-public class HomeActivity extends FragmentActivity implements OnClickListener {
+/**
+ * IdeasFragment:创意信；FriendsFragment创友录；动态比赛：TrendsGameFragment
+ * 
+ * @author yanwei
+ * 
+ */
+public class HomeActivity extends FragmentActivity implements OnClickListener,
+		EMEventListener {
 
 	public static final int TAB_IDEAS = 0;
 	public static final int TAB_FRIENDS = 1;
@@ -64,7 +72,9 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 	 * main viewpager 上面的页面
 	 */
 	@ViewInject(R.id.main)
-	private ViewPager viewPager;
+	public static ViewPager viewPager;
+
+	IdeasFragment ideasFragment;
 	/**
 	 * btn_cyl friends 创友录
 	 */
@@ -92,19 +102,25 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 	private Button num;
 	SharedPreferences sp;
 	MyReceiver myReceiver;
-//	private MyConnectionListener connectionListener = null;
+	// private MyConnectionListener connectionListener = null;
 	private MyGroupChangeListener groupChangeListener = null;
-	List<EMGroup> grouplist;//网络获取群资料
+	List<EMGroup> grouplist;// 网络获取群资料
+
+	int pageto;
+
 	class MyReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
-			
-		}}
+
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_main);
+		Log.d("oncreate", "oncreate");
 		ViewUtils.inject(this);
 		// 极光初始化
 		JPushInterface.init(this);
@@ -117,6 +133,10 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 		intentFilter.addAction(JPushInterface.ACTION_MESSAGE_RECEIVED);
 		intentFilter.addCategory(getPackageName());
 		registerReceiver(myReceiver, intentFilter);
+
+		pageto = getIntent().getIntExtra("pageto", 0);
+		Log.d("pageto", "" + pageto);
+
 		// 下拉样式
 		CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(
 				HomeActivity.this, R.layout.customer_notitfication_layout,
@@ -139,90 +159,110 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 		editor.putInt("count", ++count);
 		// 提交修改
 		editor.commit();
-		
-//		// 从本地加载群聊列表
-//		List<EMGroup> grouplists = EMGroupManager.getInstance().getAllGroups();
-//		new Thread(){
-//			public void run() {
-//				try {
-//					grouplist = EMGroupManager.getInstance().getGroupsFromServer();// 获取群聊列表
-//				} catch (EaseMobException e) {
-//					e.printStackTrace();
-//				}
-//			};
-//		}.start();
-//		System.out.println(grouplists+"????????????"+grouplist);
+
+		// // 从本地加载群聊列表
+		// List<EMGroup> grouplists =
+		// EMGroupManager.getInstance().getAllGroups();
+		// new Thread(){
+		// public void run() {
+		// try {
+		// grouplist = EMGroupManager.getInstance().getGroupsFromServer();//
+		// 获取群聊列表
+		// } catch (EaseMobException e) {
+		// e.printStackTrace();
+		// }
+		// };
+		// }.start();
+		// System.out.println(grouplists+"????????????"+grouplist);
 		groupChangeListener = new MyGroupChangeListener();
 		// 注册群聊相关的listener
-        EMGroupManager.getInstance().addGroupChangeListener(groupChangeListener);
-		EMGroupManager.getInstance().addGroupChangeListener(new GroupChangeListener() {
-			@Override
-			public void onUserRemoved(String groupId, String groupName) {
-				//当前用户被管理员移除出群聊
-			}
-			@Override
-			public void onInvitationReceived(String groupId, String groupName, String inviter, String reason) {
-				//收到加入群聊的邀请
-			}
-			@Override
-			public void onInvitationDeclined(String groupId, String invitee, String reason) {
-				//群聊邀请被拒绝
-			}
-			@Override
-			public void onInvitationAccpted(String groupId, String inviter, String reason) {
-				//群聊邀请被接受
-			}
-			@Override
-			public void onGroupDestroy(String groupId, String groupName) {
-				//群聊被创建者解散
-			}
-			@Override
-			public void onApplicationReceived(String groupId, String groupName, String applyer, String reason) {
-				//收到加群申请
-			}
-			@Override
-			public void onApplicationAccept(String groupId, String groupName, String accepter) {
-				//加群申请被同意
-			}
-			@Override
-			public void onApplicationDeclined(String groupId, String groupName, String decliner, String reason) {
-			    // 加群申请被拒绝
-			}
-		});
+		EMGroupManager.getInstance()
+				.addGroupChangeListener(groupChangeListener);
+		EMGroupManager.getInstance().addGroupChangeListener(
+				new GroupChangeListener() {
+					@Override
+					public void onUserRemoved(String groupId, String groupName) {
+						// 当前用户被管理员移除出群聊
+					}
+
+					@Override
+					public void onInvitationReceived(String groupId,
+							String groupName, String inviter, String reason) {
+						// 收到加入群聊的邀请
+					}
+
+					@Override
+					public void onInvitationDeclined(String groupId,
+							String invitee, String reason) {
+						// 群聊邀请被拒绝
+					}
+
+					@Override
+					public void onInvitationAccpted(String groupId,
+							String inviter, String reason) {
+						// 群聊邀请被接受
+					}
+
+					@Override
+					public void onGroupDestroy(String groupId, String groupName) {
+						// 群聊被创建者解散
+					}
+
+					@Override
+					public void onApplicationReceived(String groupId,
+							String groupName, String applyer, String reason) {
+						// 收到加群申请
+					}
+
+					@Override
+					public void onApplicationAccept(String groupId,
+							String groupName, String accepter) {
+						// 加群申请被同意
+					}
+
+					@Override
+					public void onApplicationDeclined(String groupId,
+							String groupName, String decliner, String reason) {
+						// 加群申请被拒绝
+					}
+				});
 		init();
 		Listener();
 	}
-	static void asyncFetchGroupsFromServer(){
-	    HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack(){
 
-            @Override
-            public void onSuccess() {
-                HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
-                
-                if(HXSDKHelper.getInstance().isContactsSyncedWithServer()){
-                    HXSDKHelper.getInstance().notifyForRecevingEvents();
-                }
-            }
+	static void asyncFetchGroupsFromServer() {
+		HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
 
-            @Override
-            public void onError(int code, String message) {
-                HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);                
-            }
+			@Override
+			public void onSuccess() {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
 
-            @Override
-            public void onProgress(int progress, String status) {
-                
-            }
-            
-        });
+				if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+					HXSDKHelper.getInstance().notifyForRecevingEvents();
+				}
+			}
+
+			@Override
+			public void onError(int code, String message) {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+
+			}
+
+		});
 	}
+
 	/**
 	 * MyGroupChangeListener
 	 */
 	public class MyGroupChangeListener implements EMGroupChangeListener {
 		@Override
-		public void onInvitationReceived(String groupId, String groupName, String inviter, String reason) {
-			
+		public void onInvitationReceived(String groupId, String groupName,
+				String inviter, String reason) {
+
 			boolean hasGroup = false;
 			for (EMGroup group : EMGroupManager.getInstance().getAllGroups()) {
 				if (group.getGroupId().equals(groupId)) {
@@ -234,143 +274,160 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 				return;
 
 			// 被邀请
-			String st3 = getResources().getString(R.string.Invite_you_to_join_a_group_chat);
+			String st3 = getResources().getString(
+					R.string.Invite_you_to_join_a_group_chat);
 			EMMessage msg = EMMessage.createReceiveMessage(Type.TXT);
 			msg.setChatType(ChatType.GroupChat);
 			msg.setFrom(inviter);
 			msg.setTo(groupId);
 			msg.setMsgId(UUID.randomUUID().toString());
-			msg.addBody(new TextMessageBody(inviter + " " +st3));
+			msg.addBody(new TextMessageBody(inviter + " " + st3));
 			// 保存邀请消息
 			EMChatManager.getInstance().saveMessage(msg);
 			// 提醒新消息
 			HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
 
-//			runOnUiThread(new Runnable() {
-//				public void run() {
-//					updateUnreadLabel();
-//					// 刷新ui
-//					if (currentTabIndex == 0)
-//						chatHistoryFragment.refresh();
-//					if (CommonUtils.getTopActivity(HomeActivity.this).equals(GroupsActivity.class.getName())) {
-//						GroupsActivity.instance.onResume();
-//					}
-//				}
-//			});
+			// runOnUiThread(new Runnable() {
+			// public void run() {
+			// updateUnreadLabel();
+			// // 刷新ui
+			// if (currentTabIndex == 0)
+			// chatHistoryFragment.refresh();
+			// if
+			// (CommonUtils.getTopActivity(HomeActivity.this).equals(GroupsActivity.class.getName()))
+			// {
+			// GroupsActivity.instance.onResume();
+			// }
+			// }
+			// });
 
 		}
 
 		@Override
-		public void onInvitationAccpted(String groupId, String inviter, String reason) {
-			
+		public void onInvitationAccpted(String groupId, String inviter,
+				String reason) {
+
 		}
 
 		@Override
-		public void onInvitationDeclined(String groupId, String invitee, String reason) {
+		public void onInvitationDeclined(String groupId, String invitee,
+				String reason) {
 
 		}
 
 		@Override
 		public void onUserRemoved(String groupId, String groupName) {
-						
+
 			// 提示用户被T了，demo省略此步骤
 			// 刷新ui
-//			runOnUiThread(new Runnable() {
-//				public void run() {
-//					try {
-//						updateUnreadLabel();
-//						if (currentTabIndex == 0)
-//							chatHistoryFragment.refresh();
-//						if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
-//							GroupsActivity.instance.onResume();
-//						}
-//					} catch (Exception e) {
-//						EMLog.e(TAG, "refresh exception " + e.getMessage());
-//					}
-//				}
-//			});
+			// runOnUiThread(new Runnable() {
+			// public void run() {
+			// try {
+			// updateUnreadLabel();
+			// if (currentTabIndex == 0)
+			// chatHistoryFragment.refresh();
+			// if
+			// (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName()))
+			// {
+			// GroupsActivity.instance.onResume();
+			// }
+			// } catch (Exception e) {
+			// EMLog.e(TAG, "refresh exception " + e.getMessage());
+			// }
+			// }
+			// });
 		}
 
 		@Override
 		public void onGroupDestroy(String groupId, String groupName) {
 			System.out.println("MMMMMMMMMMMMMMMMMMMMM");
-			
+
 			// 群被解散
 			// 提示用户群被解散,demo省略
 			// 刷新ui
 			runOnUiThread(new Runnable() {
 				public void run() {
 					System.out.println("OOOOOOOOOOOOOOOOOO");
-//					updateUnreadLabel();
-//					if (CommonUtils.getTopActivity(HomeActivity.this).equals(GroupsActivity.class.getName())) {
-//						GroupsActivity.instance.onResume();
-//					}
+					// updateUnreadLabel();
+					// if
+					// (CommonUtils.getTopActivity(HomeActivity.this).equals(GroupsActivity.class.getName()))
+					// {
+					// GroupsActivity.instance.onResume();
+					// }
 				}
 			});
 
 		}
 
 		@Override
-		public void onApplicationReceived(String groupId, String groupName, String applyer, String reason) {
-			
-//			// 用户申请加入群聊
-//			InviteMessage msg = new InviteMessage();
-//			msg.setFrom(applyer);
-//			msg.setTime(System.currentTimeMillis());
-//			msg.setGroupId(groupId);
-//			msg.setGroupName(groupName);
-//			msg.setReason(reason);
-//			Log.d(TAG, applyer + " 申请加入群聊：" + groupName);
-//			msg.setStatus(InviteMesageStatus.BEAPPLYED);
-//			notifyNewIviteMessage(msg);
+		public void onApplicationReceived(String groupId, String groupName,
+				String applyer, String reason) {
+
+			// // 用户申请加入群聊
+			// InviteMessage msg = new InviteMessage();
+			// msg.setFrom(applyer);
+			// msg.setTime(System.currentTimeMillis());
+			// msg.setGroupId(groupId);
+			// msg.setGroupName(groupName);
+			// msg.setReason(reason);
+			// Log.d(TAG, applyer + " 申请加入群聊：" + groupName);
+			// msg.setStatus(InviteMesageStatus.BEAPPLYED);
+			// notifyNewIviteMessage(msg);
 		}
 
 		@Override
-		public void onApplicationAccept(String groupId, String groupName, String accepter) {
+		public void onApplicationAccept(String groupId, String groupName,
+				String accepter) {
 
-			String st4 = getResources().getString(R.string.Agreed_to_your_group_chat_application);
+			String st4 = getResources().getString(
+					R.string.Agreed_to_your_group_chat_application);
 			// 加群申请被同意
 			EMMessage msg = EMMessage.createReceiveMessage(Type.TXT);
 			msg.setChatType(ChatType.GroupChat);
 			msg.setFrom(accepter);
 			msg.setTo(groupId);
 			msg.setMsgId(UUID.randomUUID().toString());
-			msg.addBody(new TextMessageBody(accepter + " " +st4));
+			msg.addBody(new TextMessageBody(accepter + " " + st4));
 			// 保存同意消息
 			EMChatManager.getInstance().saveMessage(msg);
 			// 提醒新消息
 			HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
 
-//			runOnUiThread(new Runnable() {
-//				public void run() {
-//					updateUnreadLabel();
-//					// 刷新ui
-//					if (currentTabIndex == 0)
-//						chatHistoryFragment.refresh();
-//					if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
-//						GroupsActivity.instance.onResume();
-//					}
-//				}
-//			});
+			// runOnUiThread(new Runnable() {
+			// public void run() {
+			// updateUnreadLabel();
+			// // 刷新ui
+			// if (currentTabIndex == 0)
+			// chatHistoryFragment.refresh();
+			// if
+			// (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName()))
+			// {
+			// GroupsActivity.instance.onResume();
+			// }
+			// }
+			// });
 		}
 
 		@Override
-		public void onApplicationDeclined(String groupId, String groupName, String decliner, String reason) {
+		public void onApplicationDeclined(String groupId, String groupName,
+				String decliner, String reason) {
 			// 加群申请被拒绝，demo未实现
 		}
 	}
+
 	/**
 	 * 刷新未读消息数
 	 */
 	public void updateUnreadLabel() {
 		int count = getUnreadMsgCountTotal();
-//		if (count > 0) {
-//			unreadLabel.setText(String.valueOf(count));
-//			unreadLabel.setVisibility(View.VISIBLE);
-//		} else {
-//			unreadLabel.setVisibility(View.INVISIBLE);
-//		}
+		// if (count > 0) {
+		// unreadLabel.setText(String.valueOf(count));
+		// unreadLabel.setVisibility(View.VISIBLE);
+		// } else {
+		// unreadLabel.setVisibility(View.INVISIBLE);
+		// }
 	}
+
 	/**
 	 * 获取未读消息数
 	 * 
@@ -380,52 +437,69 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 		int unreadMsgCountTotal = 0;
 		int chatroomUnreadMsgCount = 0;
 		unreadMsgCountTotal = EMChatManager.getInstance().getUnreadMsgsCount();
-		for(EMConversation conversation:EMChatManager.getInstance().getAllConversations().values()){
-			if(conversation.getType() == EMConversationType.ChatRoom)
-			chatroomUnreadMsgCount=chatroomUnreadMsgCount+conversation.getUnreadMsgCount();
+		for (EMConversation conversation : EMChatManager.getInstance()
+				.getAllConversations().values()) {
+			if (conversation.getType() == EMConversationType.ChatRoom)
+				chatroomUnreadMsgCount = chatroomUnreadMsgCount
+						+ conversation.getUnreadMsgCount();
 		}
-		return unreadMsgCountTotal-chatroomUnreadMsgCount;
+		return unreadMsgCountTotal - chatroomUnreadMsgCount;
 	}
+
 	@Override
 	protected void onPause() {
 		JPushInterface.onPause(this);
 		super.onPause();
 	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		unregisterReceiver(myReceiver);
+	}
+
 	@Override
 	protected void onResume() {
+		Log.d("onresume", "onresume");
 		JPushInterface.onResume(this);
+
+		if (3 == pageto) {
+			viewPager.setCurrentItem(TAB_TRENDSGAME);
+			return;
+		}
+
 		if (IsTrue.tabnum == 3) {
 			viewPager.setCurrentItem(TAB_TRENDSGAME);
 			IsTrue.tabnum = 0;
-		} else if (IsTrue.tabnum == 4) {//发布创意
+		} else if (IsTrue.tabnum == 4) {// 发布创意
 			viewPager.setCurrentItem(TAB_MY);
 			IsTrue.fabuchuangyi = 1;
 			IsTrue.tabnum = 0;
-		}else if (IsTrue.tabnum == 5) {//我要禅修
+		} else if (IsTrue.tabnum == 5) {// 我要禅修
 			viewPager.setCurrentItem(TAB_MY);
 			IsTrue.woyaochanxiu = 1;
 			IsTrue.tabnum = 0;
-		}else if (IsTrue.tabnum == 6) {//发起比赛
+		} else if (IsTrue.tabnum == 6) {// 发起比赛
 			viewPager.setCurrentItem(TAB_MY);
 			IsTrue.fabubisai = 1;
 			IsTrue.tabnum = 0;
-		}else if (IsTrue.zhishu == 1) {//我的创意指数排行
+		} else if (IsTrue.zhishu == 1) {// 我的创意指数排行
 			viewPager.setCurrentItem(TAB_MY);
 			IsTrue.zhishu = 0;
-		}else if (IsTrue.quxiaoguanzhu == 1) {
+		} else if (IsTrue.quxiaoguanzhu == 1) {
 			viewPager.setCurrentItem(TAB_TRENDSGAME);
 			IsTrue.quxiaoguanzhu = 0;
-		}else if(IsTrue.hotzhiku == true){
+		} else if (IsTrue.hotzhiku == true) {
 			viewPager.setCurrentItem(TAB_MY);
 			IsTrue.hotzhiku = false;
-		}else if (IsTrue.yichan == 1) {//创意世界优秀遗产发布
+		} else if (IsTrue.yichan == 1) {// 创意世界优秀遗产发布
 			viewPager.setCurrentItem(TAB_MY);
 		}
 		super.onResume();
 	}
 
 	private void Listener() {
-
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
@@ -462,10 +536,15 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 	}
 
 	private void init() {
+		ideasFragment = new IdeasFragment();
 		FragmentAdapter adapter = new FragmentAdapter(
 				getSupportFragmentManager(), 4, 0);
 
 		viewPager.setAdapter(adapter);
+
+		// if (3 == getIntent().getIntExtra("pageto", 0)) {
+		// viewPager.setCurrentItem(TAB_TRENDSGAME);
+		// }
 		friends.setOnClickListener(this);
 		ideas.setOnClickListener(this);
 		trends_game.setOnClickListener(this);
@@ -483,11 +562,18 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 			ideas_vertical.smoothScrollTo(0, 0);
 			break;
 		case R.id.btn_cyl:
-			viewPager.setCurrentItem(TAB_FRIENDS);
-			BadgeView badgeView = new BadgeView(getApplicationContext(), num);
-			badgeView.setText("1");
-			badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-			badgeView.show();
+			// 如果没登陆，跳到登陆界面
+			if (IsTrue.userId == 0) {
+				// Show.toast(getActivity(), "请登录后再试");
+				viewPager.setCurrentItem(TAB_MY);
+			} else {
+				viewPager.setCurrentItem(TAB_FRIENDS);
+				BadgeView badgeView = new BadgeView(getApplicationContext(),
+						num);
+				badgeView.setText("1");
+				badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+				badgeView.show();
+			}
 			break;
 		case R.id.btn_game:
 			viewPager.setCurrentItem(TAB_TRENDSGAME);
@@ -507,13 +593,13 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (IsTrue.exit == true) {
-//			if (IsTrue.dongtaigame = true) {
-////				IsTrue.dongtaigame = false;
-//				IsTrue.exit = false;
-////				finish();
-//				intent = new Intent(HomeActivity.this,SearchActivity.class);
-//				startActivity(intent);
-//			}
+			// if (IsTrue.dongtaigame = true) {
+			// // IsTrue.dongtaigame = false;
+			// IsTrue.exit = false;
+			// // finish();
+			// intent = new Intent(HomeActivity.this,SearchActivity.class);
+			// startActivity(intent);
+			// }
 			finish();
 		} else {
 			if (keyCode == KeyEvent.KEYCODE_BACK
@@ -530,5 +616,52 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void onEvent(EMNotifierEvent event) {
+		// TODO Auto-generated method stub
+		switch (event.getEvent()) {
+		case EventNewMessage: // 普通消息
+		{
+			EMMessage message = (EMMessage) event.getData();
+
+			// 提示新消息
+			HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+
+			refreshUI();
+			break;
+		}
+
+		case EventOfflineMessage: {
+			refreshUI();
+			break;
+		}
+
+		case EventConversationListChanged: {
+			refreshUI();
+			break;
+		}
+
+		default:
+			break;
+		}
+
+	}
+
+	private void refreshUI() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				// 刷新bottom bar消息未读数
+				updateUnreadLabel();
+				// if (currentTabIndex == 0) {
+				// 当前页面如果为聊天历史页面，刷新此页面
+				if (viewPager.getCurrentItem() == 0)
+
+					ideasFragment.refresh();
+
+				// }
+			}
+		});
 	}
 }

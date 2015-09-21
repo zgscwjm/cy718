@@ -59,6 +59,7 @@ import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.view.ResDialog;
 
+
 public class LoginFragment extends Fragment {
 	ResDialog dialog;
 	SharedPreferences preferences;
@@ -101,7 +102,7 @@ public class LoginFragment extends Fragment {
 			// Json:
 			// 一维数组
 			// num:1(密码错误);2(登陆成功);3(账号错误)
-			// loginid:登陆成功返回回来的会员id号
+			// loginid:登陆成功返回回来的会员id号  ,uid
 			dialog.dismiss();
 			if (msg.what == 0x123) {
 				String str = msg.obj.toString();
@@ -109,6 +110,8 @@ public class LoginFragment extends Fragment {
 				try {
 					JSONObject jsonObject = new JSONObject(str);
 					Integer num = Integer.parseInt(jsonObject.getString("num"));
+					
+					
 					Log.d("222222222222222222", num + "");
 
 					switch (num) {
@@ -173,6 +176,7 @@ public class LoginFragment extends Fragment {
 								.getText().toString());
 						editor.commit();
 						String arr = jsonObject.getString("arr");
+						Log.i("zgscwjm", "wjm+arr:"+arr);
 						JSONObject jsonObjectarr = new JSONObject(arr);
 						IsTrue.isSgin = true;
 						IsTrue.Stringnickname = jsonObjectarr
@@ -196,6 +200,9 @@ public class LoginFragment extends Fragment {
 						IsTrue.Stringsex = jsonObjectarr.getString("sex");// 性别(男、女、未设置)
 						IsTrue.Stringphone = jsonObjectarr.getString("phone");// 手机号(未设置)
 						IsTrue.Stringschool = jsonObjectarr.getString("school");// 学校
+						IsTrue.intDengji=jsonObjectarr.getInt("memdj");
+						IsTrue.intZqyz=jsonObjectarr.getInt("zqyz");
+						
 						if (jsonObjectarr.getString("isschool").equals("0")) {
 							IsTrue.booleanisschool = false;
 						} else {

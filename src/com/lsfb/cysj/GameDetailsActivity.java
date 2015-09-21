@@ -47,6 +47,11 @@ import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.view.ResDialog;
 
+/**
+ * 
+ * @author admin
+ *
+ */
 public class GameDetailsActivity extends FragmentActivity implements
 		OnClickListener {
 	/**

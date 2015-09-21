@@ -15,6 +15,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 动态比赛
+ * @author Administrator
+ *
+ */
 public class IdeasWorldActivity extends FragmentActivity implements OnClickListener{
 	/**
 	 * ideas_world_button1 热门创意比赛

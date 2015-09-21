@@ -25,14 +25,14 @@
                 android:orientation="horizontal"
                 >
             <EditText 
-                android:maxLength="3"
+                android:maxLength="4"
                 android:textColor="@color/white"
                 android:background="@drawable/dailog_qifu"
                 android:layout_gravity="center"
                 android:id="@+id/qifu_name"
                 android:layout_width="150dp"
                 android:layout_height="30dp"
-                android:hint="名字"
+                android:hint="供奉名字"
                 />
             <ImageButton 
                 android:id="@+id/qifu_queren"

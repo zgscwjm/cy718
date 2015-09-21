@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/SingleProfile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <ImageView
+        android:id="@+id/mem_photo_img_id"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/news2" />
+
+    <!--
+             <TextView
+            android:id="@+id/mem_info_txt_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_marginLeft="50dp"
+            android:text="众创创" />
+    -->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+         >
+
+        <TextView
+            android:layout_gravity="start"
+            android:id="@+id/mem_info_txt_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/mem_photo_img_id"
+            android:layout_marginLeft="8dp"
+            android:text="众创创"
+            android:textColor="@color/black_head"
+            android:textSize="18sp" />
+
+        <TextView
+             android:layout_gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="您关注了一些比赛"
+            android:textColor="@color/black_Main"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

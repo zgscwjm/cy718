@@ -39,7 +39,11 @@ import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 import com.lsfb.cysj.view.XListView.IXListViewListener;
-
+/**
+ * 报名中
+ * @author Administrator
+ *
+ */
 public class GameApplyFragment extends Fragment implements IXListViewListener{
 	private View rootView;
 	private XListView game_apply;

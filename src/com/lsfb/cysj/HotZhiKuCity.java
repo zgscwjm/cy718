@@ -45,6 +45,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lsbf.cysj.R;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
+import com.lsfb.cysj.fragment.HotIdeasGameFragment;
 import com.lsfb.cysj.view.ResDialog;
 
 public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
@@ -52,8 +53,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 	HttpClient httpClient;
 	@ViewInject(R.id.hot_zhiku_city_back)
 	private LinearLayout back;
-	@ViewInject(R.id.hot_zhiku_city_queding)
-	private LinearLayout queding;
+
 	List<Map<String, Object>> listguojia;// 国家级别
 	List<Map<String, Object>> listChina;// 省份级别
 	List<Map<String, Object>> listbeijin;// 市区级别
@@ -66,7 +66,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 	String idstrarea1 = "";
 	String idstrarea2 = "";
 	String idstrarea3 = "";
-	
+
 	LinearLayout hot_zhiku_city_queding;// 确定
 	Spinner spinner_country;// 选择国家
 	Spinner spinner_shengfen;// 选择省份
@@ -159,7 +159,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 					JSONObject jsonObject = new JSONObject(str);
 					int num = Integer.parseInt(jsonObject.getString("num")
 							.toString());
-					
+
 					listChina = new ArrayList<Map<String, Object>>();// 省份级别
 					listbeijin = new ArrayList<Map<String, Object>>();// 市区级别
 					listtiananmen = new ArrayList<Map<String, Object>>();// 县区级别
@@ -168,12 +168,12 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 					btn_quxian.setText("");
 					switch (num) {
 					case 1:
-						
+
 						break;
 					case 2:
 						JSONArray jsonArray = new JSONArray(jsonObject
 								.getString("list").toString());
-						
+
 						for (int i = 0; i < jsonArray.length(); ++i) {
 							JSONObject temp = (JSONObject) jsonArray.get(i);
 							Map<String, Object> map = new HashMap<String, Object>();
@@ -219,19 +219,19 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 					JSONObject jsonObject = new JSONObject(str);
 					int num = Integer.parseInt(jsonObject.getString("num")
 							.toString());
-					
+
 					listbeijin = new ArrayList<Map<String, Object>>();// 市区级别
 					listtiananmen = new ArrayList<Map<String, Object>>();// 县区级别
 					btn_shiqu.setText("");
 					btn_quxian.setText("");
 					switch (num) {
 					case 1:
-						
+
 						break;
 					case 2:
 						JSONArray jsonArray = new JSONArray(jsonObject
 								.getString("list").toString());
-					
+
 						for (int i = 0; i < jsonArray.length(); ++i) {
 							JSONObject temp = (JSONObject) jsonArray.get(i);
 							Map<String, Object> map = new HashMap<String, Object>();
@@ -276,11 +276,11 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 					int num = Integer.parseInt(jsonObject.getString("num")
 							.toString());
 					listtiananmen = new ArrayList<Map<String, Object>>();// 省份级别
-					
+
 					btn_quxian.setText("");
 					switch (num) {
 					case 1:
-					
+
 						break;
 					case 2:
 						JSONArray jsonArray = new JSONArray(jsonObject
@@ -325,39 +325,39 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				// 数据是使用Intent返回
-				strarea0=btn_country.getText().toString();
-				strarea1=btn_shengfen.getText().toString();
-				strarea2=btn_shiqu.getText().toString();
-				strarea3=btn_quxian.getText().toString();
-				if(strarea1.equals("--请选择--")){
-					strarea1="";
+				strarea0 = btn_country.getText().toString();
+				strarea1 = btn_shengfen.getText().toString();
+				strarea2 = btn_shiqu.getText().toString();
+				strarea3 = btn_quxian.getText().toString();
+				if (strarea1.equals("--请选择--")) {
+					strarea1 = "";
 				}
-				if(strarea2.equals("--请选择--")){
-					strarea2="";
+				if (strarea2.equals("--请选择--")) {
+					strarea2 = "";
 				}
-				if(strarea3.equals("--请选择--")){
-					strarea3="";
+				if (strarea3.equals("--请选择--")) {
+					strarea3 = "";
 				}
 				Intent intent = new Intent();
 				// 把返回数据存入Intent
-				intent.putExtra("result0", strarea0);
-				intent.putExtra("result1", strarea1);
-				intent.putExtra("result2", strarea2);
-				intent.putExtra("result3", strarea3);
-				IsTrue.Stringidstrarea0=idstrarea0;
-				IsTrue.Stringidstrarea1=idstrarea1;
-				IsTrue.Stringidstrarea2=idstrarea2;
-				IsTrue.Stringidstrarea3=idstrarea3;
-				System.err.println("开始");
+				intent.putExtra("result0", idstrarea0);
+				intent.putExtra("result1", idstrarea1);
+				intent.putExtra("result2", idstrarea2);
+				intent.putExtra("result3", idstrarea3);
+				IsTrue.Stringidstrarea0 = idstrarea0;
+				IsTrue.Stringidstrarea1 = idstrarea1;
+				IsTrue.Stringidstrarea2 = idstrarea2;
+				IsTrue.Stringidstrarea3 = idstrarea3;
+				Log.i("zgscwjm", "开始");
 				// intent.putExtra("results", strnum);
 				// 设置返回数据
-				HotZhiKuCity.this.setResult(RESULT_OK, intent);
+				HotZhiKuCity.this.setResult(HotIdeasGameFragment.RESULT_OK,
+						intent);
 				// 关闭Activity
 				HotZhiKuCity.this.finish();
 			}
 		});
 		baseAdapter_country = new BaseAdapter() {
-
 			@Override
 			public View getView(int position, View v, ViewGroup arg2) {
 				// TODO Auto-generated method stub
@@ -369,8 +369,8 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 
 				tvTextView.setText(listguojia.get(position)
 						.get("region_info_name").toString());
-				idstrarea0=listguojia.get(position)
-						.get("region_info_id").toString();
+				idstrarea0 = listguojia.get(position).get("region_info_id")
+						.toString();
 				return v;
 			}
 
@@ -510,17 +510,17 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 
 						btn_country.setText(listguojia.get(position)
 								.get("region_info_name").toString());
-						idstrarea0=listguojia.get(position)
+						idstrarea0 = listguojia.get(position)
 								.get("region_info_id").toString();
 						shengfen(listguojia.get(position).get("region_info_id")
 								.toString());
-
+						Log.i("zgscwjm", "ids:"+idstrarea0);
 					}
 
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
-//						Toast.makeText(getApplicationContext(), "没有改变的处理",
-//								Toast.LENGTH_SHORT).show();
+						// Toast.makeText(getApplicationContext(), "没有改变的处理",
+						// Toast.LENGTH_SHORT).show();
 
 					}
 				});
@@ -538,7 +538,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 
 						btn_shengfen.setText(listChina.get(position)
 								.get("region_info_name").toString());
-						idstrarea1=listChina.get(position)
+						idstrarea1 = listChina.get(position)
 								.get("region_info_id").toString();
 						shengfens(listChina.get(position).get("region_info_id")
 								.toString());
@@ -547,8 +547,8 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
-//						Toast.makeText(getApplicationContext(), "没有改变的处理",
-//								Toast.LENGTH_SHORT).show();
+						// Toast.makeText(getApplicationContext(), "没有改变的处理",
+						// Toast.LENGTH_SHORT).show();
 
 					}
 				});
@@ -565,7 +565,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 
 						btn_shiqu.setText(listbeijin.get(position)
 								.get("region_info_name").toString());
-						idstrarea2=listbeijin.get(position)
+						idstrarea2 = listbeijin.get(position)
 								.get("region_info_id").toString();
 						shengfensss(listbeijin.get(position)
 								.get("region_info_id").toString());
@@ -574,8 +574,8 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
-//						Toast.makeText(getApplicationContext(), "没有改变的处理",
-//								Toast.LENGTH_SHORT).show();
+						// Toast.makeText(getApplicationContext(), "没有改变的处理",
+						// Toast.LENGTH_SHORT).show();
 
 					}
 				});
@@ -592,14 +592,14 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 
 						btn_quxian.setText(listtiananmen.get(position)
 								.get("region_info_name").toString());
-						idstrarea3=listtiananmen.get(position)
+						idstrarea3 = listtiananmen.get(position)
 								.get("region_info_id").toString();
 					}
 
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
-//						Toast.makeText(getApplicationContext(), "没有改变的处理",
-//								Toast.LENGTH_SHORT).show();
+						// Toast.makeText(getApplicationContext(), "没有改变的处理",
+						// Toast.LENGTH_SHORT).show();
 
 					}
 				});
@@ -614,7 +614,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 				try {
 
 					HttpPost post = new HttpPost(MyUrl.Stringchooses);
-
+					Log.i("zgscwjm", "id is chain?"+id);
 					List<NameValuePair> params = new ArrayList<NameValuePair>();
 					params.add(new BasicNameValuePair("id", id));
 					post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
@@ -690,9 +690,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 			@Override
 			public void run() {
 				try {
-
 					HttpPost post = new HttpPost(MyUrl.Stringchooses);
-
 					List<NameValuePair> params = new ArrayList<NameValuePair>();
 					params.add(new BasicNameValuePair("id", id));
 					post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
@@ -734,7 +732,6 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 			@Override
 			public void run() {
 				try {
-
 					HttpPost post = new HttpPost(MyUrl.Stringchoose);
 
 					List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -775,7 +772,7 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 		httpClient = IsTrue.HttpConnectionManager.getHttpClient();
 		hot_zhiku_city_queding = (LinearLayout) findViewById(R.id.hot_zhiku_city_queding);
 		back.setOnClickListener(this);
-		queding.setOnClickListener(this);
+	//	queding.setOnClickListener(this);
 		spinner_country = (Spinner) findViewById(R.id.spinner_country);
 		spinner_shengfen = (Spinner) findViewById(R.id.spinner_shengfen);
 		spinner_shiqu = (Spinner) findViewById(R.id.spinner_shiqu);
@@ -831,11 +828,27 @@ public class HotZhiKuCity extends FragmentActivity implements OnClickListener {
 			// 设置返回数据
 			HotZhiKuCity.this.setResult(RESULT_OK, intent);
 			// 关闭Activity
-			HotZhiKuCity.this.finish();
-			finish();
+			 HotZhiKuCity.this.finish();
+			//finish();
 			break;
 		case R.id.hot_zhiku_city_queding:
-
+			Log.i("zgscwjm", "ok button down");
+//			Spinner spinner_country;// 选择国家
+//			Spinner spinner_shengfen;// 选择省份
+//			Spinner spinner_shiqu;// 选择市区
+//			Spinner spinner_quxian;
+			
+//			Intent intent2 = new Intent();
+//			Log.i("zgscwjm", "res"+idstrarea0);
+//			intent2.putExtra("result0", idstrarea0);
+//			intent2.putExtra("result1", idstrarea1);
+//			intent2.putExtra("result2", idstrarea2);
+//			intent2.putExtra("result3", idstrarea3);
+//			
+//			HotZhiKuCity.this.setResult(1, intent2);
+//			// 关闭Activity
+//			 HotZhiKuCity.this.finish();
+//			
 			break;
 		default:
 			break;

@@ -40,7 +40,7 @@
     <VideoView
         android:layout_gravity="center"
         android:id="@+id/Video_show"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="200dp" />
 
     <TextView

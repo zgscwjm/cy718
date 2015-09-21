@@ -79,6 +79,11 @@ import com.lsfb.cysj.app.MyUrl;
 import com.lsfb.cysj.utils.Res;
 import com.lsfb.cysj.view.ResDialog;
 
+/**
+ * 发布创意世界
+ * @author Administrator
+ *
+ */
 public class ReleaseIdeasActivity extends FragmentActivity implements
 		OnClickListener {
 	/**
@@ -497,19 +502,7 @@ public class ReleaseIdeasActivity extends FragmentActivity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-		case SELECT_CAMER:
-			// bitmap = BitmapFactory.decodeFile(mPhotoPath, null);
-			// picture.setImageBitmap(bitmap);
-			// try {
-			// Bundle extras = data.getExtras();
-			// bitmap = (Bitmap) extras.get("data");
-			// ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			// bitmap.compress(Bitmap.CompressFormat.JPEG , 50, baos);
-			// byte[] mContent =baos.toByteArray();
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
-
+		case SELECT_CAMER:			 
 			String sdStatus = Environment.getExternalStorageState();
 			if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
 				Log.i("TestFile",
@@ -566,28 +559,17 @@ public class ReleaseIdeasActivity extends FragmentActivity implements
 					cursor.moveToFirst();
 					// 最后根据索引值获取图片路径
 					path = cursor.getString(column_index);
+					Log.d("path", path);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
 				picture.setImageURI(uri);
+				Log.d("uri", ""+uri);
 			} else {
 				Toast.makeText(ReleaseIdeasActivity.this, "选择图片失败,请重新选择",
 						Toast.LENGTH_SHORT).show();
 			}
-			// Uri selectedImage = data.getData();
-			// String[] filePathColumn = { MediaStore.Images.Media.DATA };
-			//
-			// Cursor cursor = getContentResolver().query(selectedImage,
-			// filePathColumn, null, null, null);
-			// cursor.moveToFirst();
-			//
-			// int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-			// String picturePath = cursor.getString(columnIndex);
-			// cursor.close();
-			// picture.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-			// } catch (Exception e) {
-			// e.printStackTrace();
-			// }
+			 
 			break;
 		case 3:
 			// String result = data.getExtras().getString("imgs");//得到新Activity

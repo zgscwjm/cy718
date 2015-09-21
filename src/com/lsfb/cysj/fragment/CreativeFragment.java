@@ -47,6 +47,11 @@ import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 import com.lsfb.cysj.view.XListView.IXListViewListener;
 
+/**
+ * 创意世界,创意作品
+ * @author Administrator
+ *
+ */
 public class CreativeFragment extends Fragment implements IXListViewListener {
 
 	@Override
@@ -72,6 +77,12 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 	static String countries = "";
 	static String province = "";
 	static String city = "";
+	
+//	int  zanNum=0;
+//	int scNum=0;
+//	int commentNum=0;
+	int  currentPosition;
+	
 
 	Handler handlershoucang = new Handler() {
 		@Override
@@ -127,6 +138,7 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 
 						break;
 					case 3:
+						
 						Toast.makeText(getActivity(), "已经点赞了，请勿重复点赞",
 								Toast.LENGTH_SHORT).show();
 						break;
@@ -185,6 +197,10 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 							map.put("count", temp.getString("count"));
 							map.put("zan", temp.getString("zan"));
 							map.put("sc", temp.getString("sc"));
+							map.put("zanNum", temp.getString("zanNum"));
+							map.put("scNum", temp.getString("scNum"));
+							map.put("commentNum", temp.getString("commentNum"));
+							
 							list.add(map);
 
 						}
@@ -299,7 +315,6 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 		count = 0;
 		// 初始化适配器
 		baseAdapter = new BaseAdapter() {
-
 			@Override
 			public View getView(final int position, View v, ViewGroup arg2) {
 				// TODO Auto-generated method stub
@@ -337,6 +352,17 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 				} else {
 					holder = (ViewHolder) v.getTag();
 				}
+				
+				if(!"0".equals(list.get(position).get("zanNum").toString())){
+					holder.tvzan.setText(""+list.get(position).get("zanNum").toString());
+				}
+				if(!"0".equals(list.get(position).get("scNum").toString())){
+					holder.tvshouchang.setText(""+list.get(position).get("scNum").toString());
+				}	
+				if(!"0".equals(list.get(position).get("commentNum").toString())){
+					holder.tvshouchang.setText(""+list.get(position).get("commentNum").toString());
+				}	
+				 
 
 				bitmapUtils.display(
 						holder.iv_image,
@@ -395,7 +421,8 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 										.findViewById(R.id.tv_shoucang);
 								imageView
 										.setBackgroundResource(R.drawable.shoucang_ed);
-								textView.setText("已收藏");
+								int scNum=Integer.parseInt(list.get(position).get("sc").toString());
+								textView.setText(""+scNum++);
 						Map<String, Object>	map=list.get(position);
 						map.put("sc","1" );
 								shoucang();
@@ -473,7 +500,9 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 										.findViewById(R.id.tv_zan);
 								imageView
 										.setBackgroundResource(R.drawable.zan_ed);
-								textView.setText("已赞");
+								int zanNum=Integer.parseInt(list.get(position).get("zanNum").toString());
+								textView.setText(""+zanNum++);
+								 
 								Map<String, Object>	map=list.get(position);
 								map.put("zan","1" );
 								zan();
@@ -535,7 +564,7 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 				if (list.get(position).get("sc").toString().equals("1")) {
 					holder.iv_shouchang
 							.setBackgroundResource(R.drawable.shoucang_ed);
-					holder.tvshouchang.setText("已收藏");
+					holder.tvshouchang.setText(""+list.get(position).get("sc").toString());
 					
 				} else {
 					holder.iv_shouchang
@@ -545,7 +574,7 @@ public class CreativeFragment extends Fragment implements IXListViewListener {
 
 				if (list.get(position).get("zan").toString().equals("1")) {
 					holder.iv_zan.setBackgroundResource(R.drawable.zan_ed);
-					holder.tvzan.setText("已赞");
+					holder.tvzan.setText(""+list.get(position).get("zanNum").toString());
 				} else {
 					holder.iv_zan.setBackgroundResource(R.drawable.zan);
 					holder.tvzan.setText("赞");
