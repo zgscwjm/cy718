@@ -100,6 +100,9 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Res.init(this);
+		
+		
+		
 		bimapphoto = BitmapFactory.decodeResource(getResources(),
 				R.drawable.uploadimg_fb);
 		PublicWay.activityList.add(this);
@@ -464,7 +467,13 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
 			String URI = null;
 			IsTrue.upmore=1;
 			if (IsTrue.upmore == 1) {
+				if(IsTrue.isYichan)
+					{
+					URI=MyUrl.yichanshangchuang;
+					}else
+				{
 				URI = MyUrl.StringUP;
+				}
 			}else if (IsTrue.upmore == 2) {
 				URI = MyUrl.uploadfile;
 			}
@@ -549,6 +558,12 @@ public class UpMoreImge extends FragmentActivity implements OnClickListener{
 //			} catch (FileNotFoundException e1) {
 //				e1.printStackTrace();
 //			}
+		}
+		
+		
+		if(IsTrue.isYichan)
+		{
+			IsTrue.isYichan=false;
 		}
 	}
 }

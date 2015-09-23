@@ -53,6 +53,8 @@ public class MyUrl {
 			+ "Originality/originality/act/origaddimg";// 上传图片和视频
 	public static String upTongxunlu = baseUrl + "Share/shares/act/txlu";// 上传通讯录
 
+	public static String yichanshangchuang = baseUrl
+			+ "Excellent/lent/act/laddimg";// 创意列表
 	public static String Stringchuangyishow = baseUrl
 			+ "Originality/originality/act/origalist";// 创意列表
 	public static String Stringchuangyishows = baseUrl

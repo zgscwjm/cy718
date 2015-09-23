@@ -84,5 +84,11 @@
     <color name="black_deep">#FF000000</color>
     <color name="btn_answer_pressed">#4ebcd3</color>
     <color name="btn_answer_normal">#2dafa3</color>
-
+    
+       <color name="floralwhite">#FFFAF0</color>
+    <!-- 花白色 -->
+  <color name="dimgrey">#E22F2F</color>
+    <!-- 暗灰色 -->
+     <color name="gray">#E84A40</color>
+    <!-- 灰色 -->
 </resources>

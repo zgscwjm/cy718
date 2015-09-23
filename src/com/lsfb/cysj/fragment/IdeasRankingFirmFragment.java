@@ -82,7 +82,13 @@ IXListViewListener{
 				try {
 					JSONObject jsonObject = new JSONObject(str);
 					 myming= jsonObject.get("myming").toString().trim();
-					  num.setText(""+myming);
+					 if (myming.equals("0"))
+						 {
+						 num.setText("暂无排行");
+					} else {
+						 num.setText(""+myming);
+					}
+					
 					switch (Integer.parseInt(jsonObject.get("num").toString())) {
 					case 1:
 						Toast.makeText(getActivity(), "没有任何政府信息",
@@ -235,12 +241,12 @@ IXListViewListener{
 						.toString());
 				holder.tvNum.setText(list.get(position).get("index")
 						.toString());
-				if (list.get(position).get("membs").toString().equals("2")) {
-					int i = position + 1;
-					num.setText(i + "");
-				}else{
-					num.setText("暂无排行");
-				}
+//				if (list.get(position).get("membs").toString().equals("2")) {
+//					int i = position + 1;
+//					num.setText(i + "");
+//				}else{
+//					num.setText("暂无排行");
+//				}
 				return v;
 			}
 

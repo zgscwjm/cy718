@@ -82,7 +82,13 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 				try {
 					JSONObject jsonObject = new JSONObject(str);
 					 myming=	 jsonObject.get("myming").toString().trim();
-				  num.setText(""+myming);
+					if(myming.equals("0"))
+					{
+						num.setText("暂无数据");
+					}else {
+						 num.setText(""+myming);
+					}
+					
 					 
 					switch (Integer.parseInt(jsonObject.get("num").toString())) {
 					case 1:
@@ -95,7 +101,6 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 						for (int i = 0; i < jsonArray.length(); ++i) {
 							JSONObject temp = (JSONObject) jsonArray.get(i);
 							Map<String, Object> map = new HashMap<String, Object>();
-							
 							map.put("name", temp.getString("name"));
 							map.put("image", temp.getString("image"));
 							map.put("index", temp.getString("index"));
@@ -238,12 +243,8 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 						.toString());
 				holder.tvNum.setText(list.get(position).get("index")
 						.toString());
-				if (list.get(position).get("membs").toString().equals("2")) {
-					int i = position + 1;
-					num.setText(i + "");
-				}else{
-					num.setText("暂无排行");
-				}
+			
+				Log.e("zgscwjm", "fcuk:"+list.get(position).get("membs").toString());
 				return v;
 			}
 
@@ -263,6 +264,8 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 			}
 		};
 		listview.setAdapter(baseAdapter);
+		
+		
 	}
 
 	public class ViewHolder {
@@ -315,6 +318,7 @@ public class IdeasRankingSchoolFragment extends Fragment implements
 					if (response.getStatusLine().getStatusCode() == 200) {
 
 						String str = EntityUtils.toString(response.getEntity());
+						Log.i("zgscwjm", str);
 						Message msg = new Message();
 						msg.what = 0x123;
 						msg.obj = str;

@@ -111,13 +111,11 @@
             android:id="@+id/img_memdj"
             android:layout_width="10dp"
             android:layout_height="10dp"
+            android:layout_alignBottom="@+id/headLogo"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/headLogo"
             android:layout_toLeftOf="@+id/linearLayout1"
-            android:visibility="gone"
-            
-            />
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -140,9 +138,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="160dp" >
                 </RelativeLayout>
-   
-
-
 
                 <fragment
                     android:id="@+id/zhikufragment"
@@ -303,14 +298,14 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone" >
 
-                    
-                   <!--    <ImageView
+                    <!--
+                           <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/news2"
-                        android:scaleType="centerCrop" /> -->
-                    
-                    
+                        android:scaleType="centerCrop" />
+                    -->
+
                     <ListView
                         android:id="@+id/cmn_list_view"
                         android:layout_width="match_parent"
@@ -321,7 +316,6 @@
                         android:fadeScrollbars="true"
                         android:smoothScrollbar="true" >
                     </ListView>
-    
                 </RelativeLayout>
 
                 <View
@@ -329,11 +323,19 @@
                     android:layout_height="0.5dp"
                     android:background="@color/greyxian" />
 
-                <com.lsfb.cysj.view.ListViewForScrollView
+
+                <com.lsfb.cysj.view.SilderListView
                     android:id="@+id/ideas_listview"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white" />
+                    android:background="@color/white" 
+                    android:cacheColorHint="#00000000"
+                    android:divider="#dddbdb"
+                    android:dividerHeight="1.0px"
+                    android:drawSelectorOnTop="false"
+                    android:listSelector="#00000000"
+                    android:scrollbars="none"
+                    android:scrollingCache="false" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

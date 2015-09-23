@@ -28,7 +28,11 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -40,6 +44,12 @@ import android.widget.TextView.BufferType;
 
 
 import cn.jpush.android.api.m;
+
+
+
+
+
+
 
 
 
@@ -66,6 +76,7 @@ import com.easemob.util.DateUtils;
 //import com.easemob.chatuidemo.utils.UserUtils;
 import com.easemob.util.EMLog;
 import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.view.annotation.event.OnItemClick;
 import com.lsbf.cysj.R;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.base.HXSDKHelper;
@@ -74,7 +85,7 @@ import com.lsfb.cysj.utils.Constant;
 import com.lsfb.cysj.utils.SmileUtils;
 //import com.lsfb.cysj.utils.UserUtils;
 import com.umeng.socialize.utils.Log;
-
+import com.lsfb.cysj.view.SliderView;
 /**
  * 显示所有聊天记录adpater
  * 
@@ -101,24 +112,32 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		mlist=list;
 		this.bitmapUtils=bitmapUtils;
 		sdf= new SimpleDateFormat("yyyy-MM-dd");
+		
+		
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.row_chat_history, parent, false);
+		ViewHolder holder ;
+		SliderView slideView = (SliderView) convertView;
+		if (slideView == null) {
+//			convertView = inflater.inflate(R.layout.row_chat_history, parent, false);
+			View itemView = inflater.inflate(R.layout.row_chat_history,null);
+			itemView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+			slideView=new SliderView(this.getContext());
+			slideView.setContentView(itemView);
+			holder=new ViewHolder(slideView);
+			slideView.setTag(holder);
+		}else {
+			holder=(ViewHolder) slideView.getTag();
 		}
-		ViewHolder holder = (ViewHolder) convertView.getTag();
+		slideView.shrink();
+		// holder = (ViewHolder) convertView.getTag();
 		if (holder == null) {
-			holder = new ViewHolder();
-			holder.name = (TextView) convertView.findViewById(R.id.name);
-			holder.unreadLabel = (TextView) convertView.findViewById(R.id.unread_msg_number);
-			holder.message = (TextView) convertView.findViewById(R.id.message);
-			holder.time = (TextView) convertView.findViewById(R.id.time);
-			holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
-			holder.msgState = convertView.findViewById(R.id.msg_state);
-			holder.list_item_layout = (RelativeLayout) convertView.findViewById(R.id.list_item_layout);
-			convertView.setTag(holder);
+			
+			
+			
+			
 		}
 //		if (position % 2 == 0) {
 //			holder.list_item_layout.setBackgroundResource(R.drawable.mm_listitem);
@@ -147,8 +166,8 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			
 			
 //			holder.name.setText(group != null ? group.getGroupName() : username);
-			holder.name.setText(mlist != null ? mlist.get(position).getHuanxname(): username);
-			
+		//holder.name.setText(mlist != null ? mlist.get(position).getHuanxname(): username);
+	//		holder.name.setText("abcd");
 		
 		} else if(conversation.getType() == EMConversationType.Chat){
 
@@ -197,7 +216,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 
 			
 			// DateFormatUtils.format(d, pattern);
-//			holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
+		    // holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
 			
 			
 			holder.time.setText( sdf.format(new Date(lastMessage.getMsgTime())));
@@ -284,6 +303,27 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		/** 整个list中每一行总布局 */
 		RelativeLayout list_item_layout;
 
+		
+		
+		public ViewGroup deleteHolder;
+		
+		
+		
+		public ViewHolder(View view) {
+			// TODO Auto-generated constructor stub
+		
+	//	holder = new ViewHolder();
+		name = (TextView) view.findViewById(R.id.name);
+		unreadLabel = (TextView) view.findViewById(R.id.unread_msg_number);
+		message = (TextView) view.findViewById(R.id.message);
+		time = (TextView) view.findViewById(R.id.time);
+		avatar = (ImageView) view.findViewById(R.id.avatar);
+		msgState = view.findViewById(R.id.msg_state);
+		list_item_layout = (RelativeLayout) view.findViewById(R.id.list_item_layout);
+		deleteHolder=(ViewGroup) view.findViewById(R.id.holder);
+		
+	//	convertView.setTag(holder);
+		}
 	}
 
 	String getStrng(Context context, int resId) {
@@ -368,6 +408,10 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 		}
 
 	}
+	
+	
+	
+	
 	
 	@Override
 	public void notifyDataSetChanged() {

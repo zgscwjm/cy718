@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lsbf.cysj"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
+
+    <!-- ###################声明SDK使用的相关权限###################### -->
+    <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 获取mac地址作为用户的备用唯一标识 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 缓存资源优先存入SDcard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许应用程序联网，以便向我们的服务器端发送数据 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- QQ、QQ空间所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 读取联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 拨打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 环信权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 极光推送 -->
+    <permission
+        android:name="com.lsbf.cysj.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.lsbf.cysj.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <application
+        android:name="com.lsfb.cysj.app.Myapplication"
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
+
+        <!-- ###################注册SDK使用的Activity###################### -->
+        <!-- 分享编辑页 -->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+
+        <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID -->
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="559c8d8767e58ec7ce00657b" >
+        </meta-data>
+
+        <!-- facebook相关 -->
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1444817025830662"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="lsfb1043#cysjchat" />
+        <!-- 声明sdk所需的service SDK核心功能 -->
+        <service android:name="com.easemob.chat.EMChatService" />
+
+        <activity
+            android:name="com.lsfb.cysj.HomeActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.Loading"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.fragment.LoginFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.Img"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.base.BaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.PollResultsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ImageGridActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.MoreSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.RecorderVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.lsfb.cysj.XinWenActivity" />
+        <activity
+            android:name="com.lsfb.cysj.PollResultsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ChuangbiZuoyongActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.XiTongMsg"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.HotZhiKu"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.lsfb.cysj.HotNews" />
+        <activity
+            android:name="com.lsfb.cysj.BestResultsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StyledIndicators" />
+        <activity
+            android:name="com.lsfb.cysj.WorldHeritageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.IdeasRankingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StyledIndicators2" />
+        <activity
+            android:name="com.lsfb.cysj.ReleaseIdeasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.FaBuFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.AlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ImageFile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ShowAllPhoto"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.SelectPicPopupWindow"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.UpMoreImge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.UpTongxunlu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.UpVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ReleaseGameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.IdeasWorldActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.MeditationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GalleryImageActivity"
+            android:screenOrientation="portrait" />
+          <activity
+            android:name="com.lsfb.cysj.RegisteXieyiActivity"
+            android:screenOrientation="portrait" />
+        
+
+        <service
+            android:name="com.lsfb.cysj.service.MusicService"
+            android:exported="true" >
+        </service>
+
+        <activity
+            android:name="com.lsfb.cysj.InviteManActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.AcModifyPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.IdeasWorldGameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GameDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GameWorksFaBuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.IdeasWorldZhiKuDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.IdeasZhiKuMan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GameProductionMsgActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.HotZhiKuCity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.HotZhiKuShenQing"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.IdeasWorldZhiKuDetailsSheZhi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.WorldHeritageItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.HotIdeasGamesContentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.HotIdeasGamesContent2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GameSheZhiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.AddFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.MyFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GameWorksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.GuanZhuMan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ZhiKuManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.NewsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.WorldHeritageTiJiaoYiChan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.MyWebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lsfb.cysj.ForgetPassWordActivity"
+            android:label="@string/title_activity_forget_pass_word"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.RegisteredActivity"
+            android:label="@string/title_activity_registered" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.MyDetailsActivity"
+            android:label="@string/title_activity_my_details" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.MyIndexOfHistoryActivity"
+            android:label="@string/title_activity_index_of_history" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.IndexRulesActivity"
+            android:label="@string/title_activity_index_rules" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.MyChuangChuangCurrencyActivity"
+            android:label="@string/title_activity_my_chuang_chuang_currency" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.MyCollectionActivity"
+            android:label="@string/title_activity_my_collection" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.MyticketActivity"
+            android:label="@string/title_activity_myticket" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.ThinkTankCertificationActivity"
+            android:label="@string/title_activity_think_tank_certification" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.SetUpTheActivity"
+            android:label="@string/title_activity_set_up_the" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.FeedbackActivity"
+            android:label="@string/title_activity_feedbakc" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.NoValidationActivity"
+            android:label="@string/title_activity_no_validation" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.EditDataActivity"
+            android:label="@string/title_activity_edit_data" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.InvisibilityAndSecurityActivity"
+            android:label="@string/title_activity_invisibility_and_security" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.TixingAndNotifyActivity"
+            android:label="@string/title_activity_invisibility_and_security" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.ZqjgRenzhengActivity"
+            android:label="@string/title_activity_invisibility_and_security" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.AcHeiMingdan"
+            android:label="@string/title_activity_invisibility_and_security" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.CreaticeIndexRankingAreaActivity"
+            android:label="@string/title_activity_creatice_index_ranking_area" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.CreativeDetailsActivity"
+            android:label="@string/title_activity_creative_details" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.OtherDetailsActivity"
+            android:label="@string/title_activity_other_details" >
+        </activity>
+        <activity
+            android:name="com.lsbf.cysj.SearchActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.SearchSchoolOrEnterpriseActivity"
+            android:label="@string/title_activity_search_school_or_enterprise" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.AboutUsActivity"
+            android:label="@string/title_activity_about_us" >
+        </activity>
+
+        <!-- 极光服务 -->
+        <!-- Required -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!-- Required -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true" >
+            <intent-filter android:priority="1000" >
+
+                <!-- since 1.3.5 -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <!-- since 1.3.5 -->
+                <category android:name="com.lsbf.cysj" />
+                <!-- since 1.3.5 -->
+            </intent-filter>
+            <!-- since 1.3.5 -->
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.lsbf.cysj" />
+            </intent-filter>
+        </activity>
+        <!-- Required SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+        <!-- Required SDK核心功能 -->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+
+        <!-- Required. For publish channel feature -->
+        <!-- JPUSH_CHANNEL 是为了方便开发者统计APK分发渠道。 -->
+        <!-- 例如: -->
+        <!-- 发到 Google Play 的APK可以设置为 google-play; -->
+        <!-- 发到其他市场的 APK 可以设置为 xxx-market。 -->
+        <!-- 目前这个渠道统计功能的报表还未开放。 -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <!-- Required. AppKey copied from Portal -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="db14ea98f5d327842a74829c" />
+
+        <activity
+            android:name="com.lsfb.cysj.ThinkTankCertificationDetailsActivity"
+            android:label="@string/title_activity_think_tank_certification_details" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.VideoActivity"
+            android:label="@string/title_activity_video" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.NewsImageShowActivity"
+            android:label="@string/title_activity_news_image_show" >
+        </activity>
+
+        <!-- 聊天室 android:theme="@style/horizontal_slide" -->
+        <activity
+            android:name="com.lsfb.cysj.PublicChatRoomsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="com.lsfb.cysj.ChatRoomActivity"
+            android:screenOrientation="portrait" />
+        <!-- share -->
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    </application>
+
+</manifest>

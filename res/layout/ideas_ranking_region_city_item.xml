@@ -20,7 +20,7 @@
             android:scaleType="centerCrop"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/zkman1" />
+            android:background="@drawable/logo" />
 
         <TextView
             android:id="@+id/ideas_ranking_region_city_list_item_city"

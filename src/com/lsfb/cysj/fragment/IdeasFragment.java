@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +43,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import cn.jpush.android.api.e;
 
+import com.alipay.sdk.authjs.c;
 import com.dharani.swipegesture.ListAdapter;
 import com.dharani.swipegesture.ListViewSwipeGesture;
 import com.dharani.swipegesture.dumpclass;
@@ -58,7 +60,10 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.lsbf.cysj.R;
+import com.lsbf.cysj.R.id;
 import com.lsfb.cysj.ChatActivity;
 import com.lsfb.cysj.ChatRoomActivity;
 import com.lsfb.cysj.HomeActivity;
@@ -70,6 +75,7 @@ import com.lsfb.cysj.NewsActivity;
 import com.lsfb.cysj.SearchActivity;
 import com.lsfb.cysj.XiTongMsg;
 import com.lsfb.cysj.adapter.ChatAllHistoryAdapter;
+import com.lsfb.cysj.adapter.ChatHistoryAdapterw;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
@@ -82,6 +88,8 @@ import com.lsfb.cysj.utils.Show;
 import com.lsfb.cysj.view.CircleImageView;
 import com.lsfb.cysj.view.ListViewForScrollView;
 import com.lsfb.cysj.view.ResDialog;
+import com.lsfb.cysj.view.SilderListView;
+import com.lsfb.cysj.view.SliderView;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 /**
@@ -139,8 +147,8 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 	/**
 	 * ideas_listview 创意下面的消息
 	 */
-	public ListViewForScrollView ideas_listview;
-
+	// public ListViewForScrollView ideas_listview;
+	public SilderListView ideas_listview;
 	/**
 	 * data ���
 	 */
@@ -149,6 +157,9 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 	 * zhikufragment �ǿ����
 	 */
 	private ZhikuFragment zhikufragment;
+
+	private ChatHistoryAdapterw chatHistoryAdapterw;
+
 	ScrollView ideas_vertical;
 	BaseAdapter adapter;
 
@@ -173,9 +184,9 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 	private Button delmsg;
 	String url = null;
 	String url2 = null;// 热门新闻
-   
-	public final List<MConversationHistory> mConversationList=new ArrayList<MConversationHistory>();
-	
+
+	public final List<MConversationHistory> mConversationList = new ArrayList<MConversationHistory>();
+
 	ArrayList<HashMap<String, Object>> listmaps;
 	protected static final int MSG_OK = -553;
 
@@ -185,7 +196,7 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 	/*
 	 * 获取环信聊天记录
 	 */
-	ChatAllHistoryAdapter chatHistoryAdapter;
+	// ChatAllHistoryAdapter chatHistoryAdapter;
 	private List<EMConversation> conversationList = new ArrayList<EMConversation>();
 
 	private Handler handler = new Handler() {
@@ -217,7 +228,7 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 				parent.removeView(rootView);
 			}
 		}
-		
+
 		// 初始化
 		init();
 		// showdialogup();
@@ -239,15 +250,17 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 	void getHxHuihua() {
 		conversationList.clear();
 		conversationList.addAll(loadConversationsWithRecentChat());
-		// ideas_listview = (ListView) getView().findViewById(R.id.list);
+		// ideas_listview = (SilderListView) getView().findViewById(R.id.list);
 
+		ideas_listview = (SilderListView) getView().findViewById(
+				R.id.ideas_listview);
 		getHuanxinInfo(conversationList);
 
-//		chatHistoryAdapter = new ChatAllHistoryAdapter(getActivity(), 1,
-//				conversationList, list);
-//		// 设置adapter
-//
-//		ideas_listview.setAdapter(chatHistoryAdapter);
+		// chatHistoryAdapter = new ChatAllHistoryAdapter(getActivity(), 1,
+		// conversationList, list);
+		// // 设置adapter
+		//
+		// ideas_listview.setAdapter(chatHistoryAdapter);
 	}
 
 	/**
@@ -379,7 +392,8 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 				// return nums.length;
 			}
 		};
-		ideas_listview.setAdapter(adapter);
+
+		// ideas_listview.setAdapter(adapter);
 	}
 
 	private void date() {
@@ -589,24 +603,7 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 		}
 		FinalBitmap.create(getActivity(), cacheDir + File.separator + "images"
 				+ File.separator, 0.3f, 1024 * 1024 * 100, 10);
-		// // 构造测试数据
-		// Advertising ad1 = new Advertising(
-		// "http://img.my.csdn.net/uploads/201312/14/1386989803_3335.PNG",
-		// "http://blog.csdn.net/u011638883/article/details/17302293",
-		// "双向搜索");
-		// Advertising ad2 = new Advertising(
-		// "http://img.my.csdn.net/uploads/201312/14/1386989613_6900.jpg",
-		// "http://blog.csdn.net/u011638883/article/details/17245371",
-		// "创意设计");
-		// Advertising ad3 = new Advertising(
-		// "http://img.my.csdn.net/uploads/201312/14/1386989802_7236.PNG",
-		// "http://blog.csdn.net/u011638883/article/details/17248135",
-		// "Artificial Intelligence");
-		// Advertising ad4 = new Advertising(
-		// "http://img.my.csdn.net/uploads/201312/14/1386989802_7236.PNG",
-		// "http://blog.csdn.net/u011638883/article/details/17248135",
-		// "Artificial Intelligence");
-		// Advertising[] ads = { ad1, ad2, ad3, ad4 };
+		
 		Advertising[] adsss = new Advertising[listmap.size()];
 		for (int i = 0; i < listmap.size(); i++) {
 			Advertising advertising = new Advertising(ImageAddress.Banner
@@ -649,17 +646,24 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 		search = (RelativeLayout) rootView.findViewById(R.id.search);
 		search.setOnClickListener(this);
 		search_img = (ImageView) rootView.findViewById(R.id.search_img);
-		ideas_listview = (ListViewForScrollView) rootView
+
+		ideas_listview = (SilderListView) rootView
 				.findViewById(R.id.ideas_listview);
 
 		final String st2 = getResources().getString(
 				R.string.Cant_chat_with_yourself);
+
 		ideas_listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				EMConversation conversation = chatHistoryAdapter
-						.getItem(position);
+
+				EMConversation conversation = conversationList.get(position);
+				// EMConversation conversation = (EMConversation)
+				// chatHistoryAdapterw.getItem(position);
+				// MConversationHistory
+				// mConversationHistory=(MConversationHistory)
+				// chatHistoryAdapterw.getItem(position);
 				String username = conversation.getUserName();
 
 				// if
@@ -670,55 +674,125 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 				// Intent intent = new Intent(getActivity(),
 				// ChatActivity.class);
 				if (conversation.getType() == EMConversationType.Chat) {
-					
-//						Intent intent = new Intent(getActivity(),
-//								ChatRoomActivity.class);
-//						
-//						
-//						intent.putExtra("groupId", username);
-//						startActivity(intent);
-					
-					
-					Intent intent = new Intent(getActivity(),NewsActivity.class);
-					intent.putExtra("id",mConversationList.get(position).getSid());
-					intent.putExtra("headaddress", mConversationList.get(position).getImg());
+
+					// Intent intent = new Intent(getActivity(),
+					// ChatRoomActivity.class);
+					//
+					//
+					// intent.putExtra("groupId", username);
+					// startActivity(intent);
+
+					Intent intent = new Intent(getActivity(),
+							NewsActivity.class);
+					intent.putExtra("id", mConversationList.get(position)
+							.getSid());
+					intent.putExtra("headaddress",
+							mConversationList.get(position).getImg());
 					startActivity(intent);
+
+				} else {
 					
-					} 
-				else {
+					// it is group chat
+					
+					AsyncHttpClient client = new AsyncHttpClient();
+					com.loopj.android.http.RequestParams params = new com.loopj.android.http.RequestParams();
+					params.put("uid", IsTrue.userId);
+					params.put("sid", mConversationList.get(position).getSid());
+					final String sid=mConversationList.get(position).getSid();
+					client.post(MyUrl.bsinger, params,
+							new JsonHttpResponseHandler() {
 
-						Intent intent = new Intent(getActivity(),
-								ChatActivity.class);
-						// it is group chat
+								@Override
+								public void onSuccess(int statusCode,
+										Header[] headers, JSONObject response) {
+									 final String huanxname;
+										
+										final String huanxlistnum;
+										final String zhiklistnum;
+										final String zuop;
+										final String clasid;
+										final String countmoney;
+										final String groupId;
+									try {
+										String num = response.getString("num");
+										int i = Integer.parseInt(num);
+										
+										 if (i == 2) {
+											
+											huanxname = response
+													.getString("huanxname");
+											countmoney = response
+													.getString("countmoney");
+											Log.i("zgscwjm", "countmoney:"
+													+ countmoney);
+											String list = response
+													.getString("list");
 
-						intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-						intent.putExtra("groupId", username);
 
-						// intent.putExtra("groupId", groupId);
-						// intent.putExtra("name", huanxname);
-						// intent.putExtra("sid", sid);
-						// intent.putExtra("huanxlistnum", huanxlistnum);
-						// intent.putExtra("zhiklist", zhiklistnum);
-						// intent.putExtra("zuop", zuop);
-						// intent.putExtra("clasid", clasid);
-						// intent.putExtra("countmoney", countmoney);
-						//
+											JSONObject object = new JSONObject(
+													list);
 
-						Log.d("groupId", "" + username);
-						startActivity(intent);
-					}
+											clasid = object.getString("class");
+											groupId = object.getString("huanxqun").toString();// 环信群
+											zuop = object.getString("zuop").toString();// 参赛作品数量
+											huanxlistnum = object.getJSONArray(
+													"huanxlist").length()
+													+ "";
+											zhiklistnum = object.getJSONArray(
+													"zhiklist").length()
+													+ "";
+											Intent intent = new Intent(getActivity(),
+													ChatActivity.class);
+											intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+											intent.putExtra("groupId", groupId);
 
-				//} 
+											intent.putExtra("name", huanxname);
+											intent.putExtra("sid", sid);
+											intent.putExtra("huanxlistnum", huanxlistnum);
+											intent.putExtra("zhiklist", zhiklistnum);
+											intent.putExtra("zuop", zuop);
+											intent.putExtra("clasid", clasid);
+											intent.putExtra("countmoney", countmoney);
+											
+											startActivity(intent);	
+
+											}
+										
+									} catch (JSONException e) {
+										e.printStackTrace();
+									}
+									super.onSuccess(statusCode, headers,
+											response);
+								}
+
+								
+							});
+
 				
+
+					// intent.putExtra("groupId", groupId);
+					// intent.putExtra("name", huanxname);
+					// intent.putExtra("sid", sid);
+					// intent.putExtra("huanxlistnum", huanxlistnum);
+					// intent.putExtra("zhiklist", zhiklistnum);
+					// intent.putExtra("zuop", zuop);
+					// intent.putExtra("clasid", clasid);
+					// intent.putExtra("countmoney", countmoney);
+					//
+
 				
-//				else {
-//					Intent intent = new Intent(getActivity(),
-//							ChatActivity.class);
-//					// it is single chat
-//					intent.putExtra("userId", username);
-//					Log.d("groupId:chat", "" + username);
-//					startActivity(intent);
-//				}
+				}
+
+				// }
+
+				// else {
+				// Intent intent = new Intent(getActivity(),
+				// ChatActivity.class);
+				// // it is single chat
+				// intent.putExtra("userId", username);
+				// Log.d("groupId:chat", "" + username);
+				// startActivity(intent);
+				// }
 
 			}
 			// }
@@ -987,8 +1061,8 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 	public void refresh() {
 		conversationList.clear();
 		conversationList.addAll(loadConversationsWithRecentChat());
-		if (chatHistoryAdapter != null)
-			chatHistoryAdapter.notifyDataSetChanged();
+		// if (chatHistoryAdapter != null)
+		// chatHistoryAdapter.notifyDataSetChanged();
 	}
 
 	public List<MConversationHistory> getHuanxinInfo(
@@ -999,7 +1073,8 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 
 			Log.d("zgscwjm--hx", emConversation.getType() + "");
 			if (emConversation.getType() == EMConversationType.Chat) {
-				strParm = strParm + "d=" +  emConversation.getUserName().substring(4) + "-";
+				strParm = strParm + "d="
+						+ emConversation.getUserName().substring(4) + "-";
 			} else if (EMConversationType.GroupChat == emConversation.getType()) {
 
 				strParm += "q=" + emConversation.getUserName() + "-";
@@ -1007,7 +1082,8 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 		}
 
 		Log.i("zgscwjm--hx", strParm);
-		//final List<MConversationHistory> mConversationList = new ArrayList<MConversationHistory>();
+		// final List<MConversationHistory> mConversationList = new
+		// ArrayList<MConversationHistory>();
 		httpUtils = new HttpUtils();
 		params = new RequestParams();
 		params.addBodyParameter("allID", strParm);
@@ -1024,15 +1100,15 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 					public void onSuccess(ResponseInfo<String> arg0) {
 						// TODO Auto-generated method stub
 						try {
-							
-							ideas_listview.setAdapter(null);
-							
+
+							// ideas_listview.setAdapter(null);
+
 							mConversationList.clear();
-							
+
 							Log.i("zgscwjm--hx", arg0.result);
-							
+
 							JSONArray object = new JSONArray(arg0.result);
-							Log.i("zgscwjm", "json leng"+object.length());
+							Log.i("zgscwjm", "json leng" + object.length());
 							for (int i = 0; i < object.length(); i++) {
 
 								MConversationHistory conversationHistory = new MConversationHistory();
@@ -1042,24 +1118,35 @@ public class IdeasFragment extends Fragment implements OnClickListener {
 								conversationHistory.setHuanxname(con
 										.getString("title"));
 								conversationHistory.setType(con.getInt("type"));
-									Log.d("zgscwjm", "xx");
+								Log.d("zgscwjm", "xx");
 								mConversationList.add(conversationHistory);
-								//handler.sendEmptyMessage(100001);
+								// handler.sendEmptyMessage(100001);
 							}
-
-							
-							chatHistoryAdapter = new ChatAllHistoryAdapter(getActivity(), 1,
-									conversationList, mConversationList,new BitmapUtils(IdeasFragment.this.getActivity().getApplicationContext()));
+							// chatHistoryAdapter = new
+							// ChatAllHistoryAdapter(getActivity(), 1,
+							// conversationList, mConversationList,new
+							// BitmapUtils(IdeasFragment.this.getActivity().getApplicationContext()));
 							// 设置adapter
 
-							ideas_listview.setAdapter(chatHistoryAdapter);
+							//
+							ChatHistoryAdapterw chatHistoryAdapterw = new ChatHistoryAdapterw(
+									getActivity(), conversationList,
+									mConversationList, new BitmapUtils(
+											IdeasFragment.this.getActivity()
+													.getApplicationContext()));
+							ideas_listview.setAdapter(chatHistoryAdapterw);
+
+							// ideas_listview.setAdapter(chatHistoryAdapter);
+
+							// ideas_listview.setAdapter(chatHistoryAdapter);
 						} catch (Exception e) {
 							// TODO: handle exception
+							Log.e("fuck", Log.getStackTraceString(e));
 						}
-						
+
 					}
 				});
-		
+
 		Log.d("zgscwjm", "list" + mConversationList.size());
 		return mConversationList;
 	}

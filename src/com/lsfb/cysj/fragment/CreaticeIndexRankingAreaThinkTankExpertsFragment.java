@@ -15,6 +15,8 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lsbf.cysj.R;
+import com.lsfb.cysj.MyDetailsActivity;
+import com.lsfb.cysj.OtherDetailsActivity;
 import com.lsfb.cysj.app.ImageAddress;
 import com.lsfb.cysj.app.IsTrue;
 import com.lsfb.cysj.app.MyUrl;
@@ -22,12 +24,15 @@ import com.lsfb.cysj.fragment.TicketNoUseFragment.ViewHolder;
 import com.lsfb.cysj.view.ResDialog;
 import com.lsfb.cysj.view.XListView;
 import com.lsfb.cysj.view.XListView.IXListViewListener;
+import com.umeng.socialize.utils.Log;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -75,7 +80,7 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 		baseAdapter = new BaseAdapter() {
 
 			@Override
-			public View getView(int position, View v, ViewGroup arg2) {
+			public View getView(final int position, View v, ViewGroup arg2) {
 				ViewHolder holder = null;
 				if (v == null) {
 					holder = new ViewHolder();
@@ -99,12 +104,37 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				System.out.println(contains+"KKKKKKKKKKKKKKKKKK");
 				if (contains) {
 					String ubs = listmap.get(position).get("ubs").toString();
-						if (ubs.equals("2")) {
-							holder.imgbtn.setVisibility(View.VISIBLE);
+					Log.d("zgscwjm", ubs);	
+					if (ubs.equals("2")) {
+							//holder.imgbtn.setVisibility(View.VISIBLE);
+						holder.imgbtn.setBackgroundResource(R.drawable.yiguanzhu);
 						}else {
-							holder.imgbtn.setVisibility(View.GONE);
+							holder.imgbtn.setBackgroundResource(R.drawable.guanzhu001);
+							//holder.imgbtn.setVisibility(View.GONE);
 						}
 				}
+				v.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						//Toast.makeText(CreaticeIndexRankingAreaThinkTankExpertsFragment.this.getActivity().getApplicationContext(), "yes", Toast.LENGTH_SHORT).show();
+						
+							
+					
+							// TODO Auto-generated method stub
+							if(listmap.get(position).get("uid").toString().equals(IsTrue.userId+"")){
+								Intent intent=new Intent(getActivity(),MyDetailsActivity.class);
+								startActivity(intent);
+							}else{
+								Intent intent=new Intent(getActivity(),OtherDetailsActivity.class);
+								intent.putExtra("id", listmap.get(position).get("uid").toString());
+								startActivity(intent);
+							}
+						
+					}
+				});
+				
 				return v;
 			}
 
@@ -123,7 +153,10 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				return listmap.size();
 			}
 		};
-		lv_CreativeIndexRankingArea_experts.setAdapter(baseAdapter);		
+		lv_CreativeIndexRankingArea_experts.setAdapter(baseAdapter);	
+		
+		
+		
 	}
 	private void data() {
 		showdialogup();
@@ -144,6 +177,7 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 			public void onSuccess(ResponseInfo<String> responseInfo) {
 				jiazaidialog.dismiss();
 				String lists = responseInfo.result;
+				Log.d("zgscwjm",lists);
 				try {
 					JSONObject object = new JSONObject(lists);
 					String num = object.getString("num").toString();
@@ -167,6 +201,7 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = (JSONObject) array.get(i);
 				map = new HashMap<String, Object>();
+//				map.put("memid", object.getString("memid").toString());
 				map.put("uid", object.getString("uid").toString());
 				map.put("image", object.getString("image").toString());
 				map.put("name", object.getString("name").toString());
@@ -175,6 +210,8 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 //				boolean containsKey = map.containsKey("ubs");
 				if (has) {
 					map.put("ubs", object.getString("ubs").toString());
+				}else {
+					map.put("ubs", "1");
 				}
 				listmap.add(map);
 			}
@@ -272,6 +309,7 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = (JSONObject) array.get(i);
 				map = new HashMap<String, Object>();
+//				map.put("memid", object.getString("memid").toString());
 				map.put("uid", object.getString("uid").toString());
 				map.put("image", object.getString("image").toString());
 				map.put("name", object.getString("name").toString());
@@ -279,6 +317,8 @@ public class CreaticeIndexRankingAreaThinkTankExpertsFragment extends Fragment i
 				boolean has = object.has("ubs");
 				if (has) {
 					map.put("ubs", object.getString("ubs").toString());
+				}else {
+					map.put("ubs", "1");
 				}
 				listmap.add(map);
 			}

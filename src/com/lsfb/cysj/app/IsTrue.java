@@ -82,6 +82,7 @@ public class IsTrue {
 	public static Integer quxiaoguanzhu = 0 ;//取消关注
 	public static boolean hotzhiku = false;//热门智库未登录
 	public static Integer yichan = 0;//创意世界优秀遗产发布
+	public static boolean isYichan=false;
 	// 字符串转码
 	public  static String transformation(String s) {
 		char[] shortArray = s.toCharArray();

@@ -80,6 +80,7 @@ public class FaBuFriendsActivity extends Activity implements OnClickListener{
 	public static final int TAKE_PICTURE = 0x000001;
 	public static final int TAKE_VIDEO = 0x000002;
 
+	
 	private GridView gvUp;
 	private GridAdapter gridAdapter;
 
