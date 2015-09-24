@@ -30,6 +30,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +112,7 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
 				System.out.println(response);
+				Log.i("zgscwjm", "lalala"+response.toString());
 				try {
 					String num = response.getString("num");
 					clasid = response.getString("clasid");
@@ -124,26 +126,18 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 							map = new HashMap<String, Object>();
 							map.put("id", object.getString("id").toString());
 							map.put("bsid", object.getString("sid").toString());
-							map.put("title", object.getString("title")
-									.toString());
-							map.put("image", object.getString("image")
-									.toString());
-							map.put("nickname", object.getString("nickname")
-									.toString());
-							map.put("memid", object.getString("memid")
-									.toString());
-							map.put("memimage", object.getString("memimage")
-									.toString());
-							map.put("memindex", object.getString("memindex")
-									.toString());
-							map.put("heat", object.getString("heat").toString());
-							map.put("content", object.getString("content")
-									.toString());
-							map.put("praise", object.getString("praise")
-									.toString());
-							map.put("money", object.getString("money")
-									.toString());
-							map.put("bitbs", object.getString("bitbs").toString());
+							map.put("title", object.getString("title"));
+							map.put("image", object.getString("image"));
+							map.put("nickname", object.getString("nickname"));
+							map.put("memid", object.getString("memid"));
+							map.put("memimage", object.getString("memimage"));
+							map.put("memindex", object.getString("memindex"));
+							map.put("heat", object.getString("heat"));
+							map.put("content", object.getString("content"));
+							map.put("praise", object.getString("praise"));
+							map.put("money", object.getString("money"));
+							map.put("bitbs", object.getString("bitbs"));
+							map.put("iswinner", object.getString("iswinner"));
 							listmap.add(map);
 						}
 					}
@@ -199,6 +193,8 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 							.findViewById(R.id.game_works_pinglun);
 					holder.pinglunimg = (ImageView) view
 							.findViewById(R.id.game_works_pinglunimg);
+					holder.huangguan=(ImageView) view.findViewById(R.id.img_huangguan);
+					
 					view.setTag(holder);
 				} else {
 					holder = (ViewHolder) view.getTag();
@@ -211,19 +207,30 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 				bitmapUtils.display(holder.samllimg, ImageAddress.Stringhead+listmap.get(position).get("memimage").toString());
 				holder.name.setText(listmap.get(position).get("nickname").toString());
 				holder.zhishu.setText(listmap.get(position).get("memindex").toString());
-				if (listmap.get(position).get("money").toString().equals("1")) {
+				
+				Map mmap=listmap.get(position);
+				
+				if(mmap.get("iswinner").equals("2"))
+				{	
+					holder.huangguan.setVisibility(View.VISIBLE);
+				}else
+				{
+					holder.huangguan.setVisibility(View.GONE);
+				}
+				
+				if (mmap.get("money").toString().equals("1")) {
 					holder.zhichiimg.setBackgroundResource(R.drawable.zhici_ed);
 					holder.zhichiimg.setClickable(false);
 				}else{
 					holder.zhichiimg.setBackgroundResource(R.drawable.zhici);
 					holder.zhichiimg.setClickable(true);
 				}
-				if (listmap.get(position).get("praise").toString().equals("1")) {
+				if (mmap.get("praise").toString().equals("1")) {
 					holder.loveimg.setBackgroundResource(R.drawable.like_ed_shixin);
 				}else {
 					holder.loveimg.setBackgroundResource(R.drawable.like);
 				}
-				if (listmap.get(position).get("bitbs").toString().equals("2")) {
+				if (mmap.get("bitbs").toString().equals("2")) {
 					holder.zhichiimg.setOnClickListener(new OnClickListener() {
 						
 						@Override
@@ -231,16 +238,17 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 							Toast.makeText(getApplicationContext(), "比赛以结束", Toast.LENGTH_SHORT).show();
 						}
 					});
-				}else if (listmap.get(position).get("bitbs").toString().equals("1")){
+				}else if (mmap.get("bitbs").toString().equals("1")){
 				holder.zhichiimg.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (listmap.get(position).get("money").toString().equals("1")) {
+						Map mmap2=listmap.get(position);
+						if (mmap2.get("money").toString().equals("1")) {
 							holder.zhichiimg.setClickable(false);
 						}else{
 							holder.zhichiimg.setClickable(true);
 							imageViewholder = (ImageView)v;
-							id = listmap.get(position).get("id").toString();
+							id = mmap2.get("id").toString();
 							Dialog dialog = new CaiDialog(GameWorksActivity.this, R.style.MyDialog,
 									new CaiDialog.PriorityListener() {
 								
@@ -252,7 +260,7 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 										imageViewholder.setBackgroundResource(R.drawable.zhici_ed);
 									}
 								}
-							}, id,listmap.get(position).get("bsid").toString());
+							}, id,mmap2.get("bsid").toString());
 							dialog.show();
 							dialog.setCanceledOnTouchOutside(false);
 						}
@@ -381,6 +389,8 @@ public class GameWorksActivity extends Activity implements OnClickListener,IXLis
 		ImageView loveimg;// 喜欢图标
 		LinearLayout pinglun;// 评论
 		ImageView pinglunimg;// 评论图标
+		ImageView huangguan; //皇冠
+		
 	}
 
 	@Override

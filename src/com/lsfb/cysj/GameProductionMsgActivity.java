@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.nfc.tech.IsoDep;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,8 +77,9 @@ import com.umeng.socialize.ynote.controller.UMYNoteHandler;
 
 /**
  * 参赛作品详情,举报
+ * 
  * @author Administrator
- *
+ * 
  */
 public class GameProductionMsgActivity extends FragmentActivity implements
 		OnClickListener {
@@ -170,11 +172,10 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	 */
 	@ViewInject(R.id.game_production_msg_down_xing)
 	private LinearLayout down_xing;
-	
-	
+
 	@ViewInject(R.id.game_production_msg_jubao)
-	private LinearLayout jubao;
-	
+	private Button jubao;
+
 	/**
 	 * game_production_msg_down_xingimg down_xingxing 五星
 	 */
@@ -210,11 +211,15 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	private View xian3;
 	@ViewInject(R.id.game_production_msg_xian4)
 	private View xian4;
+	
+	@ViewInject(R.id.img_huangguan)
+	private ImageView huangguan;
+	
 	/**
 	 * game_production_msg_btn1 btn1 冠軍
 	 */
-	@ViewInject(R.id.game_production_msg_btn1)
-	private Button btn1;
+	// @ViewInject(R.id.game_production_msg_btn1)
+	// private Button btn1;
 	/**
 	 * game_production_msg_btn2 btn2 冠軍
 	 */
@@ -223,8 +228,8 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	Intent intent;
 	String zuopinid;// 创意作品id
 	String zid; // 作品id
-	
-	String sid;//大赛id
+
+	String sid;// 大赛id
 	/**
 	 * title:创意题目 content:创意内容(0无内容) images:多图(0无图片) video:视频(0无视频) price:创意价值
 	 * sc:会员收藏数量 index 发布会员指数 count:评论数量 nickid:发布会员 iddelid:2可删|1不可删
@@ -264,6 +269,7 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	 * 2(比赛已结束不能支持创币)|1(比赛未结束能支持创币) bitmember 比赛发起人id(根据bitbs判断能点击不)
 	 */
 	String bitbs, bitmember;
+	String iswinner;
 	int guanjun = 0;
 	// 首先在您的Activity中添加如下成员变量
 	final UMSocialService mController = UMServiceFactory
@@ -299,7 +305,7 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 					public void onSuccess(ResponseInfo<String> responseInfo) {
 						jiazaidialog.dismiss();
 						String list = responseInfo.result;
-						System.out.println(list);
+						Log.e("zgscwjm",list);
 						try {
 							JSONObject object = new JSONObject(list);
 							title = object.getString("title").toString();
@@ -315,23 +321,31 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 							id = object.getString("id").toString();
 							scpd = object.getString("scpd").toString();
 							bitbs = object.getString("bitbs").toString();
-							
+							iswinner=object.getString("iswinner");
 							sid = object.getString("sid").toString();
-							
-							
+
 							if (bitbs.equals("1")) {
+								//比赛未结束
+								
 								bitmember = object.getString("bitmember")
 										.toString();
 								if (Integer.parseInt(bitmember) == IsTrue.userId) {
 									btn2.setVisibility(View.VISIBLE);
-									btn1.setVisibility(View.GONE);
+									//btn1.setVisibility(View.GONE);
 								} else {
-									btn1.setVisibility(View.VISIBLE);
+									//btn1.setVisibility(View.VISIBLE);
 									btn2.setVisibility(View.GONE);
 								}
 							} else {
-								btn1.setVisibility(View.VISIBLE);
+								//btn1.setVisibility(View.VISIBLE);
 								btn2.setVisibility(View.GONE);
+								if(iswinner.equals("2"))
+								{
+									huangguan.setVisibility(View.VISIBLE);
+								}else
+								{
+									huangguan.setVisibility(View.GONE);
+								}
 							}
 							zan = object.getString("zan").toString();
 							zani = Integer.parseInt(zan);
@@ -691,9 +705,8 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 		pinglun.setOnClickListener(this);
 		down_zan.setOnClickListener(this);
 		btn2.setOnClickListener(this);
-		
 		jubao.setOnClickListener(this);
-		
+
 		map = new HashMap<String, Object>();
 		listmap = new ArrayList<Map<String, Object>>();
 		map2 = new HashMap<String, Object>();
@@ -722,11 +735,11 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		
-		
-		case R.id.game_production_msg_jubao: //举报
+
+		case R.id.game_production_msg_jubao: // 举报
+			Log.i("zgscwjm", "jubao");
 			jubaoDialog();
-			 
+			
 			break;
 		case R.id.game_production_msg_backing:
 			finish();
@@ -762,8 +775,8 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 			showdialogup();
 			downzan();
 			break;
-		case R.id.game_production_msg_btn1:// 获胜冠军1
-			break;
+//		case R.id.game_production_msg_btn1:// 获胜冠军1
+//			break;
 		case R.id.game_production_msg_btn2:// 获胜冠军2
 			showdialogup();
 			guanjun();
@@ -772,11 +785,11 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 			break;
 		}
 	}
-	
+
 	private void jubaoDialog() {
-		Dialog dialog = new JuBaoDialog(this, R.style.MyDialog, sid,4+"");
+		Dialog dialog = new JuBaoDialog(this, R.style.MyDialog, sid, 4 + "");
 		dialog.show();
-		dialog.setCanceledOnTouchOutside(true);		
+		dialog.setCanceledOnTouchOutside(true);
 	}
 
 	private void share() {
@@ -802,41 +815,41 @@ public class GameProductionMsgActivity extends FragmentActivity implements
 		EmailHandler emailHandler = new EmailHandler();
 		emailHandler.addToSocialSDK();
 
-		// 添加有道云笔记平台
-		UMYNoteHandler yNoteHandler = new UMYNoteHandler(
-				GameProductionMsgActivity.this);
-		yNoteHandler.addToSocialSDK();
+//		// 添加有道云笔记平台
+//		UMYNoteHandler yNoteHandler = new UMYNoteHandler(
+//				GameProductionMsgActivity.this);
+//		yNoteHandler.addToSocialSDK();
 
-		// 添加易信平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
-		UMYXHandler yixinHandler = new UMYXHandler(
-				GameProductionMsgActivity.this,
-				"yxc0614e80c9304c11b0391514d09f13bf");
-		// 关闭分享时的等待Dialog
-		yixinHandler.enableLoadingDialog(false);
-		// 把易信添加到SDK中
-		yixinHandler.addToSocialSDK();
+//		// 添加易信平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
+//		UMYXHandler yixinHandler = new UMYXHandler(
+//				GameProductionMsgActivity.this,
+//				"yxc0614e80c9304c11b0391514d09f13bf");
+//		// 关闭分享时的等待Dialog
+//		yixinHandler.enableLoadingDialog(false);
+//		// 把易信添加到SDK中
+//		yixinHandler.addToSocialSDK();
 
-		// 易信朋友圈平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
-		UMYXHandler yxCircleHandler = new UMYXHandler(
-				GameProductionMsgActivity.this,
-				"yxc0614e80c9304c11b0391514d09f13bf");
-		yxCircleHandler.setToCircle(true);
-		yxCircleHandler.addToSocialSDK();
+//		// 易信朋友圈平台,参数1为当前activity, 参数2为在易信开放平台申请到的app id
+//		UMYXHandler yxCircleHandler = new UMYXHandler(
+//				GameProductionMsgActivity.this,
+//				"yxc0614e80c9304c11b0391514d09f13bf");
+//		yxCircleHandler.setToCircle(true);
+//		yxCircleHandler.addToSocialSDK();
 
-		// 添加来往
-		UMLWHandler umlwHandler = new UMLWHandler(
-				GameProductionMsgActivity.this, "laiwangd497e70d4",
-				"d497e70d4c3e4efeab1381476bac4c5e");
-		umlwHandler.addToSocialSDK();
-		umlwHandler.setMessageFrom("友盟分享组件");
+//		// 添加来往
+//		UMLWHandler umlwHandler = new UMLWHandler(
+//				GameProductionMsgActivity.this, "laiwangd497e70d4",
+//				"d497e70d4c3e4efeab1381476bac4c5e");
+//		umlwHandler.addToSocialSDK();
+//		umlwHandler.setMessageFrom("友盟分享组件");
 
 		// 添加来往动态
-		UMLWHandler umlwDynamicHandler = new UMLWHandler(
-				GameProductionMsgActivity.this, "laiwangd497e70d4",
-				"d497e70d4c3e4efeab1381476bac4c5e");
-		umlwDynamicHandler.addToSocialSDK();
-		umlwDynamicHandler.setMessageFrom("友盟分享组件");
-		mController.openShare(GameProductionMsgActivity.this, false);
+//		UMLWHandler umlwDynamicHandler = new UMLWHandler(
+//				GameProductionMsgActivity.this, "laiwangd497e70d4",
+//				"d497e70d4c3e4efeab1381476bac4c5e");
+//		umlwDynamicHandler.addToSocialSDK();
+//		umlwDynamicHandler.setMessageFrom("友盟分享组件");
+//		mController.openShare(GameProductionMsgActivity.this, false);
 
 		// 添加Facebook分享
 		// UMFacebookHandler mFacebookHandler =

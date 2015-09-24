@@ -1,5 +1,9 @@
 package com.lsfb.cysj.fragment;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -61,6 +65,8 @@ public class TrendsGameFragment extends Fragment implements OnClickListener {
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			if (parent != null) {
 				parent.removeView(rootView);
+				
+				
 			}
 		}
 //		IsTrue.fabulogin = false;//发布默认未登录

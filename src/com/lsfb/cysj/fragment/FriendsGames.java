@@ -23,6 +23,8 @@ import org.json.JSONObject;
 import com.lidroid.xutils.BitmapUtils;
 import com.lsbf.cysj.R;
 import com.lsfb.cysj.GalleryImageActivity;
+import com.lsfb.cysj.GameWorksActivity;
+import com.lsfb.cysj.GuanZhuMan;
 import com.lsfb.cysj.HotIdeasGamesContent2Activity;
 import com.lsfb.cysj.HotIdeasGamesContentActivity;
 import com.lsfb.cysj.app.ImageAddress;
@@ -99,6 +101,7 @@ public class FriendsGames extends Fragment implements IXListViewListener {
 							map.put("title", temp.getString("title"));
 							map.put("number", temp.getString("number"));
 							map.put("maxnumber", temp.getString("maxnumber"));
+							map.put("class", temp.getString("class"));
 
 							list.add(map);
 
@@ -160,6 +163,7 @@ public class FriendsGames extends Fragment implements IXListViewListener {
 							map.put("title", temp.getString("title"));
 							map.put("number", temp.getString("number"));
 							map.put("maxnumber", temp.getString("maxnumber"));
+							map.put("class", temp.getString("class"));
 							list.add(map);
 
 						}
@@ -216,6 +220,9 @@ public class FriendsGames extends Fragment implements IXListViewListener {
 							.findViewById(R.id.friends_games_list_item_num);
 					holder.num2 = (TextView) v
 							.findViewById(R.id.friends_games_list_item_num2);
+					
+					holder.classfy = (TextView) v
+							.findViewById(R.id.hot_ideas_games_item_class);
 					v.setTag(holder);
 				} else {
 					holder = (ViewHolder) v.getTag();
@@ -230,6 +237,45 @@ public class FriendsGames extends Fragment implements IXListViewListener {
 				holder.num.setText(list.get(position).get("number").toString());
 				holder.num2.setText(list.get(position).get("maxnumber")
 						.toString());
+				
+				
+				holder.num
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent=new Intent(getActivity(),GuanZhuMan.class);
+						startActivity(intent);	 
+					}
+				});
+
+				holder.num2
+				.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						//参赛作品
+						Intent intent=new Intent(getActivity(),GameWorksActivity.class);
+						intent.putExtra("sid", list.get(position).get("id")
+						.toString());
+						startActivity(intent);
+					}
+				});
+
+				
+				// 成员,作品详情进入
+
+				String classfy = list.get(position).get("class")
+						.toString();
+				if ("1".equals(classfy)) {
+					holder.classfy.setText("投资项目创意");
+				} else if ("2".equals(classfy)) {
+					holder.classfy.setText("任务人才创意");
+				} else {
+					holder.classfy.setText("公益明星创意");
+				}
+				
+				
 				v.setOnClickListener(new OnClickListener() {
 					
 					@Override
@@ -312,6 +358,7 @@ public class FriendsGames extends Fragment implements IXListViewListener {
 		private TextView text;
 		private TextView num;
 		private TextView num2;
+		private TextView classfy;//
 	}
 
 	private void init() {

@@ -149,7 +149,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:background="@drawable/logo" />
 
                     <ImageView
                         android:id="@+id/hot_ideas_games_content_zhikuman_other2"
@@ -157,7 +158,9 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:visibility="gone" />
+                        android:visibility="gone" 
+                         android:background="@drawable/logo" 
+                        />
 
                     <ImageView
                         android:id="@+id/hot_ideas_games_content_zhikuman_other3"
@@ -165,7 +168,9 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                         android:background="@drawable/logo" 
+                         />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -253,7 +258,9 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:visibility="gone" />
+                        android:background="@drawable/logo"
+                          android:visibility="gone"
+                         />
 
                     <ImageView
                         android:id="@+id/hot_ideas_games_content_guanzhuman_other2"
@@ -261,7 +268,9 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:visibility="gone" />
+                          android:background="@drawable/logo"
+                          android:visibility="gone"
+                         />
 
                     <ImageView
                         android:id="@+id/hot_ideas_games_content_guanzhuman_other3"
@@ -269,7 +278,9 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:visibility="gone" />
+                          android:background="@drawable/logo"
+                            android:visibility="gone"
+                     />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -353,7 +364,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/hot_ideas_games_production"
-                    android:text="点击查看参赛作品（12）" />
+                    android:text="点击查看参赛作品（0）" />
 
                 <RelativeLayout
                     android:id="@+id/hot_ideas_games_content_img5"

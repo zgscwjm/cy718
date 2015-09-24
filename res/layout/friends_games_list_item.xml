@@ -34,6 +34,15 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/hot_ideas_games_item_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:text="投资项目创意"
+                android:textSize="14sp" />
+            
+            <TextView
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/friends_games_list_item_title"
                 android:textColor="#b5b5b5"
@@ -51,13 +60,14 @@
                 android:layout_below="@id/friends_games_list_item_text"
                 android:orientation="horizontal" >
 
-                <ImageView
+             <!--    <ImageView
                     android:layout_gravity="bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/grayman" />
+                   android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/grayman" /> -->
 
                 <TextView
+                    android:drawableLeft="@drawable/grayman"
                     android:id="@+id/friends_games_list_item_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,19 +75,20 @@
                     android:layout_marginLeft="5dp"
                     android:text="256"/>
 
-                <ImageView
+              <!--   <ImageView
                     android:layout_gravity="bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/bishaitb" />
+                    android:background="@drawable/bishaitb" /> -->
 
                 <TextView
+                    android:drawableLeft="@drawable/bishaitb"
                     android:id="@+id/friends_games_list_item_num2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:text="256" />
             </LinearLayout>
         </RelativeLayout>

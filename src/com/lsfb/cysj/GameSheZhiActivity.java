@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -72,6 +73,8 @@ public class GameSheZhiActivity extends Activity implements OnClickListener{
 	BitmapUtils bitmapUtils;
 	Dialog jiazaidialog;
 	String isremind = 0+"";
+	
+	String memid;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,6 +138,10 @@ public class GameSheZhiActivity extends Activity implements OnClickListener{
 		quxiao.setOnClickListener(this);
 		jubao.setOnClickListener(this);
 		imgkai.setOnClickListener(this);
+		memid=intent.getExtras().getString("memid");
+		if (Integer.parseInt(memid)==IsTrue.userId) {
+			quxiao.setVisibility(View.GONE);
+		}
 	}
 	@Override
 	public void onClick(View v) {
@@ -260,11 +267,12 @@ public class GameSheZhiActivity extends Activity implements OnClickListener{
 						IsTrue.quxiaoguanzhu = 1;
 //						intent = new Intent(GameSheZhiActivity.this,HomeActivity.class);
 //						startActivity(intent);
-					
-						
 						ActivityManagerApplication.destoryActivity("HotIdeasGamesContentActivity");
+						Intent intent =new Intent(getApplicationContext(),HotIdeasGamesContent2Activity.class);
+						intent.putExtra("sid", sid);
+						startActivity(intent);
 						finish();
-				
+						
 					}else if (num.equals("1")) {
 						Toast.makeText(getApplicationContext(),
 								"取消失败",

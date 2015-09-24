@@ -14,6 +14,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -183,7 +184,7 @@ public class HotIdeasGamesContent2Activity extends FragmentActivity implements O
 								map.put("memimage", object2.getString("memimage").toString());
 								listmap.add(map);
 							}
-							System.out.println(listmap+"EEEEEEEEEEEEEEEEEEEEEEEEEE");
+							System.out.println(listmap+"AEEEEEEEEEEEEEEEEEEEEEEEEEE");
 							for (int j = 0; j < listmap.size(); j++) {
 							if (listmap.size()==1) {
 								hot_ideas_games_content2_zhikuman_other1.setVisibility(View.VISIBLE);
@@ -218,23 +219,65 @@ public class HotIdeasGamesContent2Activity extends FragmentActivity implements O
 								listmap.add(map);
 							}
 							System.out.println(listmap+"VVVVVVVVVVVVVVVVVVV");
+							Log.d("zgscwjm", "size"+listmap.size());
 							for (int j = 0; j < listmap.size(); j++) {
-							if (listmap.size()==1) {
-								hot_ideas_games_content2_guanzhuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-							}else if (listmap.size()==2) {
-								hot_ideas_games_content2_guanzhuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-								hot_ideas_games_content2_guanzhuman_other2.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
-							}else if (listmap.size()==3) {
-								hot_ideas_games_content2_guanzhuman_other1.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
-								hot_ideas_games_content2_guanzhuman_other2.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
-								hot_ideas_games_content2_guanzhuman_other3.setVisibility(View.VISIBLE);
-								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other3, ImageAddress.Stringhead+listmap.get(2).get("memimage").toString());
+								
+								
+								
+								switch (listmap.size()) {
+								case 3:
+									String xx3;
+									hot_ideas_games_content2_guanzhuman_other3
+											.setVisibility(View.VISIBLE);
+									
+									xx3=listmap.get(2).get("memimage").toString();
+									if (!(xx3.equals("") || xx3 == null)) {
+									bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other3,	ImageAddress.Stringhead+ xx3);
+									}
+	
+								case 2:
+							String xx2;
+							hot_ideas_games_content2_guanzhuman_other2
+									.setVisibility(View.VISIBLE);
+							xx2=listmap.get(1).get("memimage").toString();
+							if (!(xx2.equals("") || xx2 == null)) {
+							bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other2,	ImageAddress.Stringhead+ xx2);
 							}
+								case 1:
+									hot_ideas_games_content2_guanzhuman_other1
+									.setVisibility(View.VISIBLE);
+							String xx = listmap.get(0).get("memimage")
+									.toString();
+							Log.e("zgscwjm","xxis"+xx);
+							if (!(xx.equals("") || xx == null)) {
+								bitmapUtils
+										.display(
+												hot_ideas_games_content2_guanzhuman_other1,
+												ImageAddress.Stringhead
+														+ xx);
+							}
+									break;
+								default:
+									break;
+								}
+								
+								
+//							if (listmap.size()==1) {
+//								hot_ideas_games_content2_guanzhuman_other1.setVisibility(View.VISIBLE);
+//								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
+//							}else if (listmap.size()==2) {
+//								hot_ideas_games_content2_guanzhuman_other1.setVisibility(View.VISIBLE);
+//								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
+//								hot_ideas_games_content2_guanzhuman_other2.setVisibility(View.VISIBLE);
+//								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
+//							}else if (listmap.size()==3) {
+//								hot_ideas_games_content2_guanzhuman_other1.setVisibility(View.VISIBLE);
+//								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other1, ImageAddress.Stringhead+listmap.get(0).get("memimage").toString());
+//								hot_ideas_games_content2_guanzhuman_other2.setVisibility(View.VISIBLE);
+//								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other2, ImageAddress.Stringhead+listmap.get(1).get("memimage").toString());
+//								hot_ideas_games_content2_guanzhuman_other3.setVisibility(View.VISIBLE);
+//								bitmapUtils.display(hot_ideas_games_content2_guanzhuman_other3, ImageAddress.Stringhead+listmap.get(2).get("memimage").toString());
+//							}
 							}
 						}
 						bitmapUtils.display(hot_ideas_games_content2_headimg, ImageAddress.cbit+images);

@@ -167,7 +167,8 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 	 * id:会员id memimage:会员头像 zuop参赛作品数量
 	 */
 	String zhiklist, id, zhik, time, put, zuop, nickname, putlist, introduce,
-			images, collection, memimg, memid,huanxlistnum,zhiklistnum,countmoney,huanxname,clasid;
+			images, collection, memimg, memid, huanxlistnum, zhiklistnum,
+			countmoney, huanxname, clasid;
 	String sid;// 比赛id
 	BitmapUtils bitmapUtils;
 	Map<String, Object> map;
@@ -198,6 +199,9 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hot_ideas_games_content);
+		
+		Log.e("zgscwjm", "aaabbbccc");
+		
 		ViewUtils.inject(this);
 		ActivityManagerApplication.addDestoryActivity(this, 1 + "");
 		init();
@@ -229,20 +233,20 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 
 					} else if (i == 2) {
 						bitmapUtils = new BitmapUtils(getApplicationContext());
-						huanxname=response.getString("huanxname");
-						 countmoney=response.getString("countmoney");
-						Log.i("zgscwjm", "countmoney:"+countmoney);
+						huanxname = response.getString("huanxname");
+						countmoney = response.getString("countmoney");
+
 						String list = response.getString("list");
-						
-						
-//						Log.i("zgscwjm", "request ---list:"+list);
-						
-						
+
+						Log.i("zgscwjm", "request ---list:" + list);
+
 						JSONObject object = new JSONObject(list);
-						
-						clasid=object.getString("class");
-						huanxlistnum	=object.getJSONArray("huanxlist").length()+"";
-						zhiklistnum=object.getJSONArray("zhiklist").length()+"";
+
+						clasid = object.getString("class");
+						huanxlistnum = object.getJSONArray("huanxlist")
+								.length() + "";
+						zhiklistnum = object.getJSONArray("zhiklist").length()
+								+ "";
 						collection = object.getString("collection").toString();
 						id = object.getString("id").toString();
 						images = object.getString("images").toString();// 比赛封面图
@@ -252,10 +256,10 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 						nickname = object.getString("nickname").toString();// 会员昵称
 						memid = object.getString("memid").toString();// 会员id
 						zhik = object.getString("zhik").toString();// 智库专家
-						
+
 						groupId = object.getString("huanxqun").toString();// 环信群
-						name=object.getString("nickname").toString();// 环信ming
-							
+						name = object.getString("nickname").toString();// 环信ming
+
 						if (zhik.equals("1")) {
 							String lists = object.getString("zhiklist")
 									.toString();
@@ -272,83 +276,119 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 												.toString());
 								listmap.add(map);
 							}
-							System.out.println(listmap + "SSSSSSSSSSSSSSSS");
-							for (int j = 0; j < listmap.size(); j++) {
-								if (listmap.size() == 1) {
-									hot_ideas_games_content_zhikuman_other1
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_zhikuman_other1,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(0)
-																	.get("memimage")
-																	.toString());
-								} else if (listmap.size() == 2) {
-									hot_ideas_games_content_zhikuman_other1
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_zhikuman_other1,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(0)
-																	.get("memimage")
-																	.toString());
-									hot_ideas_games_content_zhikuman_other2
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_zhikuman_other2,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(1)
-																	.get("memimage")
-																	.toString());
-								} else if (listmap.size() == 3) {
-									hot_ideas_games_content_zhikuman_other1
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_zhikuman_other1,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(0)
-																	.get("memimage")
-																	.toString());
-									hot_ideas_games_content_zhikuman_other2
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_zhikuman_other2,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(1)
-																	.get("memimage")
-																	.toString());
+							System.out.println(listmap + "SBSSSSSSSSSSSSSS");
+						//	for (int j = 0; j < listmap.size(); j++) {
+								
+								switch (listmap.size()) {
+								case 3:
+									String xx3;
 									hot_ideas_games_content_zhikuman_other3
 											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_zhikuman_other3,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(2)
-																	.get("memimage")
-																	.toString());
-								}
+									xx3=listmap.get(2).get("memimage").toString();
+									bitmapUtils.display(hot_ideas_games_content_zhikuman_other2,	ImageAddress.Stringhead+ xx3);
+									
+	
+								case 2:
+							String xx2;
+							hot_ideas_games_content_zhikuman_other2
+									.setVisibility(View.VISIBLE);
+							xx2=listmap.get(1).get("memimage").toString();
+							bitmapUtils.display(hot_ideas_games_content_zhikuman_other2,	ImageAddress.Stringhead+ xx2);
+							
+								case 1:
+									hot_ideas_games_content_zhikuman_other1
+									.setVisibility(View.VISIBLE);
+							String xx = listmap.get(0).get("memimage")
+									.toString();
+							Log.e("zgscwjm", "xxis:"+xx);
+							if (!(xx.equals("") || xx == null)) {
+								Log.e("zgscwjm", "is here boy");
+//								bitmapUtils
+//										.display(
+//												hot_ideas_games_content_zhikuman_other1,
+//												ImageAddress.Stringhead
+//														+ xx);
+							
+								hot_ideas_games_content_zhikuman_other1
+								.setVisibility(View.VISIBLE);
 							}
+									break;
+								default:
+									break;
+								}
+								
+//								if (listmap.size() == 1) {
+//									hot_ideas_games_content_zhikuman_other1
+//											.setVisibility(View.VISIBLE);
+//									String xx = listmap.get(0).get("memimage")
+//											.toString();
+//									if (!(xx.equals("") || xx == null)) {
+//										bitmapUtils
+//												.display(
+//														hot_ideas_games_content_zhikuman_other1,
+//														ImageAddress.Stringhead
+//																+ xx);
+//									}
+//								} else if (listmap.size() == 2) {
+//									hot_ideas_games_content_zhikuman_other1
+//											.setVisibility(View.VISIBLE);
+//									String xx1,xx2;
+//									xx1=listmap.get(0).get("memimage").toString();
+//									if(!(xx1.equals("")||xx1==null))
+//									{
+//									bitmapUtils.display(
+//													hot_ideas_games_content_zhikuman_other1,
+//													ImageAddress.Stringhead+xx1);
+//									}
+//									hot_ideas_games_content_zhikuman_other2
+//											.setVisibility(View.VISIBLE);
+//									xx2=listmap.get(1).get("memimage").toString();
+//									bitmapUtils.display(hot_ideas_games_content_zhikuman_other2,	ImageAddress.Stringhead+ xx2);
+//								} else if (listmap.size() == 3) {
+//									
+//									hot_ideas_games_content_zhikuman_other1
+//											.setVisibility(View.VISIBLE);
+//									String xx1,xx2,xx3;
+//									xx1=listmap.get(0).get("memimage").toString();
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_zhikuman_other1,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(0)
+//																	.get("memimage")
+//																	.toString());
+//									hot_ideas_games_content_zhikuman_other2
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_zhikuman_other2,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(1)
+//																	.get("memimage")
+//																	.toString());
+//									hot_ideas_games_content_zhikuman_other3
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_zhikuman_other3,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(2)
+//																	.get("memimage")
+//																	.toString());
+//								}
+							//}
 						}
-						
-						//环信list
-//						String huanxlist = object.getString("huanxlist")
-//								.toString();
-//						JSONArray arrayhx = new JSONArray(huanxlist);
-//						
-//						groupId=((JSONObject)arrayhx.get(0)).getString("huanxqun");
-						
-						
+
+						// 环信list
+						// String huanxlist = object.getString("huanxlist")
+						// .toString();
+						// JSONArray arrayhx = new JSONArray(huanxlist);
+						//
+						// groupId=((JSONObject)arrayhx.get(0)).getString("huanxqun");
+
 						put = object.getString("put").toString();// 关注会员
 						zuop = object.getString("zuop").toString();// 参赛作品数量
 						if (put.equals("1")) {
@@ -368,72 +408,128 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 								listmap.add(map);
 							}
 							System.out.println(listmap
-									+ "EEEEEEEEEEEEEEEEEEEEEEEEEE");
+									+ "xxEEEEEEEEEEEEEEEEEEEEEEEEEE");
+							System.out.println("xdcx");
+							System.out.println(listmap.size()+"fff");
+							Log.e("zgscwjm", "xxxx");
+							System.out.println("xxxx");
+							if(listmap==null)
+							{
+								Log.e("zgscwjm", "xaxx");
+								System.out.println("xaxx");
+							}else
+							{
+								System.out.println("xdxx");
+								Log.e("zgscwjm", "xdxx");
+							}
+							
+							
 							for (int j = 0; j < listmap.size(); j++) {
-								if (listmap.size() == 1) {
-									hot_ideas_games_content_guanzhuman_other1
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_guanzhuman_other1,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(0)
-																	.get("memimage")
-																	.toString());
-								} else if (listmap.size() == 2) {
-									hot_ideas_games_content_guanzhuman_other1
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_guanzhuman_other1,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(0)
-																	.get("memimage")
-																	.toString());
-									hot_ideas_games_content_guanzhuman_other2
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_guanzhuman_other2,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(1)
-																	.get("memimage")
-																	.toString());
-								} else if (listmap.size() == 3) {
-									hot_ideas_games_content_guanzhuman_other1
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_guanzhuman_other1,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(0)
-																	.get("memimage")
-																	.toString());
-									hot_ideas_games_content_guanzhuman_other2
-											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_guanzhuman_other2,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(1)
-																	.get("memimage")
-																	.toString());
+								switch (listmap.size()) {
+								case 3:
+									String xx3;
 									hot_ideas_games_content_guanzhuman_other3
 											.setVisibility(View.VISIBLE);
-									bitmapUtils
-											.display(
-													hot_ideas_games_content_guanzhuman_other3,
-													ImageAddress.Stringhead
-															+ listmap
-																	.get(2)
-																	.get("memimage")
-																	.toString());
+									xx3=listmap.get(2).get("memimage").toString();
+									if(!(xx3.equals("")||xx3==null))
+									{
+									bitmapUtils.display(hot_ideas_games_content_guanzhuman_other3,	ImageAddress.Stringhead+ xx3);
+									}
+	
+								case 2:
+							String xx2;
+							hot_ideas_games_content_guanzhuman_other2
+									.setVisibility(View.VISIBLE);
+							xx2=listmap.get(1).get("memimage").toString();
+							if(!(xx2.equals("")||xx2==null))
+							{
+							bitmapUtils.display(hot_ideas_games_content_guanzhuman_other2,	ImageAddress.Stringhead+ xx2);
+							}
+								case 1:
+									Log.e("zgscwjm", "here is true");
+									hot_ideas_games_content_guanzhuman_other1
+									.setVisibility(View.VISIBLE);
+							String xx = listmap.get(0).get("memimage")
+									.toString();
+							
+							Log.e("zgscwjm", "img:"+xx);
+							if (!(xx.equals("") || xx == null)) {
+								bitmapUtils
+										.display(
+												hot_ideas_games_content_guanzhuman_other1,
+												ImageAddress.Stringhead
+														+ xx);
+							}
+									break;
+								default:
+									break;
 								}
+								
+								
+//								if (listmap.size() == 1) {
+//									hot_ideas_games_content_guanzhuman_other1
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_guanzhuman_other1,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(0)
+//																	.get("memimage")
+//																	.toString());
+//								} else if (listmap.size() == 2) {
+//									hot_ideas_games_content_guanzhuman_other1
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_guanzhuman_other1,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(0)
+//																	.get("memimage")
+//																	.toString());
+//									hot_ideas_games_content_guanzhuman_other2
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_guanzhuman_other2,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(1)
+//																	.get("memimage")
+//																	.toString());
+//								} else if (listmap.size() == 3) {
+//									hot_ideas_games_content_guanzhuman_other1
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_guanzhuman_other1,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(0)
+//																	.get("memimage")
+//																	.toString());
+//									hot_ideas_games_content_guanzhuman_other2
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_guanzhuman_other2,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(1)
+//																	.get("memimage")
+//																	.toString());
+//									hot_ideas_games_content_guanzhuman_other3
+//											.setVisibility(View.VISIBLE);
+//									bitmapUtils
+//											.display(
+//													hot_ideas_games_content_guanzhuman_other3,
+//													ImageAddress.Stringhead
+//															+ listmap
+//																	.get(2)
+//																	.get("memimage")
+//																	.toString());
+//								}
 							}
 						}
 						bitmapUtils.display(hot_ideas_games_content_headimg,
@@ -507,6 +603,7 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 			intent = new Intent(HotIdeasGamesContentActivity.this,
 					GameSheZhiActivity.class);
 			intent.putExtra("sid", sid);
+			intent.putExtra("memid", memid);
 			startActivity(intent);
 			break;
 		case R.id.hot_ideas_games_content_myman:// 邀请我的成员
@@ -557,25 +654,26 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 			new Thread() {
 				public void run() {
 					try {
-//						List<EMGroup> grouplist = EMGroupManager.getInstance()
-//								.getGroupsFromServer();// 获取群聊列表
-//						System.out.println(grouplist.size() + "SSSSSSSSSSSSS");
-//						for (int i = 0; i < grouplist.size(); i++) {
-//							String groupId = grouplist.get(i).getGroupId();
-//							System.out.println(groupId + "MMM");
-//						}
-//						if (0 == grouplist.size()) {
-//							// Show.toast(getApplicationContext(), "未获取到会话ID");
-//
-//							return;
-//						}
-//						groupId = grouplist.get(0).getGroupId();
-//						name = grouplist.get(0).getGroupName();
-						
-//						groupId = grouplist.get(0).getGroupId();
-//						name = grouplist.get(0).getGroupName();
-						
-						
+						// List<EMGroup> grouplist =
+						// EMGroupManager.getInstance()
+						// .getGroupsFromServer();// 获取群聊列表
+						// System.out.println(grouplist.size() +
+						// "SSSSSSSSSSSSS");
+						// for (int i = 0; i < grouplist.size(); i++) {
+						// String groupId = grouplist.get(i).getGroupId();
+						// System.out.println(groupId + "MMM");
+						// }
+						// if (0 == grouplist.size()) {
+						// // Show.toast(getApplicationContext(), "未获取到会话ID");
+						//
+						// return;
+						// }
+						// groupId = grouplist.get(0).getGroupId();
+						// name = grouplist.get(0).getGroupName();
+
+						// groupId = grouplist.get(0).getGroupId();
+						// name = grouplist.get(0).getGroupName();
+
 						// 根据群聊ID从服务器获取群聊信息
 						EMGroup group = EMGroupManager.getInstance()
 								.getGroupFromServer(groupId);
@@ -599,7 +697,7 @@ public class HotIdeasGamesContentActivity extends FragmentActivity implements
 			intent.putExtra("zhiklist", zhiklistnum);
 			intent.putExtra("zuop", zuop);
 			intent.putExtra("clasid", clasid);
-			Log.i("zgscwjm", "bbbx"+countmoney);
+			Log.i("zgscwjm", "bbbx" + countmoney);
 			intent.putExtra("countmoney", countmoney);
 			startActivity(intent);
 			break;

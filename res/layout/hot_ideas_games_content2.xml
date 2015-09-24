@@ -208,7 +208,10 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:visibility="gone"
-                        android:layout_gravity="center" />
+                        android:background="@drawable/logo"
+                        android:layout_gravity="center" 
+                        
+                        />
 
                     <ImageView
                         android:id="@+id/hot_ideas_games_content2_guanzhuman_other2"
@@ -216,6 +219,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:visibility="gone"
+                          android:background="@drawable/logo"
                         android:layout_marginLeft="10dp"/>
 
                     <ImageView
@@ -223,6 +227,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:visibility="gone"
+                          android:background="@drawable/logo"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"/>
                 </LinearLayout>
@@ -265,7 +270,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@+id/hot_ideas_games_production"
-                    android:text="点击查看参赛作品（12）" />
+                    android:text="点击查看参赛作品（0）" />
 
                 <RelativeLayout
                     android:id="@+id/hot_ideas_games_content2_img5"
